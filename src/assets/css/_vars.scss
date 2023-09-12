@@ -1,0 +1,18 @@
+$screen-sm-max: 480px;
+$screen-md-max: 768px;
+$screen-lg-max: 1024px;
+$screen-xl-max: 1440px;
+
+$container-width: 1200px;
+$default-padding: 24px;
+$section-padding: 32px;
+/*=================================Colors=====================================*/
+:root {
+  --theme-main: #FFFFFF;
+  --theme-black: #1E1E1E;
+  --theme-light-blue: #F5F9FF;
+  --theme-blue: #D7E7FF;
+  --theme-accent-blue: #4B6194;
+  --theme-dark-blue: #253B6E;
+  --theme-light-red: #EF5350;
+}

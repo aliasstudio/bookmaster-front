@@ -1,0 +1,148 @@
+@mixin small-screen {
+    @media (max-width: #{$screen-sm-max}) {
+        @content;
+    }
+ }
+
+ @mixin medium-screen {
+    @media (max-width: #{$screen-md-max}) {
+        @content;
+    }
+ }
+
+ @mixin large-screen {
+    @media (max-width: #{$screen-lg-max}) {
+        @content;
+    }
+ }
+
+ @mixin large-xl-screen {
+    @media (max-width: #{$screen-xl-max}) {
+        @content;
+    }
+ }
+
+ @mixin custom-screen($screen) {
+    @media (max-width: #{$screen + px}) {
+        @content;
+    }
+ }
+
+ @mixin adaptive-value($property, $start-value, $end-value, $min-screen, $max-screen) {
+    #{$property}: calc(#{$end-value + px} + (#{$start-value} - #{$end-value}) * ((100vw - #{$min-screen + px}) / (#{$max-screen} - #{$min-screen})));
+ }
+
+ /*===================================Null=====================================*/
+ *, *:before, *:after {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+   -moz-box-sizing: border-box;
+ }
+
+ :focus {outline: none !important;}
+ ::-moz-focus-outer, ::-moz-focus-inner {
+   border: 0 !important;
+   padding: 0;
+   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+ }
+
+ a:focus, a:active, button:focus {
+   outline: transparent none 0 !important;
+   box-shadow: 0 0 0 0 rgba(0,123,255,0)!important;
+ }
+
+ input, textarea,input:active, textarea:active {outline:none;}
+ input[type="checkbox"]:focus,
+ input[type="radio"]:focus {
+   visibility: hidden;
+ }
+
+ input {
+   font-family: 'Gilroy', sans-serif;
+ }
+
+ html, body {
+   min-height: 100vh;
+ }
+
+ .wrapper {
+   width: 100%;
+   position: relative;
+   background: white;
+   padding-top: $default-padding;
+   padding-bottom: $default-padding;
+ }
+
+ body {
+   font-family: 'Gilroy', sans-serif;
+   color: var(--theme-main);
+   max-width: 100vw;
+   height: 100%;
+   min-width: 320px;
+   -webkit-font-smoothing: antialiased;
+   -moz-osx-font-smoothing: grayscale;
+ }
+
+ body.lock {
+   overflow: hidden;
+ }
+
+ .container {
+   max-width: $container-width + $default-padding * 2;
+   padding-right: $default-padding;
+   padding-left: $default-padding;
+   margin: 0 auto;
+ }
+
+ section {
+   padding: $section-padding 0;
+ }
+ /*===================================Text=====================================*/
+ h1, h2, h3, h4 {
+   font-weight: 400;
+ }
+
+ h1 {
+   font-size: 32px;
+ }
+
+ h2 {
+   font-size: 28px;
+ }
+
+ h3 {
+   font-size: 20px;
+ }
+
+ h4 {
+   font-size: 14px;
+ }
+
+ a {
+   text-decoration: none;
+ }
+
+ ul {
+   list-style: none;
+ }
+
+ address {
+   font-style: normal;
+ }
+ /*==============================TextTemplate==================================*/
+ .font-weight-700 {
+   font-weight: 700;
+ }
+
+ .font-weight-600 {
+   font-weight: 600;
+ }
+
+ .font-weight-500 {
+   font-weight: 500;
+ }
+
+ .font-weight-400 {
+   font-weight: 400;
+ }
