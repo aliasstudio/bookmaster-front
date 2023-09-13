@@ -17,7 +17,5 @@
 }
 
 /*=================================Fonts======================================*/
-@include font-face("Gilroy", "Gilroy-Bold", 700, normal);
-@include font-face("Gilroy", "Gilroy-SemiBold", 600, normal);
-@include font-face("Gilroy", "Gilroy-Medium", 500, normal);
-@include font-face("Gilroy", "Gilroy-Regular", 400, normal);
+@include font-face("Tahoma", "Tahoma-Bold", 700, normal);
+@include font-face("Tahoma", "Tahoma-Regular", 400, normal);
