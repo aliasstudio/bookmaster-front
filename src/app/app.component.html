@@ -1,3 +1,8 @@
-<router-outlet>
-
-</router-outlet>
+<mat-drawer-container class="example-container">
+  <mat-drawer mode="over">
+    <app-menu></app-menu>
+  </mat-drawer>
+  <mat-drawer-content>
+    <router-outlet></router-outlet>
+  </mat-drawer-content>
+</mat-drawer-container>

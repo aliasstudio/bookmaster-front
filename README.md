@@ -1,5 +1,8 @@
 Bookmaster3000 - Frontend
 
+### Команда разработчиков
+![front_squad](https://github.com/aliasstudio/bookmaster-front/assets/63116956/50ccaa83-58a3-4701-95e4-15d2b0970ce4)
+
 # Процесс работы с задачами
 
 1) Все технические задания хранятся во вкладке `Issues` текущего репозитория

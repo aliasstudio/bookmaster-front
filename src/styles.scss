@@ -1,4 +1,56 @@
+@use '@angular/material' as mat;
+
 @import 'assets/css/fonts';
 @import 'assets/css/vars';
 @import 'assets/css/utils';
-@import 'assets/css/main';
+@import 'assets/css/overrides';
+
+@include mat.core();
+
+$bookmaster-palette: (
+  50: var(--theme-white),
+  100: var(--theme-light-green-alt-3),
+  200: var(--theme-light-green-alt-2),
+  300: var(--theme-light-green-alt-2),
+  400: var(--theme-light-green),
+  500: var(--theme-light-green),
+  600: var(--theme-light-green),
+  700: var(--theme-light-green-alt),
+  800: var(--theme-light-green-alt),
+  900: var(--theme-dark-green),
+  A100: var(--theme-dark-green),
+  A200: var(--theme-light-green-alt),
+  A400: var(--theme-light-green),
+  A700: var(--theme-light-green),
+  warn: var(--theme-red),
+  contrast: (
+    50: var(--theme-white),
+    100: var(--theme-light-green-alt-3),
+    200: var(--theme-light-green-alt-2),
+    300: var(--theme-light-green-alt-2),
+    400: var(--theme-light-green),
+    500: var(--theme-light-green),
+    600: var(--theme-light-green),
+    700: var(--theme-light-green-alt),
+    800: var(--theme-light-green-alt),
+    900: var(--theme-dark-green),
+    A100: var(--theme-dark-green),
+    A200: var(--theme-light-green-alt),
+    A400: var(--theme-light-green),
+    A700: var(--theme-light-green),
+    warn: var(--theme-red),
+  ),
+);
+
+$bookmaster-front-primary: mat.define-palette($bookmaster-palette, 800);
+$bookmaster-front-accent: mat.define-palette($bookmaster-palette, 600, 700);
+$bookmaster-front-warn: mat.define-palette($bookmaster-palette, warn);
+$bookmaster-front-theme: mat.define-light-theme((
+  color: (
+    primary: $bookmaster-front-primary,
+    accent: $bookmaster-front-accent,
+    warn: $bookmaster-front-warn,
+  )
+));
+
+@include mat.all-component-themes($bookmaster-front-theme);
