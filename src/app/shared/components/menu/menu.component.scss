@@ -1,5 +1,65 @@
 @use '/src/assets/css/vars';
 
+$menu-border-size: 2px;
+$menu-padding: 10px;
+$menu-item-padding: 6px;
+$menu-title-offset-y: 6px;
+$menu-accent-color: #757575;
+
 .menu {
-  padding: vars.$default-padding;
+  display: flex;
+  flex-direction: column;
+  padding: $menu-padding;
+  height: 100%;
+  background-color: var(--theme-gray);
+  width: calc(#{$menu-padding} * 2 + #{$menu-item-padding} * 2 + #{vars.$icon-size} + #{$menu-border-size});
+  transition: all .5s ease-in-out;
+  border-right: $menu-border-size solid $menu-accent-color;
+
+  &:hover {
+    > li {
+      background: var(--theme-white);
+
+      .menu-title {
+        opacity: 1;
+      }
+    }
+  }
+
+  > li {
+    display: flex;
+    align-items: flex-start;
+    padding: $menu-item-padding;
+    border-radius: vars.$btn-border-radius;
+    overflow: hidden;
+    background: var(--theme-gray);
+    cursor: pointer;
+    transition: all .5s ease-in-out;
+
+    &:hover {
+      box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+
+      [class^="icon-"], [class*=" icon-"] {
+        color: var(--theme-dark-green);
+      }
+    }
+
+    &:not(:last-child) {
+      margin-bottom: $menu-item-padding * 2;
+    }
+
+    .menu-title {
+      opacity: 0;
+      margin-left: $menu-item-padding * 2;
+      font-weight: 500;
+      line-height: calc(100% + $menu-title-offset-y);
+      transition: all .3s ease-in-out;
+    }
+
+    // Menu Icons
+    [class^="icon-"], [class*=" icon-"] {
+      color: $menu-accent-color;
+      transition: all .3s ease-in-out;
+    }
+  }
 }

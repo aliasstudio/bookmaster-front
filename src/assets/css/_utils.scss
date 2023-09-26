@@ -32,6 +32,13 @@
     #{$property}: calc(#{$end-value + px} + (#{$start-value} - #{$end-value}) * ((100vw - #{$min-screen + px}) / (#{$max-screen} - #{$min-screen})));
  }
 
+/*===================================Icons=====================================*/
+@import '../icons/glyphs/style';
+
+[class^="icon-"], [class*=" icon-"] {
+  font-size: $icon-size;
+}
+
  /*===================================Null=====================================*/
  *, *:before, *:after {
    margin: 0;
@@ -67,7 +74,6 @@
  }
 
  .wrapper {
-   display: block;
    width: 100%;
    position: relative;
    background-color: white;
