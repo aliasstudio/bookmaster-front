@@ -23,7 +23,7 @@ const ToastrOptions: Partial<GlobalConfig> = {
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,

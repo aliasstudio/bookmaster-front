@@ -67,11 +67,10 @@
  }
 
  .wrapper {
+   display: block;
    width: 100%;
    position: relative;
-   background: white;
-   padding-top: $default-padding;
-   padding-bottom: $default-padding;
+   background-color: white;
  }
 
  body {
