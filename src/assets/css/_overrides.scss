@@ -1,12 +1,3 @@
-.mat-drawer-container {
-  background-color: var(--theme-main) !important;
-  min-height: 100vh;
-}
-
-.mat-drawer-content {
-  padding: $default-padding;
-}
-
 .mat-calendar-body-selected {
   background-color: var(--theme-light-green) !important;
   color: var(--theme-black) !important;

@@ -6,6 +6,9 @@ $screen-xl-max: 1440px;
 $container-width: 1200px;
 $default-padding: 24px;
 $section-padding: 32px;
+
+$icon-size: 24px;
+$btn-border-radius: 4px;
 /*=================================Colors=====================================*/
 :root {
   --theme-main: #FFFFFF;
@@ -16,6 +19,6 @@ $section-padding: 32px;
   --theme-light-green-alt-2: #CFDC9C;
   --theme-light-green-alt-3: #dae0ca;
   --theme-dark-green: #50673B;
-  --theme-gray: #BFBFBF;
+  --theme-gray: #D9D9D9;
   --theme-red: #EF5350;
 }
