@@ -1,0 +1,61 @@
+:host {
+  margin: 0 auto;
+  display: flex;
+  height: 100%;
+  max-width: 597px;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+
+  .auth-page {
+    width: 100%;
+  }
+
+  .info-block {
+    position: absolute;
+    background-color: #D9D9D9;
+    padding: 16px;
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    justify-content: space-between;
+    transform: translateY(calc(-100% - 21px));
+
+    &__poem {
+      &-text-row {
+        white-space: nowrap;
+      }
+
+      &-author {
+        text-align: center;
+      }
+    }
+
+    &__other {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    &__app-name {
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    &__group-name {
+      font-size: 24px;
+    }
+  }
+
+  .form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: 16px 32px;
+
+    &__title {
+      margin-bottom: 16px;
+    }
+  }
+}
