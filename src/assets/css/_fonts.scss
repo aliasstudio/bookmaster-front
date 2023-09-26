@@ -17,5 +17,11 @@
 }
 
 /*=================================Fonts======================================*/
-@include font-face("Tahoma", "Tahoma-Bold", 700, normal);
-@include font-face("Tahoma", "Tahoma-Regular", 400, normal);
+@include font-face("Roboto", "Roboto-Black", 900, normal);
+@include font-face("Roboto", "Roboto-Bold", 700, normal);
+@include font-face("Roboto", "Roboto-Medium", 500, normal);
+@include font-face("Roboto", "Roboto-Regular", 400, normal);
+@include font-face("Roboto", "Roboto-Black-Italic", 900, italic);
+@include font-face("Roboto", "Roboto-Bold-Italic", 700, italic);
+@include font-face("Roboto", "Roboto-Medium-Italic", 500, italic);
+@include font-face("Roboto", "Roboto-Regular-Italic", 400, italic);
