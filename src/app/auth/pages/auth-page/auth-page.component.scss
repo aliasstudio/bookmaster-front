@@ -1,27 +1,33 @@
 :host {
-  margin: 0 auto;
-  display: flex;
   height: 100%;
-  max-width: 597px;
-  position: relative;
-  justify-content: center;
-  align-items: center;
+  width: 100%;
+  display: block;
+  background-image: url("/assets/imgs/auth-background.png");
+  background-size: cover;
+  color: black;
 
   .auth-page {
-    width: 100%;
+    position: relative;
+    max-width: 660px;
+    margin: auto;
+    top: 50%;
+
+    // 162 - высота info-block
+    // 21 - маржин
+    transform: translateY(calc(-162px - 20px - calc(calc(100% - 162px - 20px) / 2 )));
   }
 
   .info-block {
-    position: absolute;
     background-color: #D9D9D9;
     padding: 16px;
     display: flex;
     gap: 30px;
     align-items: center;
     justify-content: space-between;
-    transform: translateY(calc(-100% - 21px));
+    margin-bottom: 20px;
 
     &__poem {
+
       &-text-row {
         white-space: nowrap;
       }
