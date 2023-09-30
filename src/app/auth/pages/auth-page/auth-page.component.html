@@ -1,7 +1,7 @@
 <div class="auth-page">
   <div class="info-block">
     <img src="/assets/imgs/utmn-logo.png" alt="utmn-logo">
-    <div class="info-block__poem"> <!-- ну ешь, кто мешает-то -->
+    <div class="info-block__poem font-weight-500"> <!-- ну ешь, кто мешает-то -->
       <div class="info-block__poem-text">
         <div class="info-block__poem-text-row">
           Все, что создано умом,
@@ -22,13 +22,31 @@
       </div>
     </div>
     <div class="info-block__other">
-      <h3 class="info-block__app-name">Bookmaster-3000</h3>
-      <span class="info-block__group-name">ПИ 20.01</span>
+      <h3 class="info-block__app-name font-weight-700">Bookmaster-3000</h3>
+      <span class="info-block__group-name font-weight-500">ПИ 20.01</span>
     </div>
   </div>
 
   <form [formGroup]="formGroup" class="form">
-    <h2 class="form__title">Авторизация</h2>
-    <!-- Сюда пихать input'ы -->
+    <h2 class="form__title font-weight-500">Авторизация</h2>
+
+    <div class="form__content">
+      <mat-form-field subscriptSizing="dynamic">
+        <mat-label>Имя пользователя</mat-label>
+        <input matInput formControlName="userName">
+      </mat-form-field>
+
+      <mat-form-field subscriptSizing="dynamic">
+        <mat-label>Пароль</mat-label>
+        <input matInput formControlName="password" [type]="showPassword ? 'text' : 'password'">
+      </mat-form-field>
+
+      <mat-checkbox class="form-checkbox" (click)="togglePasswordVisibility()" [checked]="showPassword">Показать пароль</mat-checkbox>
+
+      <div class="form__buttons">
+        <button mat-flat-button class="form__buttons-login">Войти</button>
+        <button mat-flat-button class="form__buttons-register">Зарегистрироваться</button>
+      </div>
+    </div>
   </form>
 </div>
