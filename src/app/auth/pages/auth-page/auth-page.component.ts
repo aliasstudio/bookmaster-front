@@ -12,6 +12,12 @@ export class AuthPageComponent {
     password: new FormControl(''),
   });
 
+  showPassword = false;
+
   constructor(private formBuilder: FormBuilder) {}
 
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword
+  }
+  
 }
