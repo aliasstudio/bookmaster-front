@@ -1,5 +1,17 @@
-<ul class="menu">
-  <li>Option 1</li>
-  <li>Option 2</li>
-  <li>Option 3</li>
+<ul class="menu"
+    #menu
+    (mouseenter)="onMouseEnter()"
+    (mouseleave)="onMouseLeave()"
+>
+  <ng-container *ngFor="let item of items">
+    <li>
+      <span [class]="item.icon"></span>
+      <span class="menu-title">{{ item.name }}</span>
+    </li>
+  </ng-container>
+<!--  TODO: проверка авторизации-->
+  <li class="mt-auto">
+    <span class="icon-logout"></span>
+    <span class="menu-title">Выход</span>
+  </li>
 </ul>

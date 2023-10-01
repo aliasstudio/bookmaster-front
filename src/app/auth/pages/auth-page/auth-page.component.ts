@@ -19,5 +19,5 @@ export class AuthPageComponent {
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword
   }
-
+  
 }
