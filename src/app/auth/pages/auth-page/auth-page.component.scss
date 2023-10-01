@@ -1,39 +1,43 @@
 :host {
-  margin: 0 auto;
-  display: flex;
-  height: 100%;
-  max-width: 597px;
   position: relative;
-  justify-content: center;
-  align-items: center;
-  font-family: Roboto, sans-serif;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-image: url("/assets/images/auth-background.png");
+  background-size: cover;
+}
 
-  .auth-page {
-    width: 100%;
-  }
+
+.auth-page {
+  position: absolute;
+  left: 50%;
+  top: calc(50% - 162px / 2);
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 580px;
 
   .info-block {
-    width: 100%;
-    position: absolute;
     background-color: #D9D9D9;
     padding: 16px;
     display: flex;
     gap: 7px;
     align-items: center;
     justify-content: space-between;
-    transform: translateY(calc(-100% - 21px));
+    margin-bottom: 20px;
 
     &__poem {
       text-align: center;
       font-size: 14px;
       line-height: 16px;
 
-      &-text-row {
+      &-text {
+        display: flex;
+        flex-direction: column;
         white-space: nowrap;
       }
 
       &-author {
-        text-align: center;
+        margin-top: 16px;
       }
     }
 
