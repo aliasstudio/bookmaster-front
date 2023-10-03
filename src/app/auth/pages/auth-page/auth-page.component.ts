@@ -1,20 +1,24 @@
-import { Component } from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '@app/auth/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from "rxjs";
+import { User } from "@app/auth/models/user";
 
 @Component({
   selector: 'app-auth-page',
   templateUrl: './auth-page.component.html',
   styleUrls: ['./auth-page.component.scss'],
 })
-export class AuthPageComponent {
+export class AuthPageComponent implements OnDestroy {
   form = this.formBuilder.group({
-    userName: new FormControl(null, Validators.required),
+    login: new FormControl(null, Validators.required),
     password: new FormControl(null, Validators.required),
   });
 
   showPassword = false;
+
+  subscription = new Subscription();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -26,7 +30,9 @@ export class AuthPageComponent {
     this.showPassword = !this.showPassword;
   }
 
-  login(): void {
+  login(e: Event): void {
+    e.stopPropagation();
+
     const form = this.form;
 
     if (!form.valid) {
@@ -34,8 +40,14 @@ export class AuthPageComponent {
       return;
     }
 
-    this.auth
-      .login(form.controls.userName.value, form.controls.password.value)
+    const subscription = this.auth
+      .login(form.controls.login.value, form.controls.password.value)
       .subscribe();
+
+    this.subscription.add(subscription);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

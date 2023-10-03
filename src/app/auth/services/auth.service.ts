@@ -8,6 +8,7 @@ import { catchError, EMPTY, Observable, tap, throwError } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { UserProtected } from '@app/auth/models/user-proteted';
 import { Router } from '@angular/router';
+import {User} from "@app/auth/models/user";
 
 @Injectable({
   providedIn: 'root',
@@ -58,13 +59,7 @@ export class AuthService {
 
   register(user: UserProtected): Observable<unknown> {
     return this.http
-      .post('user/registration', {
-        login: user.login,
-        password: user.password,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        secondName: user.middleName,
-      })
+      .post('user/registration', { ...user })
       .pipe(
         catchError((error: HttpErrorResponse) => {
           if (error.status === HttpStatusCode.Conflict) {
