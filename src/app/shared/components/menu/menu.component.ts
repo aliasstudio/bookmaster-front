@@ -3,10 +3,12 @@ import {
   Component,
   ElementRef,
   Input,
-  OnInit,
   ViewChild,
 } from '@angular/core';
-import { MenuItem } from '../../models/menu-item';
+import { MenuItem } from '@app/shared/models/menu-item';
+import { AuthService } from '@app/auth/services/auth.service';
+import { Router } from '@angular/router';
+import { of, tap } from 'rxjs';
 
 @Component({
   selector: 'app-menu',
@@ -38,10 +40,15 @@ export class MenuComponent implements AfterViewInit {
   private hoverWidth = 160;
   private initialWidth = 60;
 
+  constructor(
+    protected router: Router,
+    protected authService: AuthService,
+  ) {}
+
   ngAfterViewInit() {
-    const maxLengthItem = [...this.items]
-      .sort((a, b) => b.name.length - a.name.length)
-      .pop()!.name.length;
+    const maxLengthItem =
+      [...this.items].sort((a, b) => b.name.length - a.name.length).pop()?.name
+        .length || 'Войти'.length;
     const menuPadding = 10;
     const menuItemPadding = 6;
     const iconSize = 24;
@@ -62,5 +69,14 @@ export class MenuComponent implements AfterViewInit {
 
   protected onMouseLeave() {
     this.menuRef.nativeElement.style.width = this.initialWidth + 'px';
+  }
+
+  protected auth(): void {
+    const authService = this.authService;
+    const req$ = authService.isAuthorized
+      ? authService.logout()
+      : of(void 0).pipe(tap(() => this.router.navigate(['/auth'])));
+
+    req$.subscribe();
   }
 }

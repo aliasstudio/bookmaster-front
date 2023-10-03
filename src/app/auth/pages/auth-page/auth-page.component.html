@@ -16,23 +16,23 @@
     </div>
   </div>
 
-  <form [formGroup]="formGroup" class="form">
+  <form [formGroup]="form" class="form" (ngSubmit)="login()">
     <h2 class="form__title font-weight-500">Авторизация</h2>
     <div class="form__content">
       <mat-form-field subscriptSizing="dynamic">
         <mat-label>Имя пользователя</mat-label>
-        <input matInput formControlName="userName">
+        <input matInput formControlName="userName" autocomplete="on">
       </mat-form-field>
 
       <mat-form-field subscriptSizing="dynamic">
         <mat-label>Пароль</mat-label>
-        <input matInput formControlName="password" [type]="showPassword ? 'text' : 'password'">
+        <input matInput formControlName="password" [type]="showPassword ? 'text' : 'password'" autocomplete="on">
       </mat-form-field>
 
       <mat-checkbox class="form-checkbox" (click)="togglePasswordVisibility()" [checked]="showPassword">Показать пароль</mat-checkbox>
 
       <div class="form__buttons">
-        <button mat-flat-button class="form__buttons-login">Войти</button>
+        <button mat-flat-button class="form__buttons-login" type="submit">Войти</button>
         <button mat-flat-button class="form__buttons-register">Зарегистрироваться</button>
       </div>
     </div>

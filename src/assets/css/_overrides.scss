@@ -2,3 +2,12 @@
   background-color: var(--theme-light-green) !important;
   color: var(--theme-black) !important;
 }
+
+.toast-container {
+  --bs-toast-spacing: 6px;
+
+  .ngx-toastr {
+    width: 350px !important;
+    box-shadow: none !important;
+  }
+}
