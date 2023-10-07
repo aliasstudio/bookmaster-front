@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '@app/auth/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from "rxjs";
-import { User } from "@app/auth/models/user";
+import { UserProtected } from "@app/auth/models/user-proteted";
 
 @Component({
   selector: 'app-auth-page',
@@ -42,6 +42,31 @@ export class AuthPageComponent implements OnDestroy {
 
     const subscription = this.auth
       .login(form.controls.login.value, form.controls.password.value)
+      .subscribe();
+
+    this.subscription.add(subscription);
+  }
+
+  register(e: Event) {
+    e.stopPropagation();
+
+    const form = this.form;
+
+    if (!form.valid) {
+      this.toastr.error('Укажите логин и пароль');
+      return;
+    }
+
+    const user: UserProtected = {
+      login: form.controls.login.value,
+      password: form.controls.password.value,
+      firstName: 'fn',
+      lastName: 'ln',
+      middleName: 'mn',
+    }
+
+    const subscription = this.auth
+      .register(user)
       .subscribe();
 
     this.subscription.add(subscription);
