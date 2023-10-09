@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from "./app.component";
-import { SharedModule } from "./shared/shared.module";
-import { BaseUrlInterceptor } from "./core/interceptors/base-url.interceptor";
-import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
-import { NgxsModule } from "@ngxs/store";
-import { NgxsLoggerPluginModule } from "@ngxs/logger-plugin";
-import { AppState } from "./store/app.state";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { GlobalConfig, ToastrModule } from "ngx-toastr";
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { NgxsModule } from '@ngxs/store';
+import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { GlobalConfig, ToastrModule } from 'ngx-toastr';
+import { AppRoutingModule } from '@app/app-routing.module';
+import { AppComponent } from '@app/app.component';
+import { SharedModule } from '@app/shared/shared.module';
+import { AppState } from '@app/store/app.state';
+import { BaseInterceptor } from '@app/core/interceptors/base.interceptor';
 
 const ToastrOptions: Partial<GlobalConfig> = {
   timeOut: 3000,
@@ -19,12 +19,11 @@ const ToastrOptions: Partial<GlobalConfig> = {
   tapToDismiss: true,
   positionClass: 'toast-top-right',
   maxOpened: 3,
-}
+  enableHtml: true,
+};
 
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -38,10 +37,10 @@ const ToastrOptions: Partial<GlobalConfig> = {
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: BaseUrlInterceptor,
+      useClass: BaseInterceptor,
       multi: true,
     },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -3,7 +3,7 @@
 $menu-border-size: 2px;
 $menu-padding: 10px;
 $menu-item-padding: 6px;
-$menu-title-offset-y: 6px;
+$menu-title-offset-y: 8px;
 $menu-accent-color: #757575;
 
 .menu {
@@ -12,7 +12,7 @@ $menu-accent-color: #757575;
   padding: $menu-padding;
   height: 100%;
   background-color: var(--theme-gray);
-  width: calc(#{$menu-padding} * 2 + #{$menu-item-padding} * 2 + #{vars.$icon-size} + #{$menu-border-size});
+  width: calc(#{$menu-padding} * 2 + #{$menu-item-padding} * 2 + #{vars.$icon-size} + #{$menu-border-size} * 2);
   transition: all .5s ease-in-out;
   border-right: $menu-border-size solid $menu-accent-color;
 

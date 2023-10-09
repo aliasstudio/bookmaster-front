@@ -4,6 +4,7 @@
   &__menu {
     display: flex;
     position: fixed;
+    z-index: 50;
     top: 0;
     left: 0;
     height: 100vh;
@@ -13,5 +14,13 @@
     padding-left: 60px;
     width: 100%;
     min-height: 100vh;
+  }
+}
+
+form {
+  mat-form-field {
+    mat-error {
+      font-size: 14px;
+    }
   }
 }

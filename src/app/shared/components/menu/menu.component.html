@@ -3,15 +3,16 @@
     (mouseenter)="onMouseEnter()"
     (mouseleave)="onMouseLeave()"
 >
-  <ng-container *ngFor="let item of items">
-    <li>
-      <span [class]="item.icon"></span>
-      <span class="menu-title">{{ item.name }}</span>
-    </li>
+  <ng-container *ngIf="authService.isAuthorized">
+    <ng-container *ngFor="let item of items">
+      <li>
+        <span [class]="item.icon"></span>
+        <span class="menu-title">{{ item.name }}</span>
+      </li>
+    </ng-container>
   </ng-container>
-<!--  TODO: проверка авторизации-->
-  <li class="mt-auto">
+  <li class="mt-auto" (click)="auth()">
     <span class="icon-logout"></span>
-    <span class="menu-title">Выход</span>
+    <span class="menu-title">{{ authService.isAuthorized ? 'Выход' : 'Войти' }}</span>
   </li>
 </ul>

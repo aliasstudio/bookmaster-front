@@ -1,34 +1,40 @@
 <div class="auth-page">
   <div class="info-block">
-    <img src="/assets/imgs/utmn-logo.png" alt="utmn-logo">
-    <div class="info-block__poem"> <!-- ну ешь, кто мешает-то -->
+    <img src="assets/images/utmn-logo.png" alt="utmn-logo">
+    <div class="info-block__poem font-weight-500"> <!-- ну ешь, кто мешает-то -->
       <div class="info-block__poem-text">
-        <div class="info-block__poem-text-row">
-          Все, что создано умом,
-        </div>
-        <div class="info-block__poem-text-row">
-          Все, к чему душа стремится,
-        </div>
-        <div class="info-block__poem-text-row">
-          Как янтарь на дне морском,
-        </div>
-        <div class="info-block__poem-text-row">
-          В книгах бережно хранится.
-        </div>
+        <span>Все, что создано умом,</span>
+        <span>Все, к чему душа стремится,</span>
+        <span>Как янтарь на дне морском,</span>
+        <span>В книгах бережно хранится.</span>
       </div>
-      <br>
-      <div class="info-block__poem-author">
-        Ю. Ванаг
-      </div>
+      <div class="info-block__poem-author"><span>Ю. Ванаг</span></div>
     </div>
     <div class="info-block__other">
-      <h3 class="info-block__app-name">Bookmaster-3000</h3>
-      <span class="info-block__group-name">ПИ 20.01</span>
+      <h3 class="info-block__app-name font-weight-700">Bookmaster-3000</h3>
+      <span class="info-block__group-name font-weight-500">ПИ 20.01</span>
     </div>
   </div>
 
-  <form [formGroup]="formGroup" class="form">
-    <h2 class="form__title">Авторизация</h2>
-    <!-- Сюда пихать input'ы -->
+  <form [formGroup]="form" class="form">
+    <h2 class="form__title font-weight-500">Авторизация</h2>
+    <div class="form__content">
+      <mat-form-field subscriptSizing="dynamic">
+        <mat-label>Имя пользователя</mat-label>
+        <input matInput formControlName="login" autocomplete="on">
+      </mat-form-field>
+
+      <mat-form-field subscriptSizing="dynamic">
+        <mat-label>Пароль</mat-label>
+        <input matInput formControlName="password" [type]="showPassword ? 'text' : 'password'" autocomplete="on">
+      </mat-form-field>
+
+      <mat-checkbox class="form-checkbox no-select" (click)="togglePasswordVisibility()" [checked]="showPassword">Показать пароль</mat-checkbox>
+
+      <div class="form__buttons">
+        <button mat-flat-button class="form__buttons-login" (click)="login($event)">Войти</button>
+        <button mat-flat-button class="form__buttons-register" (click)="register($event)">Зарегистрироваться</button>
+      </div>
+    </div>
   </form>
 </div>
