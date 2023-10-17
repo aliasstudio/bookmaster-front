@@ -18,9 +18,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MenuComponent } from '@app/shared/components/menu/menu.component';
+import { MatPaginatorCustomizeDirective } from './directives/mat-paginator-customize.directive';
 
 @NgModule({
-  declarations: [MenuComponent],
+  declarations: [MenuComponent, MatPaginatorCustomizeDirective],
   imports: [
     CommonModule,
     RouterModule,
