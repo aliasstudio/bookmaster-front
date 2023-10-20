@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MenuComponent } from '@app/shared/components/menu/menu.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -17,35 +18,68 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MenuComponent } from '@app/shared/components/menu/menu.component';
-import { MatPaginatorCustomizeDirective } from './directives/mat-paginator-customize.directive';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorCustomizeDirective } from '@app/shared/directives/mat-paginator-customize.directive';
+import { MatDatatableComponent } from '@app/shared/components/mat-datatable/mat-datatable.component';
+import { MatDatatableControlComponent } from '@app/shared/components/mat-datatable-control/mat-datatable-control.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { BaseButtonDirective } from '@app/shared/directives/buttons/base-button.directive';
+import { CreateGridRowButtonDirective } from '@app/shared/directives/buttons/create-grid-row-button.directive';
+import { ReloadGridButtonDirective } from '@app/shared/directives/buttons/reload-grid-button.directive';
+import { SearchGridButtonDirective } from '@app/shared/directives/buttons/search-button.directive';
+import { MatDatatableSearchComponent } from '@app/shared/components/mat-datatable-search/mat-datatable-search.component';
+
+const modules = [
+  CommonModule,
+  RouterModule,
+  FormsModule,
+  ReactiveFormsModule,
+  MatNativeDateModule,
+  MatInputModule,
+  MatFormFieldModule,
+  MatIconModule,
+  MatSlideToggleModule,
+  MatSelectModule,
+  MatCheckboxModule,
+  MatButtonModule,
+  MatDatepickerModule,
+  MatRadioModule,
+  MatTableModule,
+  MatPaginatorModule,
+  MatSortModule,
+  MatSidenavModule,
+  MatTooltipModule,
+  MatChipsModule,
+  MatAutocompleteModule,
+  MatMenuModule,
+  MatToolbarModule,
+];
 
 @NgModule({
-  declarations: [MenuComponent, MatPaginatorCustomizeDirective],
-  imports: [
-    CommonModule,
-    RouterModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatSidenavModule,
-  ],
-  exports: [
-    MatNativeDateModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatSlideToggleModule,
-    MatSelectModule,
-    MatCheckboxModule,
-    MatButtonModule,
-    MatDatepickerModule,
-    MatRadioModule,
-    MatTableModule,
-    MatSidenavModule,
-    MatTooltipModule,
-    MatChipsModule,
-    MatAutocompleteModule,
+  declarations: [
     MenuComponent,
+    MatPaginatorCustomizeDirective,
+    MatDatatableComponent,
+    MatDatatableControlComponent,
+    BaseButtonDirective,
+    CreateGridRowButtonDirective,
+    ReloadGridButtonDirective,
+    SearchGridButtonDirective,
+    MatDatatableSearchComponent,
+  ],
+  imports: modules,
+  exports: [
+    ...modules,
+    MenuComponent,
+    MatDatatableComponent,
+    MatDatatableControlComponent,
+    BaseButtonDirective,
+    CreateGridRowButtonDirective,
+    ReloadGridButtonDirective,
+    SearchGridButtonDirective,
+    MatDatatableSearchComponent,
   ],
 })
 export class SharedModule {}

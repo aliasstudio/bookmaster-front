@@ -3,6 +3,14 @@
   color: var(--theme-black) !important;
 }
 
+.mat-mdc-icon-button:hover .mat-mdc-button-persistent-ripple::before {
+  //opacity: 0 !important;
+}
+
+.mat-sidenav-fixed {
+  min-width: 520px;
+}
+
 .toast-container {
   --bs-toast-spacing: 6px;
 

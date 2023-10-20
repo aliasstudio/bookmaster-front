@@ -21,4 +21,8 @@ $btn-border-radius: 4px;
   --theme-dark-green: #50673B;
   --theme-gray: #D9D9D9;
   --theme-red: #EF5350;
+
+  --mat-sidenav-content-background-color: var(--theme-main);
+  --mat-sidenav-container-background-color: var(--theme-gray);
+  --mdc-checkbox-selected-checkmark-color: var(--theme-white);
 }
