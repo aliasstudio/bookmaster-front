@@ -53,7 +53,7 @@ export class BaseInterceptor implements HttpInterceptor {
             }
             case HttpStatusCode.Unauthorized: {
               this.toastr.warning(`Сессия авторизации истекла`);
-              this.authService.logout();
+              this.authService.clearToken();
               break;
             }
           }
