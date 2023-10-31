@@ -18,6 +18,17 @@ const routes: Routes = [
       },
     ],
   },
+  {
+    path: 'users',
+    pathMatch: 'full',
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('@app/users/users.module').then((m) => m.UsersModule),
+      },
+    ],
+  },
 ];
 
 @NgModule({

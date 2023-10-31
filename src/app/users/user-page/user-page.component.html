@@ -1,0 +1,19 @@
+<ng-template #form>
+  <app-user-form [entity]="selectedItem" (saved)="save($event)"></app-user-form>
+</ng-template>
+
+<section class="repository full-height">
+  <h3>Пользователи</h3>
+
+  <app-mat-datatable-control
+    [dataBinding]="dataBinding"
+    [formRef]="form"
+    formTitle="Пользователь"
+  >
+    <ng-container table-header>
+      <app-mat-datatable-search></app-mat-datatable-search>
+      <button mat-flat-button appReloadGridButton></button>
+      <button mat-flat-button appCreateGridRowButton text="Создать нового пользователя"></button>
+    </ng-container>
+  </app-mat-datatable-control>
+</section>

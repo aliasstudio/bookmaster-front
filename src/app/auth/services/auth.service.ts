@@ -62,7 +62,7 @@ export class AuthService {
       first(),
       catchError((error: HttpErrorResponse) => {
         if (error.status === HttpStatusCode.Conflict) {
-          this.toastr.error('Пользователь с таким именем уже существует');
+          this.toastr.error('Пользователь с таким логином уже существует');
 
           return EMPTY;
         }
@@ -70,7 +70,7 @@ export class AuthService {
         return throwError(() => error);
       }),
       tap(() => {
-        this.toastr.success('Вы успешно зарегистрированы в системе!');
+        this.toastr.success('Пользователь успешно зарегистрирован в системе!');
       }),
     );
   }
@@ -86,5 +86,10 @@ export class AuthService {
           this.toastr.success('Вы успешно вышли из системы!');
         }),
       );
+  }
+
+  clearToken(): void {
+    localStorage.removeItem('auth-token');
+    this.router.navigate(['/auth']);
   }
 }

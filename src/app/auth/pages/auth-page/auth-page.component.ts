@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '@app/auth/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
-import { UserProtected } from '@app/auth/models/user-proteted';
 import { takeUntil } from 'rxjs';
 import { DestroyService } from '@app/core/services/destroy.service';
 
@@ -45,26 +44,5 @@ export class AuthPageComponent {
       .login(form.controls.login.value, form.controls.password.value)
       .pipe(takeUntil(this.destroy$))
       .subscribe();
-  }
-
-  register(e: Event) {
-    e.stopPropagation();
-
-    const form = this.form;
-
-    if (!form.valid) {
-      this.toastr.error('Укажите логин и пароль');
-      return;
-    }
-
-    const user: UserProtected = {
-      login: form.controls.login.value,
-      password: form.controls.password.value,
-      firstName: 'fn',
-      lastName: 'ln',
-      middleName: 'mn',
-    };
-
-    this.auth.register(user).pipe(takeUntil(this.destroy$)).subscribe();
   }
 }
