@@ -63,11 +63,11 @@ const modules = [
     MatPaginatorCustomizeDirective,
     MatDatatableComponent,
     MatDatatableControlComponent,
+    MatDatatableSearchComponent,
     BaseButtonDirective,
     CreateGridRowButtonDirective,
     ReloadGridButtonDirective,
     SearchGridButtonDirective,
-    MatDatatableSearchComponent,
   ],
   imports: modules,
   exports: [
@@ -75,11 +75,11 @@ const modules = [
     MenuComponent,
     MatDatatableComponent,
     MatDatatableControlComponent,
+    MatDatatableSearchComponent,
     BaseButtonDirective,
     CreateGridRowButtonDirective,
     ReloadGridButtonDirective,
     SearchGridButtonDirective,
-    MatDatatableSearchComponent,
   ],
 })
 export class SharedModule {}

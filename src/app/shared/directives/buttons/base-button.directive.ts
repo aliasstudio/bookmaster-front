@@ -1,11 +1,17 @@
-import { Directive, HostBinding, Input, OnInit } from '@angular/core';
+import {
+  Directive,
+  HostBinding,
+  Input,
+  OnChanges,
+  OnInit,
+} from '@angular/core';
 import { MatButton } from '@angular/material/button';
 
 @Directive({
   selector: 'button[appButton]',
 })
-export class BaseButtonDirective implements OnInit {
-  @HostBinding('class') private get hostClass(): string {
+export class BaseButtonDirective implements OnInit, OnChanges {
+  @HostBinding('class') protected get hostClass(): string {
     return this.altColor ? 'green-text-button' : 'green-button';
   }
 
@@ -16,6 +22,14 @@ export class BaseButtonDirective implements OnInit {
   constructor(protected button: MatButton) {}
 
   ngOnInit() {
+    this.renderButton();
+  }
+
+  ngOnChanges(): void {
+    this.renderButton();
+  }
+
+  renderButton(): void {
     const iconClass = this.iconClass;
     let content = this.text ?? '';
 

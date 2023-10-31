@@ -15,6 +15,7 @@ import { takeUntil } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Page } from '@app/shared/models/page';
 import { ToastrService } from 'ngx-toastr';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-mat-datatable',
@@ -23,6 +24,7 @@ import { ToastrService } from 'ngx-toastr';
   providers: [DestroyService],
 })
 export class MatDatatableComponent<T extends PlainObject> implements OnInit {
+  @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @Input({ required: true }) dataBinding: DataBinding<T>;
 
@@ -85,6 +87,7 @@ export class MatDatatableComponent<T extends PlainObject> implements OnInit {
     this.columnKeys = (this.columns || columns).map((col) => col.key);
 
     dataSource.paginator = this.paginator;
+    dataSource.sort = this.sort;
     dataSource._updateChangeSubscription();
   }
 

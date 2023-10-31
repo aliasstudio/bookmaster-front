@@ -10,7 +10,6 @@ import { MatDatatableComponent } from '@app/shared/components/mat-datatable/mat-
 import { PlainObject } from '@ngxs/store/internals';
 import { DestroyService } from '@app/core/services/destroy.service';
 import { MatDrawer } from '@angular/material/sidenav';
-import { UserFormComponent } from '@app/users/user-form/user-form.component';
 import {
   BehaviorSubject,
   catchError,
@@ -32,7 +31,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   selector: 'app-mat-datatable-control',
   templateUrl: './mat-datatable-control.component.html',
   styleUrls: ['./mat-datatable-control.component.scss'],
-  providers: [DestroyService, UserFormComponent],
+  providers: [DestroyService],
 })
 export class MatDatatableControlComponent<
   T extends PlainObject,
