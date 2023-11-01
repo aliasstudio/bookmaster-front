@@ -1,0 +1,57 @@
+<form [formGroup]="form">
+  <ng-container *ngIf="!isNew">
+    <div class="form-field">
+      <mat-label>ID</mat-label>
+      <mat-form-field>
+        <input matInput formControlName="id" readonly>
+      </mat-form-field>
+    </div>
+  </ng-container>
+
+  <div class="form-field">
+    <mat-label>ФИО</mat-label>
+    <mat-form-field>
+      <input matInput formControlName="name" placeholder="Введите ФИО">
+    </mat-form-field>
+  </div>
+
+  <div class="form-field">
+    <mat-label>Адрес</mat-label>
+    <mat-form-field>
+      <input matInput formControlName="address" placeholder="Введите адрес">
+    </mat-form-field>
+  </div>
+
+  <div class="form-field">
+    <mat-label>Почтовый индекс</mat-label>
+    <mat-form-field>
+      <input matInput formControlName="zip" placeholder="Введите почтовый индекс">
+    </mat-form-field>
+  </div>
+
+  <div class="form-field">
+    <mat-label>Город</mat-label>
+    <mat-form-field>
+      <input matInput formControlName="city" placeholder="Введите город">
+    </mat-form-field>
+  </div>
+
+  <div class="form-field">
+    <mat-label>Телефон</mat-label>
+    <mat-form-field>
+      <input matInput formControlName="phone" placeholder="Введите телефон">
+    </mat-form-field>
+  </div>
+
+  <div class="form-field">
+    <mat-label>Почта</mat-label>
+    <mat-form-field>
+      <input matInput formControlName="email" placeholder="Введите почту">
+    </mat-form-field>
+  </div>
+</form>
+
+<mat-toolbar>
+  <button mat-flat-button appButton text="Очистить" iconClass="icon-close" [altColor]="true" (click)="clear()"></button>
+  <button mat-flat-button appButton [text]="isNew ? 'Создать' : 'Сохранить'" class="ms-auto" [disabled]="!canSave" (click)="save()"></button>
+</mat-toolbar>

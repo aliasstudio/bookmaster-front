@@ -29,6 +29,17 @@ const routes: Routes = [
       },
     ],
   },
+  {
+    path: 'clients',
+    pathMatch: 'full',
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+            import('@app/customers/customers.module').then((m) => m.CustomersModule),
+      },
+    ],
+  },
 ];
 
 @NgModule({
