@@ -13,6 +13,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { FormControlMap } from '@app/core/models/form-control-map';
 import { takeUntil } from 'rxjs';
 import { DestroyService } from '@app/core/services/destroy.service';
+import * as _ from 'lodash';
 
 @Directive()
 export class FormEditorDirective<T extends PlainObject>
@@ -35,7 +36,11 @@ export class FormEditorDirective<T extends PlainObject>
   }
 
   get canSave(): boolean {
-    return this.form.valid;
+    return this.form.valid && this.hasChanges;
+  }
+
+  get hasChanges(): boolean {
+    return !_.isEqual(this.form.value, this.entity);
   }
 
   ngOnInit(): void {

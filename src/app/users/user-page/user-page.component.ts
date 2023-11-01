@@ -4,7 +4,6 @@ import { EntityRemoteDataBinding } from '@app/shared/models/databinding';
 import { RepositoryDirective } from '@app/shared/directives/repository.directive';
 import { DestroyService } from '@app/core/services/destroy.service';
 import { AuthService } from '@app/auth/services/auth.service';
-import * as _ from 'lodash';
 
 @Component({
   selector: 'app-user-page',
@@ -27,7 +26,7 @@ export class UserPageComponent extends RepositoryDirective<UserProtected> {
   };
 
   save(item: UserProtected): void {
-    const isNew = !_.get(this.selectedItem, this.dataBinding.idField);
+    const isNew = this.isNew;
 
     this.grid.save(item, {
       req$: isNew ? this.authService.register(item) : null,
