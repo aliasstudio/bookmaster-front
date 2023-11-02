@@ -30,6 +30,8 @@ import { CreateGridRowButtonDirective } from '@app/shared/directives/buttons/cre
 import { ReloadGridButtonDirective } from '@app/shared/directives/buttons/reload-grid-button.directive';
 import { SearchGridButtonDirective } from '@app/shared/directives/buttons/search-button.directive';
 import { MatDatatableSearchComponent } from '@app/shared/components/mat-datatable-search/mat-datatable-search.component';
+import {MatDeleteDialogComponent} from "@app/shared/components/mat-delete-dialog/mat-delete-dialog.component";
+import {MatDialogModule} from "@angular/material/dialog";
 
 const modules = [
   CommonModule,
@@ -55,6 +57,7 @@ const modules = [
   MatAutocompleteModule,
   MatMenuModule,
   MatToolbarModule,
+  MatDialogModule
 ];
 
 @NgModule({
@@ -68,6 +71,7 @@ const modules = [
     CreateGridRowButtonDirective,
     ReloadGridButtonDirective,
     SearchGridButtonDirective,
+    MatDeleteDialogComponent
   ],
   imports: modules,
   exports: [
@@ -80,6 +84,7 @@ const modules = [
     CreateGridRowButtonDirective,
     ReloadGridButtonDirective,
     SearchGridButtonDirective,
+    MatDeleteDialogComponent,
   ],
 })
 export class SharedModule {}

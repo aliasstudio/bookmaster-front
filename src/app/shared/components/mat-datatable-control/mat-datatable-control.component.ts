@@ -25,7 +25,10 @@ import {
   CustomRequestOptions,
   EntityRemoteDataBinding,
 } from '@app/shared/models/databinding';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { MatDeleteDialogComponent } from "@app/shared/components/mat-delete-dialog/mat-delete-dialog.component";
+import { ToastrService } from "ngx-toastr";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: 'app-mat-datatable-control',
@@ -46,6 +49,10 @@ export class MatDatatableControlComponent<
 
   selectedItem$ = new BehaviorSubject<T>(null);
 
+  constructor(destroy$: DestroyService, http: HttpClient, toastr: ToastrService, public dialog: MatDialog) {
+    super(destroy$, http, toastr);
+  }
+
   protected onBindingComplete() {
     super.onBindingComplete();
 
@@ -57,6 +64,16 @@ export class MatDatatableControlComponent<
     of(item)
       .pipe(map((entity: T) => this.selectedItem$.next(entity)))
       .subscribe(() => this.drawer.open());
+  }
+
+  openDeleteDialog(item: T, customOptions?: CustomRequestOptions): void {
+    const dialogRef = this.dialog.open(MatDeleteDialogComponent);
+    const subscription = dialogRef.afterClosed().subscribe(doAction => {
+      if (doAction) {
+        this.delete(item, customOptions);
+      }
+      subscription.unsubscribe();
+    });
   }
 
   delete(item: T, customOptions?: CustomRequestOptions): void {
