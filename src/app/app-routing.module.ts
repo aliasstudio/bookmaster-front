@@ -30,7 +30,7 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'clients',
+    path: 'customers',
     pathMatch: 'full',
     children: [
       {
