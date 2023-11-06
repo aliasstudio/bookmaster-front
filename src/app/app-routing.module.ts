@@ -29,6 +29,17 @@ const routes: Routes = [
       },
     ],
   },
+  {
+    path: 'authors',
+    pathMatch: 'full',
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('@app/authors/authors.module').then((m) => m.AuthorsModule),
+      },
+    ],
+  },
 ];
 
 @NgModule({
