@@ -16,6 +16,10 @@ import { provideFormEditor } from '@app/core/utils/functions';
   providers: [provideFormEditor(BookFormComponent)],
 })
 export class BookFormComponent extends FormEditorDirective<Book> {
+  get isNew(): boolean {
+    return !this.entity?.uuid;
+  }
+
   authors$: Observable<Author[]>;
 
   private http = inject(HttpClient);

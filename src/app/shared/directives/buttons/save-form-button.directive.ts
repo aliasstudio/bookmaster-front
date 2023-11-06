@@ -27,6 +27,10 @@ export class SaveFormButtonDirective<
     this.setButtonText();
     this.setDisabledState();
 
+    this.button._elementRef.nativeElement.style.display = this.formRef.readOnly
+      ? 'none'
+      : 'block';
+
     this.formRef.form.valueChanges
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.setDisabledState());
@@ -42,7 +46,7 @@ export class SaveFormButtonDirective<
   }
 
   private setDisabledState(): void {
-    this.button.disabled = !this.formRef.canSave;
+    this.button.disabled = !this.formRef.canSave || this.formRef.readOnly;
   }
 
   private setButtonText(): void {

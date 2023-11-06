@@ -1,5 +1,5 @@
 <ng-template #form>
-  <app-author-form [entity]="selectedItem" (saved)="save($event)"></app-author-form>
+  <app-author-form [entity]="selectedItem" [readOnly]="readOnly"(saved)="save($event)"></app-author-form>
 </ng-template>
 
 <section class="repository full-height">
@@ -7,6 +7,7 @@
 
   <app-mat-datatable-control
     [dataBinding]="dataBinding"
+    [readOnly]="readOnly"
     [formRef]="form"
     formTitle="Автор"
   >

@@ -19,6 +19,18 @@ export class CreateGridRowButtonDirective<
   ) {
     super(button);
   }
+
+  ngOnInit() {
+    super.ngOnInit();
+
+    const readOnly = this.grid.readOnly;
+
+    this.button.disabled = readOnly;
+    this.button._elementRef.nativeElement.style.display = readOnly
+      ? 'none'
+      : 'block';
+  }
+
   @HostListener('click')
   onCreateClick(): void {
     this.grid.open();

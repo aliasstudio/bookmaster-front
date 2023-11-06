@@ -21,6 +21,17 @@ export class ClearFormButtonDirective<
     super(button);
   }
 
+  ngOnInit() {
+    super.ngOnInit();
+
+    const readOnly = this.formRef.readOnly;
+
+    this.button.disabled = readOnly;
+    this.button._elementRef.nativeElement.style.display = readOnly
+      ? 'none'
+      : 'block';
+  }
+
   @HostListener('click')
   onCreateClick(): void {
     this.formRef.clear();

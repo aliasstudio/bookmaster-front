@@ -1,6 +1,6 @@
-import { Identifiable } from "../../core/models/identifable";
+import { Identifiable } from '@app/core/models/identifable';
 
-export interface MenuItem extends Identifiable<string>{
+export interface MenuItem extends Identifiable<string> {
   name: string;
   icon: string;
   link?: string;

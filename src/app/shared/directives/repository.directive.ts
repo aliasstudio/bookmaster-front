@@ -1,12 +1,18 @@
-import { AfterViewInit, Directive, TemplateRef, ViewChild, } from '@angular/core';
 import {
-  MatDatatableControlComponent
-} from '@app/shared/components/mat-datatable-control/mat-datatable-control.component';
+  AfterViewInit,
+  Directive,
+  Input,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
+import { MatDatatableControlComponent } from '@app/shared/components/mat-datatable-control/mat-datatable-control.component';
 import { PlainObject } from '@ngxs/store/internals';
 import { DestroyService } from '@app/core/services/destroy.service';
 import { takeUntil } from 'rxjs';
 import { CustomRequestOptions } from '@app/shared/models/databinding';
 import * as _ from 'lodash';
+import { ActivatedRoute, Data } from '@angular/router';
+import { hasEditPrivilege } from '@app/core/utils/functions';
 
 @Directive()
 export class RepositoryDirective<T extends PlainObject>
@@ -17,12 +23,26 @@ export class RepositoryDirective<T extends PlainObject>
   grid: MatDatatableControlComponent<T>;
 
   selectedItem: T | null;
+  readonly routeData: Data;
+
+  @Input() readOnly: boolean;
 
   get isNew(): boolean {
     return !_.get(this.selectedItem, this.grid.dataBinding?.idField || 'id');
   }
 
-  constructor(protected destroy$: DestroyService) {}
+  constructor(
+    protected destroy$: DestroyService,
+    private route: ActivatedRoute,
+  ) {
+    this.routeData = this.route.snapshot.data;
+
+    const isReadOnly = !hasEditPrivilege(
+      this.routeData.registryKey,
+      this.routeData.registries,
+    );
+    this.readOnly ||= isReadOnly;
+  }
 
   ngAfterViewInit(): void {
     this.grid.selectedItem$

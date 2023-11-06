@@ -1,5 +1,5 @@
 <ng-template #form>
-  <app-customer-form [entity]="selectedItem" (saved)="save($event)"></app-customer-form>
+  <app-customer-form [entity]="selectedItem" [readOnly]="readOnly"(saved)="save($event)"></app-customer-form>
 </ng-template>
 
 <section class="repository full-height">
@@ -7,6 +7,7 @@
 
   <app-mat-datatable-control
     [dataBinding]="dataBinding"
+    [readOnly]="readOnly"
     [formRef]="form"
     formTitle="Клиент"
   >

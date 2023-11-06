@@ -2,6 +2,18 @@ import { FormEditorDirective } from '@app/shared/directives/form-editor.directiv
 import { StaticProvider, Type } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DestroyService } from '@app/core/services/destroy.service';
+import * as _ from 'lodash';
+import { Registry, RegistryPrivilege } from '@app/auth/models/privilege';
+
+export function hasEditPrivilege(
+  registryKey: Registry,
+  registries: Record<Registry, RegistryPrivilege[]>,
+): boolean {
+  return (
+    _.has(registries, Registry.All) ||
+    _.get(registries, registryKey)?.includes(RegistryPrivilege.Edit)
+  );
+}
 
 export function provideFormEditor(
   ref: Type<FormEditorDirective<any>>,

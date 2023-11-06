@@ -1,64 +1,58 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { Registry } from '@app/auth/models/privilege';
+import { RegistriesResolver } from '@app/core/resolvers/registries.resolver';
 
 const routes: Routes = [
   {
     path: '',
-    pathMatch: 'full',
-    redirectTo: 'auth',
-  },
-  {
-    path: 'auth',
-    pathMatch: 'full',
+    resolve: {
+      registries: RegistriesResolver,
+    },
     children: [
       {
         path: '',
+        pathMatch: 'full',
+        redirectTo: 'auth',
+      },
+      {
+        path: 'auth',
         loadChildren: () =>
           import('@app/auth/auth.module').then((m) => m.AuthModule),
       },
-    ],
-  },
-  {
-    path: 'users',
-    pathMatch: 'full',
-    children: [
       {
-        path: '',
+        path: 'users',
+        data: {
+          registryKey: Registry.User,
+        },
         loadChildren: () =>
           import('@app/users/users.module').then((m) => m.UsersModule),
       },
-    ],
-  },
-  {
-    path: 'books',
-    pathMatch: 'full',
-    children: [
       {
-        path: '',
+        path: 'books',
+        data: {
+          registryKey: Registry.Book,
+        },
         loadChildren: () =>
           import('@app/books/books.module').then((m) => m.BooksModule),
       },
-    ],
-  },
-  {
-    path: 'authors',
-    pathMatch: 'full',
-    children: [
       {
-        path: '',
+        path: 'authors',
+        data: {
+          registryKey: Registry.Author,
+        },
         loadChildren: () =>
           import('@app/authors/authors.module').then((m) => m.AuthorsModule),
       },
-    ],
-  },
-  {
-    path: 'customers',
-    pathMatch: 'full',
-    children: [
       {
-        path: '',
+        path: 'customers',
+        data: {
+          registryKey: Registry.Customer,
+        },
         loadChildren: () =>
-            import('@app/customers/customers.module').then((m) => m.CustomersModule),
+          import('@app/customers/customers.module').then(
+            (m) => m.CustomersModule,
+          ),
       },
     ],
   },

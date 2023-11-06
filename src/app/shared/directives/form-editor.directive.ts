@@ -26,6 +26,7 @@ export class FormEditorDirective<T extends PlainObject>
     protected changeDetector: ChangeDetectorRef,
   ) {}
 
+  @Input() readOnly: boolean;
   @Input({ required: true }) entity: T | null;
   @Output() saved = new EventEmitter();
   @Output() entityChanges = new EventEmitter();
@@ -53,6 +54,7 @@ export class FormEditorDirective<T extends PlainObject>
   ngOnInit(): void {
     this.form = this.initForm();
     this.form.reset(this.entity);
+    this.readOnly && this.form.disable();
 
     this.form.valueChanges
       .pipe(takeUntil(this.destroy$))

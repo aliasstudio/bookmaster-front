@@ -1,5 +1,17 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import {
+  AfterContentInit,
+  Component,
+  ContentChildren,
+  Input,
+  OnInit,
+  QueryList,
+  ViewChild,
+} from '@angular/core';
+import {
+  MatColumnDef,
+  MatTable,
+  MatTableDataSource,
+} from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { PlainObject } from '@ngxs/store/internals';
 import * as _ from 'lodash';
@@ -23,7 +35,12 @@ import { MatSort } from '@angular/material/sort';
   styleUrls: ['./mat-datatable.component.scss'],
   providers: [DestroyService],
 })
-export class MatDatatableComponent<T extends PlainObject> implements OnInit {
+export class MatDatatableComponent<T extends PlainObject>
+  implements OnInit, AfterContentInit
+{
+  @ContentChildren(MatColumnDef) columnDefs: QueryList<MatColumnDef>;
+
+  @ViewChild(MatTable, { static: true }) table: MatTable<T>;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @Input({ required: true }) dataBinding: DataBinding<T>;
@@ -31,6 +48,7 @@ export class MatDatatableComponent<T extends PlainObject> implements OnInit {
   dataSource = new MatTableDataSource<T>();
 
   protected columns: Column<T>[];
+  protected columnsBind: Column<T>[];
   protected columnKeys: string[];
 
   constructor(
@@ -43,7 +61,14 @@ export class MatDatatableComponent<T extends PlainObject> implements OnInit {
     const dataBinding = this.dataBinding;
 
     this.columns = dataBinding.columns;
+    this.columnsBind = dataBinding.columns.filter(
+      (col) => !col?.customTemplate,
+    );
     this.bindData();
+  }
+
+  ngAfterContentInit() {
+    this.columnDefs.forEach((columnDef) => this.table.addColumnDef(columnDef));
   }
 
   bindData(): void {
@@ -84,7 +109,7 @@ export class MatDatatableComponent<T extends PlainObject> implements OnInit {
     }));
 
     this.columns ||= columns;
-    this.columnKeys = (this.columns || columns).map((col) => col.key);
+    this.columnKeys = [...this.columns].map((col) => col.key);
 
     dataSource.paginator = this.paginator;
     dataSource.sort = this.sort;

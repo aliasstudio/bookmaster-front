@@ -10,6 +10,7 @@ import {
   EMPTY,
   first,
   Observable,
+  switchMap,
   tap,
   throwError,
 } from 'rxjs';
@@ -17,6 +18,8 @@ import { ToastrService } from 'ngx-toastr';
 import { UserProtected } from '@app/auth/models/user-proteted';
 import { Router } from '@angular/router';
 import { parseJSON } from 'date-fns';
+import { User } from '@app/auth/models/user';
+import { RegistriesResolver } from '@app/core/resolvers/registries.resolver';
 
 interface Token {
   token: string;
@@ -35,6 +38,7 @@ export class AuthService {
     private router: Router,
     private http: HttpClient,
     private toastr: ToastrService,
+    private registriesResolver: RegistriesResolver,
   ) {}
 
   getTokenDate(): Date | undefined {
@@ -47,6 +51,14 @@ export class AuthService {
     const tokenRef = JSON.parse(localStorage.getItem('auth-token')) as Token;
 
     return tokenRef?.token;
+  }
+
+  currentUser(): Observable<User | undefined> {
+    const isAuthorized = this.isAuthorized$.getValue();
+
+    return isAuthorized
+      ? this.http.get<User>('user/currentUser').pipe(first())
+      : EMPTY;
   }
 
   login(login: string, password: string): Observable<unknown> {
@@ -79,6 +91,7 @@ export class AuthService {
           this.isAuthorized$.next(!!this.getToken());
           this.toastr.success('Вы успешно авторизованы!');
         }),
+        switchMap(() => this.registriesResolver.resolve()),
       );
   }
 
@@ -100,7 +113,7 @@ export class AuthService {
     );
   }
 
-  logout(message = 'Вы успешно вышли из системы!'): Observable<unknown> {
+  logout(message?: string): Observable<unknown> {
     return this.http
       .get('logout', { params: { userCode: this.getToken() } })
       .pipe(
@@ -109,7 +122,9 @@ export class AuthService {
           localStorage.removeItem('auth-token');
           this.isAuthorized$.next(!!this.getToken());
           this.router.navigate(['/auth']);
-          this.toastr.success(message);
+          message
+            ? this.toastr.warning(message)
+            : this.toastr.success('Вы успешно вышли из системы!');
         }),
       );
   }

@@ -54,8 +54,7 @@ export class MatDatatableControlComponent<
   protected onBindingComplete() {
     super.onBindingComplete();
 
-    // Добавляем колонку для редактирования, если не readOnly
-    !this.readOnly && this.columnKeys.push('control');
+    this.columnKeys.push('control');
   }
 
   private hasEntityRoot(): boolean {
@@ -79,7 +78,7 @@ export class MatDatatableControlComponent<
 
   openDeleteDialog(item: T, customOptions?: CustomRequestOptions): void {
     const dialogRef = this.dialog.open(MatDeleteDialogComponent);
-    const subscription = dialogRef.afterClosed().subscribe(doAction => {
+    const subscription = dialogRef.afterClosed().subscribe((doAction) => {
       if (doAction) {
         this.delete(item, customOptions);
       }

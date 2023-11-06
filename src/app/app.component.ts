@@ -14,9 +14,10 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     const tokenDate = this.authService.getTokenDate();
+    const logoutMessage = 'Сессия авторизации истекла';
 
     if (tokenDate && differenceInMinutes(new Date(), tokenDate) >= 30) {
-      this.authService.logout('Сессия авторизации истекла').subscribe();
+      this.authService.logout(logoutMessage).subscribe();
     }
   }
 }
