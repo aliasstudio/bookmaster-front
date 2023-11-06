@@ -50,7 +50,7 @@ $menu-accent-color: #757575;
 
     .menu-title {
       opacity: 0;
-      margin-left: $menu-item-padding * 2;
+      margin-left: 8px;
       font-weight: 500;
       line-height: calc(100% + $menu-title-offset-y);
       transition: all .3s ease-in-out;

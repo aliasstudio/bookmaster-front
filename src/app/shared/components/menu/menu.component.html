@@ -5,7 +5,7 @@
 >
   <ng-container *ngIf="authService.isAuthorized">
     <ng-container *ngFor="let item of items">
-      <li>
+      <li [routerLink]="item.link">
         <span [class]="item.icon"></span>
         <span class="menu-title">{{ item.name }}</span>
       </li>
