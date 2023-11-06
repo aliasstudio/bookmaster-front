@@ -1,10 +1,7 @@
+import { AfterViewInit, Directive, TemplateRef, ViewChild, } from '@angular/core';
 import {
-  AfterViewInit,
-  Directive,
-  TemplateRef,
-  ViewChild,
-} from '@angular/core';
-import { MatDatatableControlComponent } from '@app/shared/components/mat-datatable-control/mat-datatable-control.component';
+  MatDatatableControlComponent
+} from '@app/shared/components/mat-datatable-control/mat-datatable-control.component';
 import { PlainObject } from '@ngxs/store/internals';
 import { DestroyService } from '@app/core/services/destroy.service';
 import { takeUntil } from 'rxjs';

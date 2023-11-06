@@ -1,30 +1,11 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  TemplateRef,
-  ViewChild,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild, } from '@angular/core';
 import { MatDatatableComponent } from '@app/shared/components/mat-datatable/mat-datatable.component';
 import { PlainObject } from '@ngxs/store/internals';
 import { DestroyService } from '@app/core/services/destroy.service';
 import { MatDrawer } from '@angular/material/sidenav';
-import {
-  BehaviorSubject,
-  catchError,
-  first,
-  map,
-  of,
-  takeUntil,
-  tap,
-  throwError,
-} from 'rxjs';
+import { BehaviorSubject, catchError, first, map, of, takeUntil, tap, throwError, } from 'rxjs';
 import * as _ from 'lodash';
-import {
-  CustomRequestOptions,
-  EntityRemoteDataBinding,
-} from '@app/shared/models/databinding';
+import { CustomRequestOptions, EntityRemoteDataBinding, } from '@app/shared/models/databinding';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -91,7 +72,7 @@ export class MatDatatableControlComponent<
   }
 
   create(item: T, customOptions?: CustomRequestOptions): void {
-    const { req$, url, withoutNotification } = customOptions;
+    const { req$, url, withoutNotification } = customOptions || {};
 
     // TODO: Если с бэка будет прилетать модель, как результат - обновлять моделью с сервера
     if (_.has(this.dataBinding, 'urlRoot') || req$ || url) {
