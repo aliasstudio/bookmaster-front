@@ -30,6 +30,17 @@ const routes: Routes = [
     ],
   },
   {
+    path: 'books',
+    pathMatch: 'full',
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('@app/books/books.module').then((m) => m.BooksModule),
+      },
+    ],
+  },
+  {
     path: 'authors',
     pathMatch: 'full',
     children: [
