@@ -1,0 +1,39 @@
+<form [formGroup]="form">
+  <div class="form-field">
+    <mat-label>Название</mat-label>
+    <mat-form-field>
+      <input matInput formControlName="title" placeholder="Введите название">
+    </mat-form-field>
+  </div>
+
+  <div class="form-field">
+    <mat-label>Подзаголовок</mat-label>
+    <mat-form-field>
+      <input matInput formControlName="subTitle" placeholder="Введите подзаголовок">
+    </mat-form-field>
+  </div>
+
+  <div class="form-field">
+    <mat-label>Первая дата публикации</mat-label>
+    <mat-form-field>
+      <input matInput formControlName="firstPublishDate" placeholder="Введите первую дату публикации">
+    </mat-form-field>
+  </div>
+
+  <div class="form-field">
+    <mat-label>Описание</mat-label>
+    <mat-form-field>
+      <input matInput formControlName="description" placeholder="Введите описание">
+    </mat-form-field>
+  </div>
+
+  <div class="form-field" *ngIf="authors$ | async as authors" >
+    <mat-label>Авторы</mat-label>
+    <app-mat-select-search [control]="authorsFormControl" [items]="authors" placeholder="Авторы"></app-mat-select-search>
+  </div>
+</form>
+
+<mat-toolbar>
+  <button mat-flat-button appButton text="Очистить" iconClass="icon-close" [altColor]="true" (click)="clear()"></button>
+  <button mat-flat-button appButton [text]="isNew ? 'Создать' : 'Сохранить'" class="ms-auto" [disabled]="!canSave" (click)="save()"></button>
+</mat-toolbar>
