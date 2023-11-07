@@ -30,6 +30,7 @@ import { ReloadGridButtonDirective } from '@app/shared/directives/buttons/reload
 import { SearchGridButtonDirective } from '@app/shared/directives/buttons/search-button.directive';
 import { MatDatatableSearchComponent } from '@app/shared/components/mat-datatable-search/mat-datatable-search.component';
 import { MatSelectSearchComponent } from '@app/shared/components/mat-select-search/mat-select-search.component';
+import { MatPaginatorCustomizeDirective } from '@app/shared/directives/mat-paginator-customize.directive';
 
 const imports = [
   CommonModule,
@@ -68,6 +69,7 @@ const exports = [
   CreateGridRowButtonDirective,
   ReloadGridButtonDirective,
   SearchGridButtonDirective,
+  MatPaginatorCustomizeDirective,
 ];
 
 @NgModule({
