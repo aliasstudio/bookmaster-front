@@ -27,9 +27,14 @@
     </mat-form-field>
   </div>
 
-  <div class="form-field" *ngIf="authors$ | async as authors" >
+  <div class="form-field">
     <mat-label>Авторы</mat-label>
-    <app-mat-select-search [control]="authorsFormControl" [items]="authors" placeholder="Авторы"></app-mat-select-search>
+    <app-mat-select-search
+      formControlName="authors"
+      placeholder="Выберите авторов"
+      [binding]="authors$"
+    >
+    </app-mat-select-search>
   </div>
 </form>
 

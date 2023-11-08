@@ -1,11 +1,11 @@
-import { AfterViewInit, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormEditorDirective } from '@app/shared/directives/form-editor.directive';
 import { Book } from '@app/shared/models/book';
 import { FormControl, Validators } from '@angular/forms';
 import { FormControlMap } from '@app/core/models/interfaces';
+import { Author } from '@app/shared/models/author';
 import { map, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { Author } from '@app/shared/models/author';
 import { Page } from '@app/shared/models/page';
 
 @Component({
@@ -13,19 +13,14 @@ import { Page } from '@app/shared/models/page';
   templateUrl: './book-form.component.html',
   styleUrls: ['./book-form.component.scss'],
 })
-export class BookFormComponent
-  extends FormEditorDirective<Book>
-  implements AfterViewInit
-{
-  http = inject(HttpClient);
-
+export class BookFormComponent extends FormEditorDirective<Book> {
   authors$: Observable<Author[]>;
 
-  get authorsFormControl(): FormControl<Author> {
-    return this.formControls.authors as FormControl<Author>;
-  }
+  private http = inject(HttpClient);
 
-  ngAfterViewInit() {
+  ngOnInit(): void {
+    super.ngOnInit();
+
     this.authors$ = this.http
       .get('author')
       .pipe(map(({ content: authors }: Page<Author>) => authors));

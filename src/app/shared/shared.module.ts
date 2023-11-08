@@ -31,6 +31,7 @@ import { SearchGridButtonDirective } from '@app/shared/directives/buttons/search
 import { MatDatatableSearchComponent } from '@app/shared/components/mat-datatable-search/mat-datatable-search.component';
 import { MatSelectSearchComponent } from '@app/shared/components/mat-select-search/mat-select-search.component';
 import { MatPaginatorCustomizeDirective } from '@app/shared/directives/mat-paginator-customize.directive';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 const imports = [
   CommonModule,
@@ -57,6 +58,7 @@ const imports = [
   MatMenuModule,
   MatToolbarModule,
   MatDatepickerModule,
+  NgxMatSelectSearchModule,
 ];
 
 const exports = [
