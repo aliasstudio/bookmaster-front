@@ -42,7 +42,7 @@ export class BaseInterceptor implements HttpInterceptor {
               break;
             }
             case HttpStatusCode.InternalServerError: {
-              const errorMessage = JSON.parse(error.error) as HttpErrorResponse;
+              const errorMessage = error.error as HttpErrorResponse;
               message = `<strong>${requestUrl.replace(
                 /\/\d+/g,
                 '/{ID}',

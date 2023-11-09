@@ -53,8 +53,21 @@ export class MatDatatableControlComponent<
     !this.readOnly && this.columnKeys.push('control');
   }
 
+  private hasEntityRoot(): boolean {
+    return _.has(this.dataBinding, 'urlRoot');
+  }
+
   open(item?: T): void {
-    of(item)
+    const binding = this.dataBinding as EntityRemoteDataBinding<T>;
+    const idField = binding?.idField || 'id';
+    const isNew = !_.get(item, idField);
+
+    const getReq$ =
+      !isNew && this.hasEntityRoot()
+        ? this.http.get(`${binding.urlRoot}/${item[idField]}`)
+        : of(item);
+
+    getReq$
       .pipe(map((entity: T) => this.selectedItem$.next(entity)))
       .subscribe(() => this.drawer.open());
   }
@@ -66,7 +79,7 @@ export class MatDatatableControlComponent<
     };
 
     // Если не передан запрос, сразу обновляем данные в гриде, иначе обновляем только после запроса
-    if (_.has(this.dataBinding, 'urlRoot') || req$ || url) {
+    if (this.hasEntityRoot() || req$ || url) {
       const binding = this.dataBinding as EntityRemoteDataBinding<T>;
       const reqUrl = url || `${binding.urlRoot}/${item[idField]}`;
       const deleteReq$ = req$ ?? this.http.delete(reqUrl);
@@ -93,7 +106,7 @@ export class MatDatatableControlComponent<
   create(item: T, customOptions?: CustomRequestOptions): void {
     const { req$, url, withoutNotification } = customOptions || {};
 
-    if (_.has(this.dataBinding, 'urlRoot') || req$ || url) {
+    if (this.hasEntityRoot() || req$ || url) {
       const binding = this.dataBinding as EntityRemoteDataBinding<T>;
       const reqUrl = url || binding.urlRoot;
       const postReq$ = req$ ?? this.http.post(reqUrl, item);
@@ -126,10 +139,11 @@ export class MatDatatableControlComponent<
       ...customOptions,
       idField: customOptions?.idField || this.dataBinding?.idField || 'id',
     };
+    const entity = this.selectedItem$.getValue();
 
-    if (_.has(this.dataBinding, 'urlRoot') || req$ || url) {
+    if (this.hasEntityRoot() || req$ || url) {
       const binding = this.dataBinding as EntityRemoteDataBinding<T>;
-      const reqUrl = url || `${binding.urlRoot}/${item[idField]}`;
+      const reqUrl = url || `${binding.urlRoot}/${entity[idField]}`;
       const putReq$ = req$ ?? this.http.put(reqUrl, item);
 
       putReq$

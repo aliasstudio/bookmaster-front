@@ -32,7 +32,7 @@ export class UserPageComponent extends RepositoryDirective<UserProtected> {
     const isNew = this.isNew;
     const req$ = isNew
       ? this.authService.register(item)
-      : this.http.put(`user/${item.login}`, item).pipe(
+      : this.http.put(`user/${this.selectedItem.login}`, item).pipe(
           switchMap(() => {
             return item?.password
               ? this.http.patch(`user/change_password_admin`, {
