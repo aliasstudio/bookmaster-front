@@ -121,7 +121,7 @@ export class MatDatatableControlComponent<
             return throwError(() => error);
           }),
           tap((model: T) => {
-            const entity = model || item;
+            const entity = _.isObject(model) ? model : item;
 
             this.add(entity, withoutNotification);
             this.selectedItem$.next(entity);
@@ -156,7 +156,7 @@ export class MatDatatableControlComponent<
             return throwError(() => error);
           }),
           tap((model: T) => {
-            const entity = model || item;
+            const entity = _.isObject(model) ? model : item;
 
             this.edit(entity, idField, withoutNotification);
             this.selectedItem$.next(entity);

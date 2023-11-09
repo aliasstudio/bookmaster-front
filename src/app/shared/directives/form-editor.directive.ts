@@ -28,6 +28,7 @@ export class FormEditorDirective<T extends PlainObject>
 
   @Input({ required: true }) entity: T | null;
   @Output() saved = new EventEmitter();
+  @Output() entityChanges = new EventEmitter();
 
   get isNew(): boolean {
     return !this.entity?.id;
@@ -68,15 +69,18 @@ export class FormEditorDirective<T extends PlainObject>
 
   ngOnChanges(changes: SimpleChanges) {
     if ('entity' in changes && !changes.entity.firstChange) {
-      this.form.reset(changes.entity.currentValue);
+      const entity = changes.entity.currentValue;
+
+      this.form.reset(entity);
+      this.entityChanges.emit(entity);
     }
   }
 
-  protected clear(): void {
+  clear(): void {
     this.form.reset();
   }
 
-  protected save(): void {
+  save(): void {
     this.saved.emit(this.form.value);
   }
 }

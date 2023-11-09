@@ -39,6 +39,6 @@
 </form>
 
 <mat-toolbar>
-  <button mat-flat-button appButton text="Очистить" iconClass="icon-close" [altColor]="true" (click)="clear()"></button>
-  <button mat-flat-button appButton [text]="isNew ? 'Создать' : 'Сохранить'" class="ms-auto" [disabled]="!canSave" (click)="save()"></button>
+  <button mat-flat-button appClearFormButton></button>
+  <button mat-flat-button appSaveFormButton></button>
 </mat-toolbar>

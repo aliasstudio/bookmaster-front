@@ -32,6 +32,8 @@ import { MatDatatableSearchComponent } from '@app/shared/components/mat-datatabl
 import { MatSelectSearchComponent } from '@app/shared/components/mat-select-search/mat-select-search.component';
 import { MatPaginatorCustomizeDirective } from '@app/shared/directives/mat-paginator-customize.directive';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { ClearFormButtonDirective } from '@app/shared/directives/buttons/clear-form-button.directive';
+import { SaveFormButtonDirective } from '@app/shared/directives/buttons/save-form-button.directive';
 
 const imports = [
   CommonModule,
@@ -72,6 +74,8 @@ const exports = [
   ReloadGridButtonDirective,
   SearchGridButtonDirective,
   MatPaginatorCustomizeDirective,
+  ClearFormButtonDirective,
+  SaveFormButtonDirective,
 ];
 
 @NgModule({

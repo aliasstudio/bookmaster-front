@@ -7,11 +7,13 @@ import { Author } from '@app/shared/models/author';
 import { map, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Page } from '@app/shared/models/page';
+import { provideFormEditor } from '@app/core/utils/functions';
 
 @Component({
   selector: 'app-book-form',
   templateUrl: './book-form.component.html',
   styleUrls: ['./book-form.component.scss'],
+  providers: [provideFormEditor(BookFormComponent)],
 })
 export class BookFormComponent extends FormEditorDirective<Book> {
   authors$: Observable<Author[]>;

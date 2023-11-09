@@ -12,26 +12,19 @@ import {
   AbstractControl,
   ControlValueAccessor,
   FormControl,
-  NG_VALUE_ACCESSOR,
   ValidationErrors,
   Validator,
 } from '@angular/forms';
 import { DestroyService } from '@app/core/services/destroy.service';
 import * as _ from 'lodash';
 import { MatSelect } from '@angular/material/select';
+import { provideValueAccessor } from '@app/core/utils/functions';
 
 @Component({
   selector: 'app-mat-select-search',
   templateUrl: './mat-select-search.component.html',
   styleUrls: ['./mat-select-search.component.scss'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: MatSelectSearchComponent,
-      multi: true,
-    },
-    DestroyService,
-  ],
+  providers: [provideValueAccessor(MatSelectSearchComponent), DestroyService],
 })
 export class MatSelectSearchComponent<T extends Dictionary<string | number>>
   implements ControlValueAccessor, Validator, OnInit, AfterViewInit
