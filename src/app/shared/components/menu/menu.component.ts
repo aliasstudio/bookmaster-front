@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, ViewChild, } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { MenuItem } from '@app/shared/models/menu-item';
 import { AuthService } from '@app/auth/services/auth.service';
 import { Router } from '@angular/router';
@@ -15,8 +15,9 @@ export class MenuComponent implements AfterViewInit {
   menuRef!: ElementRef;
   // TODO: временное решение, пока не все ясно с отображаемыми пунктами
   protected items = this.getMenuItems();
-
-  private hoverWidth = 160;
+  // FIXME: если не будет лень, придумать как отловить момент после рендера меню при смене состава пунктов
+  //  и вынести расчет ширины в отдельную функцию, после рендера - вызывать
+  private hoverWidth = 180;
   private initialWidth = 60;
 
   constructor(
@@ -35,9 +36,9 @@ export class MenuComponent implements AfterViewInit {
 
     this.hoverWidth = padding * 2 + maxButtonWidth;
 
-    this.authService.isAuthorized$.subscribe(isAuthorized => {
+    this.authService.isAuthorized$.subscribe((isAuthorized) => {
       this.items = isAuthorized ? this.getMenuItems() : [];
-    })
+    });
   }
 
   protected onMouseEnter() {
@@ -83,6 +84,6 @@ export class MenuComponent implements AfterViewInit {
         icon: 'icon-customer',
         link: 'customers',
       },
-    ]
+    ];
   }
 }
