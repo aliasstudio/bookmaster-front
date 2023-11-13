@@ -15,13 +15,13 @@ export class CustomerFormComponent extends FormEditorDirective<Customer> {
 
   resolveForm(): FormControlMap<Customer> {
     return {
-      id: new FormControl(this.entity?.id),
-      name: new FormControl(this.entity?.name, Validators.required),
-      phone: new FormControl(this.entity?.phone, Validators.pattern('(\\+7|8)[0-9]{10}')),
-      address: new FormControl(this.entity?.address, Validators.required),
-      city: new FormControl(this.entity?.city, Validators.required),
-      zip: new FormControl(this.entity?.zip, Validators.pattern('[0-9]{6}')),
-      email: new FormControl(this.entity?.email, Validators.email)
+      id: new FormControl(null),
+      name: new FormControl(null, Validators.required),
+      phone: new FormControl(null, Validators.pattern('(\\+7|8)[0-9]{10}')),
+      address: new FormControl(null, Validators.required),
+      city: new FormControl(null, Validators.required),
+      zip: new FormControl(null, Validators.pattern('[0-9]{6}')),
+      email: new FormControl(null, Validators.email)
     };
   }
 }
