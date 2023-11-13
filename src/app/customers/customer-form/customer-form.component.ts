@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { FormEditorDirective } from '@app/shared/directives/form-editor.directive';
-import { FormControlMap } from '@app/core/models/form-control-map';
 import { Customer } from "@app/customers/models/customer";
+import { FormControlMap } from "@app/core/models/interfaces";
 
 @Component({
   selector: 'app-customer-form',

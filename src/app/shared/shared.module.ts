@@ -34,6 +34,8 @@ import { MatPaginatorCustomizeDirective } from '@app/shared/directives/mat-pagin
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { ClearFormButtonDirective } from '@app/shared/directives/buttons/clear-form-button.directive';
 import { SaveFormButtonDirective } from '@app/shared/directives/buttons/save-form-button.directive';
+import { MatDeleteDialogComponent } from "@app/shared/components/mat-delete-dialog/mat-delete-dialog.component";
+import { MatDialogModule } from "@angular/material/dialog";
 
 const imports = [
   CommonModule,
@@ -61,6 +63,7 @@ const imports = [
   MatToolbarModule,
   MatDatepickerModule,
   NgxMatSelectSearchModule,
+  MatDialogModule
 ];
 
 const exports = [
@@ -76,6 +79,7 @@ const exports = [
   MatPaginatorCustomizeDirective,
   ClearFormButtonDirective,
   SaveFormButtonDirective,
+  MatDeleteDialogComponent
 ];
 
 @NgModule({
