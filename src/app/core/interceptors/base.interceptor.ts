@@ -21,7 +21,7 @@ export class BaseInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler,
   ): Observable<HttpEvent<any>> {
-    const requestUrl = 'http://localhost:777/pi-api/' + request.url;
+    const requestUrl = 'https://demo.technocom.tech/pi-api/' + request.url;
 
     return next
       .handle(this.addAuthToken(request.clone({ url: requestUrl })))
@@ -42,7 +42,7 @@ export class BaseInterceptor implements HttpInterceptor {
               break;
             }
             case HttpStatusCode.InternalServerError: {
-              const errorMessage = JSON.parse(error.error) as HttpErrorResponse;
+              const errorMessage = error.error as HttpErrorResponse;
               message = `<strong>${requestUrl.replace(
                 /\/\d+/g,
                 '/{ID}',

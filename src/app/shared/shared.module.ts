@@ -20,7 +20,6 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { MatPaginatorCustomizeDirective } from '@app/shared/directives/mat-paginator-customize.directive';
 import { MatDatatableComponent } from '@app/shared/components/mat-datatable/mat-datatable.component';
 import { MatDatatableControlComponent } from '@app/shared/components/mat-datatable-control/mat-datatable-control.component';
 import { MatMenuModule } from '@angular/material/menu';
@@ -30,10 +29,13 @@ import { CreateGridRowButtonDirective } from '@app/shared/directives/buttons/cre
 import { ReloadGridButtonDirective } from '@app/shared/directives/buttons/reload-grid-button.directive';
 import { SearchGridButtonDirective } from '@app/shared/directives/buttons/search-button.directive';
 import { MatDatatableSearchComponent } from '@app/shared/components/mat-datatable-search/mat-datatable-search.component';
-import {MatDeleteDialogComponent} from "@app/shared/components/mat-delete-dialog/mat-delete-dialog.component";
-import {MatDialogModule} from "@angular/material/dialog";
+import { MatSelectSearchComponent } from '@app/shared/components/mat-select-search/mat-select-search.component';
+import { MatPaginatorCustomizeDirective } from '@app/shared/directives/mat-paginator-customize.directive';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { ClearFormButtonDirective } from '@app/shared/directives/buttons/clear-form-button.directive';
+import { SaveFormButtonDirective } from '@app/shared/directives/buttons/save-form-button.directive';
 
-const modules = [
+const imports = [
   CommonModule,
   RouterModule,
   FormsModule,
@@ -57,34 +59,28 @@ const modules = [
   MatAutocompleteModule,
   MatMenuModule,
   MatToolbarModule,
-  MatDialogModule
+  MatDatepickerModule,
+  NgxMatSelectSearchModule,
+];
+
+const exports = [
+  MenuComponent,
+  MatDatatableComponent,
+  MatDatatableControlComponent,
+  MatDatatableSearchComponent,
+  MatSelectSearchComponent,
+  BaseButtonDirective,
+  CreateGridRowButtonDirective,
+  ReloadGridButtonDirective,
+  SearchGridButtonDirective,
+  MatPaginatorCustomizeDirective,
+  ClearFormButtonDirective,
+  SaveFormButtonDirective,
 ];
 
 @NgModule({
-  declarations: [
-    MenuComponent,
-    MatPaginatorCustomizeDirective,
-    MatDatatableComponent,
-    MatDatatableControlComponent,
-    MatDatatableSearchComponent,
-    BaseButtonDirective,
-    CreateGridRowButtonDirective,
-    ReloadGridButtonDirective,
-    SearchGridButtonDirective,
-    MatDeleteDialogComponent
-  ],
-  imports: modules,
-  exports: [
-    ...modules,
-    MenuComponent,
-    MatDatatableComponent,
-    MatDatatableControlComponent,
-    MatDatatableSearchComponent,
-    BaseButtonDirective,
-    CreateGridRowButtonDirective,
-    ReloadGridButtonDirective,
-    SearchGridButtonDirective,
-    MatDeleteDialogComponent,
-  ],
+  declarations: exports,
+  imports: imports,
+  exports: [...imports, ...exports],
 })
 export class SharedModule {}

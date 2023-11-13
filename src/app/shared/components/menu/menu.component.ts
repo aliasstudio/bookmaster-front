@@ -9,6 +9,7 @@ import { MenuItem } from '@app/shared/models/menu-item';
 import { AuthService } from '@app/auth/services/auth.service';
 import { Router } from '@angular/router';
 import { of, tap } from 'rxjs';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-menu',
@@ -21,19 +22,28 @@ export class MenuComponent implements AfterViewInit {
   // TODO: временное решение, пока не все ясно с отображаемыми пунктами
   @Input() items: MenuItem[] = [
     {
+      id: 'users',
+      name: 'Пользователи',
+      icon: 'icon-user',
+      link: 'users',
+    },
+    {
       id: 'books',
       name: 'Книги',
       icon: 'icon-book',
+      link: 'books',
     },
     {
-      id: 'create',
-      name: 'Добавить',
-      icon: 'icon-add',
+      id: 'authors',
+      name: 'Авторы',
+      icon: 'icon-author',
+      link: 'authors',
     },
     {
-      id: 'reports',
-      name: 'Отчеты',
-      icon: 'icon-chart',
+      id: 'customers',
+      name: 'Клиенты',
+      icon: 'icon-customer',
+      link: 'customers',
     },
   ];
 
@@ -46,21 +56,15 @@ export class MenuComponent implements AfterViewInit {
   ) {}
 
   ngAfterViewInit() {
-    const maxLengthItem =
-      [...this.items].sort((a, b) => b.name.length - a.name.length).pop()?.name
-        .length || 'Войти'.length;
-    const menuPadding = 10;
-    const menuItemPadding = 6;
-    const iconSize = 24;
-    const iconMargin = 12;
-    const fontSize = 16;
+    const maxButtonWidth = _.max(
+      _.map(
+        document.querySelectorAll('.wrapper__menu ul.menu > li'),
+        (el) => el.scrollWidth,
+      ),
+    );
+    const padding = 16;
 
-    this.hoverWidth =
-      menuPadding * 2 +
-      menuItemPadding * 2 +
-      iconSize +
-      iconMargin +
-      maxLengthItem * fontSize;
+    this.hoverWidth = padding * 2 + maxButtonWidth;
   }
 
   protected onMouseEnter() {

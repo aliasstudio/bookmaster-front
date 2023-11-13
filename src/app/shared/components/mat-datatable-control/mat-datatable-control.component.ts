@@ -60,8 +60,21 @@ export class MatDatatableControlComponent<
     !this.readOnly && this.columnKeys.push('control');
   }
 
+  private hasEntityRoot(): boolean {
+    return _.has(this.dataBinding, 'urlRoot');
+  }
+
   open(item?: T): void {
-    of(item)
+    const binding = this.dataBinding as EntityRemoteDataBinding<T>;
+    const idField = binding?.idField || 'id';
+    const isNew = !_.get(item, idField);
+
+    const getReq$ =
+      !isNew && this.hasEntityRoot()
+        ? this.http.get(`${binding.urlRoot}/${item[idField]}`)
+        : of(item);
+
+    getReq$
       .pipe(map((entity: T) => this.selectedItem$.next(entity)))
       .subscribe(() => this.drawer.open());
   }
@@ -83,7 +96,7 @@ export class MatDatatableControlComponent<
     };
 
     // Если не передан запрос, сразу обновляем данные в гриде, иначе обновляем только после запроса
-    if (_.has(this.dataBinding, 'urlRoot') || req$ || url) {
+    if (this.hasEntityRoot() || req$ || url) {
       const binding = this.dataBinding as EntityRemoteDataBinding<T>;
       const reqUrl = url || `${binding.urlRoot}/${item[idField]}`;
       const deleteReq$ = req$ ?? this.http.delete(reqUrl);
@@ -108,10 +121,9 @@ export class MatDatatableControlComponent<
   }
 
   create(item: T, customOptions?: CustomRequestOptions): void {
-    const { req$, url, withoutNotification } = customOptions;
+    const { req$, url, withoutNotification } = customOptions || {};
 
-    // TODO: Если с бэка будет прилетать модель, как результат - обновлять моделью с сервера
-    if (_.has(this.dataBinding, 'urlRoot') || req$ || url) {
+    if (this.hasEntityRoot() || req$ || url) {
       const binding = this.dataBinding as EntityRemoteDataBinding<T>;
       const reqUrl = url || binding.urlRoot;
       const postReq$ = req$ ?? this.http.post(reqUrl, item);
@@ -125,9 +137,11 @@ export class MatDatatableControlComponent<
               this.toastr.error('Ошибка добавления записи!');
             return throwError(() => error);
           }),
-          tap(() => {
-            this.add(item, withoutNotification);
-            this.selectedItem$.next(item);
+          tap((model: T) => {
+            const entity = _.isObject(model) ? model : item;
+
+            this.add(entity, withoutNotification);
+            this.selectedItem$.next(entity);
           }),
           takeUntil(this.destroy$),
         )
@@ -142,11 +156,11 @@ export class MatDatatableControlComponent<
       ...customOptions,
       idField: customOptions?.idField || this.dataBinding?.idField || 'id',
     };
+    const entity = this.selectedItem$.getValue();
 
-    // TODO: Если с бэка будет прилетать модель, как результат - обновлять моделью с сервера
-    if (_.has(this.dataBinding, 'urlRoot') || req$ || url) {
+    if (this.hasEntityRoot() || req$ || url) {
       const binding = this.dataBinding as EntityRemoteDataBinding<T>;
-      const reqUrl = url || `${binding.urlRoot}/${item[idField]}`;
+      const reqUrl = url || `${binding.urlRoot}/${entity[idField]}`;
       const putReq$ = req$ ?? this.http.put(reqUrl, item);
 
       putReq$
@@ -158,9 +172,11 @@ export class MatDatatableControlComponent<
               this.toastr.error('Ошибка сохранения записи!');
             return throwError(() => error);
           }),
-          tap(() => {
-            this.edit(item, idField, withoutNotification);
-            this.selectedItem$.next(item);
+          tap((model: T) => {
+            const entity = _.isObject(model) ? model : item;
+
+            this.edit(entity, idField, withoutNotification);
+            this.selectedItem$.next(entity);
           }),
           takeUntil(this.destroy$),
         )

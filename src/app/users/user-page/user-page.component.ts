@@ -4,6 +4,8 @@ import { EntityRemoteDataBinding } from '@app/shared/models/databinding';
 import { RepositoryDirective } from '@app/shared/directives/repository.directive';
 import { DestroyService } from '@app/core/services/destroy.service';
 import { AuthService } from '@app/auth/services/auth.service';
+import { HttpClient } from '@angular/common/http';
+import { of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-user-page',
@@ -13,6 +15,7 @@ import { AuthService } from '@app/auth/services/auth.service';
 })
 export class UserPageComponent extends RepositoryDirective<UserProtected> {
   private authService = inject(AuthService);
+  private http = inject(HttpClient);
 
   dataBinding: EntityRemoteDataBinding<UserProtected> = {
     idField: 'login',
@@ -27,9 +30,21 @@ export class UserPageComponent extends RepositoryDirective<UserProtected> {
 
   save(item: UserProtected): void {
     const isNew = this.isNew;
+    const req$ = isNew
+      ? this.authService.register(item)
+      : this.http.put(`user/${this.selectedItem.login}`, item).pipe(
+        switchMap(() => {
+          return item?.password
+            ? this.http.patch(`user/change_password_admin`, {
+              login: item.login,
+              newPassword: item.password,
+            })
+            : of(item);
+        }),
+      );
 
     this.grid.save(item, {
-      req$: isNew ? this.authService.register(item) : null,
+      req$,
       withoutNotification: isNew,
     });
   }

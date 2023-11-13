@@ -1,0 +1,15 @@
+<mat-form-field>
+  <mat-select [formControl]="control" [placeholder]="placeholder" [multiple]="true" #multiSelect>
+    <mat-option>
+      <ngx-mat-select-search
+        [formControl]="searchControl"
+        placeholderLabel="Поиск..."
+        noEntriesFoundLabel="Список пуст"
+      >
+      </ngx-mat-select-search>
+    </mat-option>
+    <mat-option *ngFor="let item of filteredItems | async" [value]="item">
+      {{ item.name }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

@@ -2,12 +2,14 @@ import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { UserProtected } from '@app/auth/models/user-proteted';
 import { FormEditorDirective } from '@app/shared/directives/form-editor.directive';
-import { FormControlMap } from '@app/core/models/form-control-map';
+import { FormControlMap } from '@app/core/models/interfaces';
+import { provideFormEditor } from '@app/core/utils/functions';
 
 @Component({
   selector: 'app-user-form',
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.scss'],
+  providers: [provideFormEditor(UserFormComponent)],
 })
 export class UserFormComponent extends FormEditorDirective<UserProtected> {
   showPassword = false;
@@ -29,5 +31,14 @@ export class UserFormComponent extends FormEditorDirective<UserProtected> {
       secondName: new FormControl(null, Validators.required),
       password: new FormControl(null, this.isNew ? Validators.required : null),
     };
+  }
+
+  ngOnInit(): void {
+    super.ngOnInit();
+
+    if (this.isPristine) {
+      this.entity.password = null;
+      this.formControls.password.reset();
+    }
   }
 }

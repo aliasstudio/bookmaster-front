@@ -1,0 +1,45 @@
+<form [formGroup]="form">
+  <div class="form-field">
+    <mat-label>ФИО</mat-label>
+    <mat-form-field>
+      <input matInput formControlName="name" placeholder="Введите ФИО">
+    </mat-form-field>
+  </div>
+
+  <div class="form-field">
+    <mat-label>Биография</mat-label>
+    <mat-form-field>
+      <textarea matInput formControlName="bio" placeholder="Введите биографию"></textarea>
+    </mat-form-field>
+  </div>
+
+  <div class="form-field">
+    <mat-label>Дата рождения</mat-label>
+    <mat-form-field>
+      <input matInput formControlName="birthDate" [matDatepicker]="birthDatePicker" placeholder="Дата рождения">
+      <mat-datepicker-toggle matSuffix [for]="birthDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #birthDatePicker></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+  <div class="form-field">
+    <mat-label>Дата смерти</mat-label>
+    <mat-form-field>
+      <input matInput formControlName="deathDate" [matDatepicker]="deathDatePicker" placeholder="Дата смерти">
+      <mat-datepicker-toggle matSuffix [for]="deathDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #deathDatePicker></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+  <div class="form-field">
+    <mat-label>Википедия</mat-label>
+    <mat-form-field>
+      <input matInput formControlName="wikipedia" placeholder="Введите ссылку на википедию">
+    </mat-form-field>
+  </div>
+</form>
+
+<mat-toolbar>
+  <button mat-flat-button appClearFormButton></button>
+  <button mat-flat-button appSaveFormButton></button>
+</mat-toolbar>
