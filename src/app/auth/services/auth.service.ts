@@ -1,10 +1,6 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpStatusCode,
-} from '@angular/common/http';
-import { catchError, EMPTY, first, Observable, tap, throwError } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpStatusCode, } from '@angular/common/http';
+import { BehaviorSubject, catchError, EMPTY, first, Observable, tap, throwError } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { UserProtected } from '@app/auth/models/user-proteted';
 import { Router } from '@angular/router';
@@ -13,9 +9,8 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class AuthService {
-  get isAuthorized(): boolean {
-    return !!this.getToken();
-  }
+
+  public readonly isAuthorized$ = new BehaviorSubject<boolean>(!!this.getToken());
 
   constructor(
     private router: Router,
@@ -52,6 +47,7 @@ export class AuthService {
         }),
         tap((token: string) => {
           localStorage.setItem('auth-token', token);
+          this.isAuthorized$.next(!!this.getToken());
           this.toastr.success('Вы успешно авторизованы!');
         }),
       );
@@ -82,6 +78,7 @@ export class AuthService {
         first(),
         tap(() => {
           localStorage.removeItem('auth-token');
+          this.isAuthorized$.next(!!this.getToken());
           this.router.navigate(['/auth']);
           this.toastr.success('Вы успешно вышли из системы!');
         }),
