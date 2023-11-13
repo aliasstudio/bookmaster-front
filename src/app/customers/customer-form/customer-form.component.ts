@@ -3,11 +3,13 @@ import { FormControl, Validators } from '@angular/forms';
 import { FormEditorDirective } from '@app/shared/directives/form-editor.directive';
 import { Customer } from "@app/customers/models/customer";
 import { FormControlMap } from "@app/core/models/interfaces";
+import { provideFormEditor } from "@app/core/utils/functions";
 
 @Component({
   selector: 'app-customer-form',
   templateUrl: './customer-form.component.html',
   styleUrls: ['./customer-form.component.scss'],
+  providers: [provideFormEditor(CustomerFormComponent)],
 })
 export class CustomerFormComponent extends FormEditorDirective<Customer> {
 
