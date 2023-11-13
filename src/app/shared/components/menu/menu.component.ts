@@ -1,10 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  Input,
-  ViewChild,
-} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild, } from '@angular/core';
 import { MenuItem } from '@app/shared/models/menu-item';
 import { AuthService } from '@app/auth/services/auth.service';
 import { Router } from '@angular/router';
@@ -20,32 +14,7 @@ export class MenuComponent implements AfterViewInit {
   @ViewChild('menu')
   menuRef!: ElementRef;
   // TODO: временное решение, пока не все ясно с отображаемыми пунктами
-  @Input() items: MenuItem[] = [
-    {
-      id: 'users',
-      name: 'Пользователи',
-      icon: 'icon-user',
-      link: 'users',
-    },
-    {
-      id: 'books',
-      name: 'Книги',
-      icon: 'icon-book',
-      link: 'books',
-    },
-    {
-      id: 'authors',
-      name: 'Авторы',
-      icon: 'icon-author',
-      link: 'authors',
-    },
-    {
-      id: 'customers',
-      name: 'Клиенты',
-      icon: 'icon-customer',
-      link: 'customers',
-    },
-  ];
+  protected items = this.getMenuItems();
 
   private hoverWidth = 160;
   private initialWidth = 60;
@@ -65,6 +34,10 @@ export class MenuComponent implements AfterViewInit {
     const padding = 16;
 
     this.hoverWidth = padding * 2 + maxButtonWidth;
+
+    this.authService.isAuthorized$.subscribe(isAuthorized => {
+      this.items = isAuthorized ? this.getMenuItems() : [];
+    })
   }
 
   protected onMouseEnter() {
@@ -77,10 +50,39 @@ export class MenuComponent implements AfterViewInit {
 
   protected auth(): void {
     const authService = this.authService;
-    const req$ = authService.isAuthorized
+    const req$ = authService.isAuthorized$.value
       ? authService.logout()
       : of(void 0).pipe(tap(() => this.router.navigate(['/auth'])));
 
     req$.subscribe();
+  }
+
+  private getMenuItems(): MenuItem[] {
+    return [
+      {
+        id: 'users',
+        name: 'Пользователи',
+        icon: 'icon-user',
+        link: 'users',
+      },
+      {
+        id: 'books',
+        name: 'Книги',
+        icon: 'icon-book',
+        link: 'books',
+      },
+      {
+        id: 'authors',
+        name: 'Авторы',
+        icon: 'icon-author',
+        link: 'authors',
+      },
+      {
+        id: 'customers',
+        name: 'Клиенты',
+        icon: 'icon-customer',
+        link: 'customers',
+      },
+    ]
   }
 }
