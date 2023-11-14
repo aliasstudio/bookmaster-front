@@ -1,6 +1,7 @@
 import {
   Component,
   EventEmitter,
+  inject,
   Input,
   Output,
   TemplateRef,
@@ -26,6 +27,8 @@ import {
   EntityRemoteDataBinding,
 } from '@app/shared/models/databinding';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MatDialog } from '@angular/material/dialog';
+import { MatDeleteDialogComponent } from '@app/shared/components/mat-delete-dialog/mat-delete-dialog.component';
 
 @Component({
   selector: 'app-mat-datatable-control',
@@ -45,6 +48,8 @@ export class MatDatatableControlComponent<
   @Output() removed = new EventEmitter<T>();
 
   selectedItem$ = new BehaviorSubject<T>(null);
+
+  private dialog = inject(MatDialog);
 
   protected onBindingComplete() {
     super.onBindingComplete();
@@ -70,6 +75,16 @@ export class MatDatatableControlComponent<
     getReq$
       .pipe(map((entity: T) => this.selectedItem$.next(entity)))
       .subscribe(() => this.drawer.open());
+  }
+
+  openDeleteDialog(item: T, customOptions?: CustomRequestOptions): void {
+    const dialogRef = this.dialog.open(MatDeleteDialogComponent);
+    const subscription = dialogRef.afterClosed().subscribe(doAction => {
+      if (doAction) {
+        this.delete(item, customOptions);
+      }
+      subscription.unsubscribe();
+    });
   }
 
   delete(item: T, customOptions?: CustomRequestOptions): void {

@@ -33,15 +33,15 @@ export class UserPageComponent extends RepositoryDirective<UserProtected> {
     const req$ = isNew
       ? this.authService.register(item)
       : this.http.put(`user/${this.selectedItem.login}`, item).pipe(
-          switchMap(() => {
-            return item?.password
-              ? this.http.patch(`user/change_password_admin`, {
-                  login: item.login,
-                  newPassword: item.password,
-                })
-              : of(item);
-          }),
-        );
+        switchMap(() => {
+          return item?.password
+            ? this.http.patch(`user/change_password_admin`, {
+              login: item.login,
+              newPassword: item.password,
+            })
+            : of(item);
+        }),
+      );
 
     this.grid.save(item, {
       req$,

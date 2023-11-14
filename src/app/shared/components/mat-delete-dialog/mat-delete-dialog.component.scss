@@ -1,0 +1,19 @@
+.dialog-wrapper {
+  width: 480px;
+  height: fit-content;
+}
+
+.dialog-title {
+  text-align: center;
+  font-weight: 400;
+  padding: 25px 25px 10px;
+  font-size: 20px;
+}
+
+.dialog-buttons {
+  padding-bottom: 43px;
+
+  > button[color="warn"] {
+    color: var(--theme-main);
+  }
+}
