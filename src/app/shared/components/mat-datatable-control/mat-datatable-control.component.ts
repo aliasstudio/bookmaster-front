@@ -1,6 +1,7 @@
 import {
   Component,
   EventEmitter,
+  inject,
   Input,
   Output,
   TemplateRef,
@@ -25,10 +26,9 @@ import {
   CustomRequestOptions,
   EntityRemoteDataBinding,
 } from '@app/shared/models/databinding';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { MatDeleteDialogComponent } from "@app/shared/components/mat-delete-dialog/mat-delete-dialog.component";
-import { ToastrService } from "ngx-toastr";
-import { MatDialog } from "@angular/material/dialog";
+import { HttpErrorResponse } from '@angular/common/http';
+import { MatDialog } from '@angular/material/dialog';
+import { MatDeleteDialogComponent } from '@app/shared/components/mat-delete-dialog/mat-delete-dialog.component';
 
 @Component({
   selector: 'app-mat-datatable-control',
@@ -49,9 +49,7 @@ export class MatDatatableControlComponent<
 
   selectedItem$ = new BehaviorSubject<T>(null);
 
-  constructor(destroy$: DestroyService, http: HttpClient, toastr: ToastrService, public dialog: MatDialog) {
-    super(destroy$, http, toastr);
-  }
+  private dialog = inject(MatDialog);
 
   protected onBindingComplete() {
     super.onBindingComplete();

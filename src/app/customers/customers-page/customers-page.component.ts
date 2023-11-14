@@ -24,10 +24,4 @@ export class CustomersPageComponent extends RepositoryDirective<Customer> {
       { name: 'Почта', key: 'email' },
     ],
   };
-
-  save(item: Customer): void {
-    this.grid.save(item, {
-      withoutNotification: this.isNew,
-    });
-  }
 }
