@@ -3,7 +3,7 @@
     (mouseenter)="onMouseEnter()"
     (mouseleave)="onMouseLeave()"
 >
-  <ng-container *ngFor="let item of items">
+  <ng-container #menuItems *ngFor="let item of items">
     <li [routerLink]="item.link">
       <span [class]="item.icon"></span>
       <span class="menu-title">{{ item.name }}</span>

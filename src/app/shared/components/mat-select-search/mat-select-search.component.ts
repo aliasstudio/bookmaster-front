@@ -24,7 +24,7 @@ import { provideValueAccessor } from '@app/core/utils/functions';
   selector: 'app-mat-select-search',
   templateUrl: './mat-select-search.component.html',
   styleUrls: ['./mat-select-search.component.scss'],
-  providers: [provideValueAccessor(MatSelectSearchComponent), DestroyService],
+  providers: [provideValueAccessor(MatSelectSearchComponent)],
 })
 export class MatSelectSearchComponent<T extends Dictionary<string | number>>
   implements ControlValueAccessor, Validator, OnInit, AfterViewInit

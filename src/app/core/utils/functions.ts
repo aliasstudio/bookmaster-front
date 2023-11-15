@@ -11,6 +11,9 @@ export function provideFormEditor(
       provide: FormEditorDirective,
       useExisting: ref,
     },
+    {
+      provide: DestroyService,
+    },
   ];
 }
 
@@ -23,8 +26,6 @@ export function provideValueAccessor(ref: Type<any>): StaticProvider[] {
     },
     {
       provide: DestroyService,
-      useExisting: ref,
-      multi: true,
     },
   ];
 }

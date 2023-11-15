@@ -1,43 +1,50 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnInit,
+  QueryList,
+  ViewChild,
+  ViewChildren,
+} from '@angular/core';
 import { MenuItem } from '@app/shared/models/menu-item';
 import { AuthService } from '@app/auth/services/auth.service';
 import { Router } from '@angular/router';
-import { of, tap } from 'rxjs';
+import { of, takeUntil, tap } from 'rxjs';
 import * as _ from 'lodash';
+import { DestroyService } from '@app/core/services/destroy.service';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss'],
+  providers: [DestroyService],
 })
-export class MenuComponent implements AfterViewInit {
-  @ViewChild('menu')
-  menuRef!: ElementRef;
-  // TODO: временное решение, пока не все ясно с отображаемыми пунктами
-  protected items = this.getMenuItems();
-  // FIXME: если не будет лень, придумать как отловить момент после рендера меню при смене состава пунктов
-  //  и вынести расчет ширины в отдельную функцию, после рендера - вызывать
-  private hoverWidth = 180;
+export class MenuComponent implements OnInit, AfterViewInit {
+  @ViewChild('menu') menuRef!: ElementRef;
+  @ViewChildren('menuItems') menuItems!: QueryList<any>;
+
+  protected items: MenuItem[];
+  private hoverWidth = 120;
   private initialWidth = 60;
 
   constructor(
     protected router: Router,
     protected authService: AuthService,
+    private destroy$: DestroyService,
   ) {}
 
+  ngOnInit(): void {
+    this.items = this.getMenuItems();
+    this.authService.isAuthorized$.subscribe(() => {
+      this.items = this.getMenuItems();
+    });
+  }
+
   ngAfterViewInit() {
-    const maxButtonWidth = _.max(
-      _.map(
-        document.querySelectorAll('.wrapper__menu ul.menu > li'),
-        (el) => el.scrollWidth,
-      ),
-    );
-    const padding = 16;
-
-    this.hoverWidth = padding * 2 + maxButtonWidth;
-
-    this.authService.isAuthorized$.subscribe((isAuthorized) => {
-      this.items = isAuthorized ? this.getMenuItems() : [];
+    this.setHoverWidth();
+    this.menuItems.changes.pipe(takeUntil(this.destroy$)).subscribe(() => {
+      this.setHoverWidth();
     });
   }
 
@@ -58,32 +65,48 @@ export class MenuComponent implements AfterViewInit {
     req$.subscribe();
   }
 
+  private setHoverWidth(): void {
+    const maxButtonWidth = _.max(
+      _.map(
+        document.querySelectorAll('.wrapper__menu ul.menu > li'),
+        (el) => el.scrollWidth,
+      ),
+    );
+    const padding = 16;
+
+    this.hoverWidth = this.items.length ? padding * 2 + maxButtonWidth : 120;
+  }
+
   private getMenuItems(): MenuItem[] {
-    return [
-      {
-        id: 'users',
-        name: 'Пользователи',
-        icon: 'icon-user',
-        link: 'users',
-      },
-      {
-        id: 'books',
-        name: 'Книги',
-        icon: 'icon-book',
-        link: 'books',
-      },
-      {
-        id: 'authors',
-        name: 'Авторы',
-        icon: 'icon-author',
-        link: 'authors',
-      },
-      {
-        id: 'customers',
-        name: 'Клиенты',
-        icon: 'icon-customer',
-        link: 'customers',
-      },
-    ];
+    const isAuthorized = this.authService.isAuthorized$.getValue();
+
+    return !isAuthorized
+      ? []
+      : [
+          {
+            id: 'users',
+            name: 'Пользователи',
+            icon: 'icon-user',
+            link: 'users',
+          },
+          {
+            id: 'books',
+            name: 'Книги',
+            icon: 'icon-book',
+            link: 'books',
+          },
+          {
+            id: 'authors',
+            name: 'Авторы',
+            icon: 'icon-author',
+            link: 'authors',
+          },
+          {
+            id: 'customers',
+            name: 'Клиенты',
+            icon: 'icon-customer',
+            link: 'customers',
+          },
+        ];
   }
 }
