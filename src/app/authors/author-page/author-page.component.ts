@@ -21,7 +21,7 @@ export class AuthorPageComponent extends RepositoryDirective<Author> {
       { name: 'Биография', key: 'bio' },
       { name: 'Дата рождения', key: 'birthDate' },
       { name: 'Дата смерти', key: 'deathDate' },
-      { name: 'Википедия', key: 'wikipedia' }
+      { name: 'Википедия', key: 'wikipedia', customTemplate: true },
     ],
   };
 }

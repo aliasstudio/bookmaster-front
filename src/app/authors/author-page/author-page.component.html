@@ -11,6 +11,13 @@
     [formRef]="form"
     formTitle="Автор"
   >
+    <ng-container table-columns>
+      <ng-container matColumnDef="wikipedia">
+        <th mat-header-cell *matHeaderCellDef>Википедия</th>
+        <td mat-cell *matCellDef="let element" [innerHTML]="element['wikipedia']|href"></td>
+      </ng-container>
+    </ng-container>
+
     <ng-container table-header>
       <app-mat-datatable-search></app-mat-datatable-search>
       <button mat-flat-button appReloadGridButton></button>
