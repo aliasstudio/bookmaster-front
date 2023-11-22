@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { Registry } from '@app/auth/models/privilege';
 import { RegistriesResolver } from '@app/core/resolvers/registries.resolver';
+import { authGuard } from '@app/core/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -9,6 +10,7 @@ const routes: Routes = [
     resolve: {
       registries: RegistriesResolver,
     },
+    canActivate: [authGuard],
     children: [
       {
         path: '',
