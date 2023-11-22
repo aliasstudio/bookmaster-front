@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { EntityRemoteDataBinding } from '@app/shared/models/databinding';
 import { RepositoryDirective } from '@app/shared/directives/repository.directive';
 import { DestroyService } from '@app/core/services/destroy.service';
 import { Book } from '@app/shared/models/book';
+import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: 'app-books-page',
@@ -21,4 +22,6 @@ export class BooksPageComponent extends RepositoryDirective<Book> {
       { name: 'Описание', key: 'description' },
     ],
   };
+
+  http = inject(HttpClient);
 }

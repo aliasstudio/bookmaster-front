@@ -1,12 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  OnInit,
-  QueryList,
-  ViewChild,
-  ViewChildren,
-} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren, } from '@angular/core';
 import { MenuItem } from '@app/shared/models/menu-item';
 import { AuthService } from '@app/auth/services/auth.service';
 import { Router } from '@angular/router';
@@ -124,7 +116,13 @@ export class MenuComponent implements OnInit, AfterViewInit {
             icon: 'icon-customer',
             link: 'customers',
           },
-        ];
+          {
+            id: Registry.Reports,
+            name: 'Отчеты',
+            icon: 'icon-customer',
+            link: 'reports',
+          },
+      ];
 
     return menuItems.filter((item) => {
       const reg = this.availableRegistries;
