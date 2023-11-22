@@ -11,6 +11,13 @@
     [formRef]="form"
     formTitle="Клиент"
   >
+    <ng-container table-columns>
+      <ng-container matColumnDef="phone">
+        <th mat-header-cell *matHeaderCellDef>Телефон</th>
+        <td mat-cell *matCellDef="let element">{{ element['phone']|phone }}</td>
+      </ng-container>
+    </ng-container>
+
     <ng-container table-header>
       <app-mat-datatable-search placeholder="Введите ФИО или ID клиента"></app-mat-datatable-search>
       <button mat-flat-button appReloadGridButton></button>
