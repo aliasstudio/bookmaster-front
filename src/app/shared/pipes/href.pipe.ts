@@ -8,6 +8,8 @@ export class HrefPipe implements PipeTransform {
     const link = value?.match(
       '(http|https):\\/\\/([\\w_-]+(?:(?:\\.[\\w_-]+)+))([\\w.,@?^=%&:\\/~+#-]*[\\w@?^=%&\\/~+#-])',
     )?.[0];
-    return link ? `<a href="${link}">${content || 'Перейти'}</a>` : value;
+    return link
+      ? `<a href="${link}" target="_blank">${content || 'Перейти'}</a>`
+      : value;
   }
 }
