@@ -37,6 +37,7 @@ import { SaveFormButtonDirective } from '@app/shared/directives/buttons/save-for
 import { MatDeleteDialogComponent } from '@app/shared/components/mat-delete-dialog/mat-delete-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { HrefPipe } from '@app/shared/pipes/href.pipe';
+import { MatTabsModule } from '@angular/material/tabs';
 
 const imports = [
   CommonModule,
@@ -64,7 +65,8 @@ const imports = [
   MatToolbarModule,
   MatDatepickerModule,
   NgxMatSelectSearchModule,
-  MatDialogModule
+  MatDialogModule,
+  MatTabsModule,
 ];
 
 const exports = [

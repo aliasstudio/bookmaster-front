@@ -103,6 +103,14 @@ form {
   }
 }
 
+mat-tab-header.mat-mdc-tab-header {
+    display: inline-block;
+
+    > div.mat-mdc-tab-label-container {
+      display: inline-block;
+    }
+}
+
 .green-button {
   --mdc-filled-button-container-color: var(--theme-light-green) !important;
   --mdc-filled-button-label-text-color: var(--theme-white) !important;
@@ -127,3 +135,4 @@ form {
   --mdc-filled-button-container-color: var(--theme-white) !important;
   --mdc-filled-button-label-text-color:var(--theme-light-green) !important;
 }
+

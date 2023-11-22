@@ -56,6 +56,17 @@ const routes: Routes = [
       },
     ],
   },
+  {
+    path: 'reports',
+    pathMatch: 'full',
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+         import('@app/reports/reports.module').then(m => m.ReportsModule),
+      },
+    ],
+  },
 ];
 
 @NgModule({
