@@ -1,0 +1,35 @@
+.table__header_wrapper {
+  display: flex;
+  column-gap: 16px;
+  row-gap: 8px;
+  align-items: center;
+  padding: 8px 0;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  column-gap: 16px;
+  height: 54px;
+}
+
+.content {
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+}
+
+.book-card {
+  display: inline-block;
+  padding: 24px 16px;
+  background-color: #D9D9D9;
+  margin-right: 37px;
+
+  &__title {
+    white-space: nowrap;
+  }
+}
+
+.reload-button {
+  margin-left: auto;
+}

@@ -1,0 +1,19 @@
+<div class="toolbar table__header_wrapper">
+  <app-mat-datatable-search url="issue/history" (responseData)="updateRecords($event)"></app-mat-datatable-search>
+  <button mat-flat-button appButton iconClass="icon-reload" class="reload-button" text="Обновить" (click)="grid.bindData()"></button>
+</div>
+<div class="content">
+  <div class="book-card">
+    <h3 class="book-card__title">Информация о книге</h3>
+    <div>Название: {{ book.title }}</div>
+    <div>
+      <span>Авторы: </span>
+      <span *ngFor="let author of book.authors">
+        {{ author.name }}
+      </span>
+    </div>
+    <div>Описание: {{ book.description }}</div>
+  </div>
+
+  <app-book-history-grid-page #grid [dataBinding]="dataBinding" style="width: 100%;"></app-book-history-grid-page>
+</div>

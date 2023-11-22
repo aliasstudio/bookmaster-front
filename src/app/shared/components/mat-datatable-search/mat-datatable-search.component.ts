@@ -1,9 +1,11 @@
-import { AfterViewInit, Component, Input, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { PlainObject } from '@ngxs/store/internals';
 import { MatFormField } from '@angular/material/form-field';
-import { MatDatatableControlComponent } from '@app/shared/components/mat-datatable-control/mat-datatable-control.component';
 import { debounceTime, Subject, takeUntil } from 'rxjs';
 import { DestroyService } from '@app/core/services/destroy.service';
+import {
+  MatDatatableControlComponent
+} from '@app/shared/components/mat-datatable-control/mat-datatable-control.component';
 
 @Component({
   selector: 'app-mat-datatable-search',
@@ -16,6 +18,9 @@ export class MatDatatableSearchComponent<T extends PlainObject>
 {
   @ViewChild(MatFormField) formField: MatFormField;
   @Input() placeholder: string = 'Введите название или ID';
+  @Input() url: string;
+  @Output() responseData = new EventEmitter<string>();
+
 
   search$ = new Subject<void>();
 
@@ -23,7 +28,6 @@ export class MatDatatableSearchComponent<T extends PlainObject>
     private grid: MatDatatableControlComponent<T>,
     private destroy$: DestroyService,
   ) {}
-
   ngAfterViewInit(): void {
     const el = this.formField._elementRef.nativeElement.getElementsByClassName(
       'mat-mdc-form-field-infix',

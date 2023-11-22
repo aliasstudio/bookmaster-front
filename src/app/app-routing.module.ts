@@ -47,24 +47,25 @@ const routes: Routes = [
             (m) => m.CustomersModule,
           ),
       },
-      // {
-      //   path: 'issues',
-      //   data: {
-      //     registryKey: Registry.Issue,
-      //   },
-      //   canActivate: [firstAccessibleChildRedirectGuard],
-      //   loadChildren: () =>
-      //     import('@app/issues/issues.module').then(
-      //       (m) => m.IssuesModule,
-      //     ),
-      // },
       {
         path: 'reports',
         data: {
-          registryKey: Registry.Report,
+          registryKey: Registry.Reports,
         },
         loadChildren: () =>
-          import('@app/reports/reports.module').then((m) => m.ReportsModule),
+          import('@app/reports/reports.module').then(
+            (m) => m.ReportsModule,
+          ),
+      },
+      {
+        path: 'book-return',
+        data: {
+          registryKey: Registry.Customer,
+        },
+        loadChildren: () =>
+          import('@app/book-return/book-return.module').then(
+            (m) => m.BookReturnModule,
+          ),
       },
     ],
   },
