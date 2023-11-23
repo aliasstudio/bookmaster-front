@@ -2,11 +2,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { Registry } from '@app/auth/models/privilege';
 import { authGuard } from '@app/core/guards/auth.guard';
+import { RegistriesGuard } from '@app/core/guards/registries.guard';
 
 const routes: Routes = [
   {
     path: '',
-    canActivate: [authGuard],
+    canActivate: [RegistriesGuard],
     children: [
       {
         path: '',
@@ -15,6 +16,7 @@ const routes: Routes = [
       },
       {
         path: 'auth',
+        canActivate: [authGuard],
         loadChildren: () =>
           import('@app/auth/auth.module').then((m) => m.AuthModule),
       },

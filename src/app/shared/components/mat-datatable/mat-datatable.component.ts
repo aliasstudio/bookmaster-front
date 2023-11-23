@@ -71,7 +71,7 @@ export class MatDatatableComponent<T extends PlainObject>
     this.columnDefs.forEach((columnDef) => this.table.addColumnDef(columnDef));
   }
 
-  bindData(): void {
+  bindData(filter?: string): void {
     const dataBinding = this.dataBinding;
 
     if (_.has(dataBinding, 'loadReq$')) {
@@ -82,7 +82,9 @@ export class MatDatatableComponent<T extends PlainObject>
         .subscribe(({ content }) => this.setData(content));
     } else if (_.has(dataBinding, 'urlRoot')) {
       const binding = dataBinding as EntityRemoteDataBinding<T>;
-      const url = binding.urlRoot;
+      const url = filter
+        ? `${binding.urlRoot}?filter=${filter}`
+        : binding.urlRoot;
 
       this.http
         .get<Page<T>>(url)

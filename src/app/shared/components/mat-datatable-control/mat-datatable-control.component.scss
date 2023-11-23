@@ -6,6 +6,11 @@
   padding: 8px 0;
 }
 
+.mat-data-table {
+  max-height: calc(100vh - 155px);
+  overflow: auto;
+}
+
 
 .mat-column-control {
   width: 50px;

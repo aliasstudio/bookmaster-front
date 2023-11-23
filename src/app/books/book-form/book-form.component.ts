@@ -34,7 +34,6 @@ export class BookFormComponent extends FormEditorDirective<Book> {
 
   resolveForm(): FormControlMap<Book> {
     return {
-      id: new FormControl(null),
       title: new FormControl(null, Validators.required),
       subTitle: new FormControl(null),
       firstPublishDate: new FormControl(null),

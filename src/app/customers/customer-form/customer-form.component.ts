@@ -13,16 +13,14 @@ import { PHONE } from '@app/core/utils/patterns';
   providers: [provideFormEditor(CustomerFormComponent)],
 })
 export class CustomerFormComponent extends FormEditorDirective<Customer> {
-
   resolveForm(): FormControlMap<Customer> {
     return {
-      id: new FormControl(null),
       name: new FormControl(null, Validators.required),
       phone: new FormControl(null, Validators.pattern(PHONE)),
       address: new FormControl(null, Validators.required),
       city: new FormControl(null, Validators.required),
       zip: new FormControl(null, Validators.pattern('[0-9]{6}')),
-      email: new FormControl(null, Validators.email)
+      email: new FormControl(null, Validators.email),
     };
   }
 }

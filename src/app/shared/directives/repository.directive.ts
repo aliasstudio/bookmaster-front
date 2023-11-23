@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   Directive,
   Input,
+  OnInit,
   TemplateRef,
   ViewChild,
 } from '@angular/core';
@@ -13,12 +14,12 @@ import { CustomRequestOptions } from '@app/shared/models/databinding';
 import * as _ from 'lodash';
 import { ActivatedRoute, Data } from '@angular/router';
 import { hasEditPrivilege } from '@app/core/utils/functions';
-import {Store} from "@ngxs/store";
-import {AppState} from "@app/store/app.state";
+import { Store } from '@ngxs/store';
+import { AppState } from '@app/store/app.state';
 
 @Directive()
 export class RepositoryDirective<T extends PlainObject>
-  implements AfterViewInit
+  implements OnInit, AfterViewInit
 {
   @ViewChild('form') form: TemplateRef<any>;
   @ViewChild(MatDatatableControlComponent)
@@ -39,7 +40,9 @@ export class RepositoryDirective<T extends PlainObject>
     private route: ActivatedRoute,
   ) {
     this.routeData = this.route.snapshot.data;
+  }
 
+  ngOnInit(): void {
     const isReadOnly = !hasEditPrivilege(
       this.routeData.registryKey,
       this.store.selectSnapshot(AppState.getAvailableRegistries),

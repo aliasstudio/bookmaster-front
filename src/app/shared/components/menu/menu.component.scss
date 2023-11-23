@@ -34,6 +34,7 @@ $menu-accent-color: #757575;
     overflow: hidden;
     background: var(--theme-gray);
     cursor: pointer;
+    user-select: none;
     transition: all .5s ease-in-out;
 
     &:hover {

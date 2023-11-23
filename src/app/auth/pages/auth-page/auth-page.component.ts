@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '@app/auth/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
-import { takeUntil, tap } from 'rxjs';
+import { switchMap, takeUntil, tap } from 'rxjs';
 import { DestroyService } from '@app/core/services/destroy.service';
 import { Router } from '@angular/router';
+import { RegistriesGuard } from '@app/core/guards/registries.guard';
 
 @Component({
   selector: 'app-auth-page',
@@ -26,6 +27,7 @@ export class AuthPageComponent {
     private auth: AuthService,
     private toastr: ToastrService,
     private router: Router,
+    private registries: RegistriesGuard,
   ) {}
 
   togglePasswordVisibility() {
@@ -45,6 +47,7 @@ export class AuthPageComponent {
     this.auth
       .login(form.controls.login.value, form.controls.password.value)
       .pipe(
+        switchMap(() => this.registries.resolve()),
         tap(() => this.router.navigate(['/books'])),
         takeUntil(this.destroy$),
       )

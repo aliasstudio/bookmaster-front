@@ -18,7 +18,6 @@ export class AuthorFormComponent extends FormEditorDirective<Author> {
 
   resolveForm(): FormControlMap<Author> {
     return {
-      uuid: new FormControl(null),
       name: new FormControl(null, Validators.required),
       bio: new FormControl(null),
       birthDate: new FormControl(null),
