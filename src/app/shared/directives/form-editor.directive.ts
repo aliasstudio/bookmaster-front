@@ -44,7 +44,9 @@ export class FormEditorDirective<T extends PlainObject>
   }
 
   get hasChanges(): boolean {
-    return !_.isEqual(this.form.value, this.entity);
+    const formValue = this.form.value;
+
+    return !_.isEqual(formValue, _.pick(this.entity, _.keys(formValue)));
   }
 
   get formControls(): FormControlMap<T> {

@@ -10,7 +10,6 @@ import {
   EMPTY,
   first,
   Observable,
-  switchMap,
   tap,
   throwError,
 } from 'rxjs';
@@ -19,7 +18,6 @@ import { UserProtected } from '@app/auth/models/user-proteted';
 import { Router } from '@angular/router';
 import { parseJSON } from 'date-fns';
 import { User } from '@app/auth/models/user';
-import { RegistriesResolver } from '@app/core/resolvers/registries.resolver';
 
 interface Token {
   token: string;
@@ -38,7 +36,6 @@ export class AuthService {
     private router: Router,
     private http: HttpClient,
     private toastr: ToastrService,
-    private registriesResolver: RegistriesResolver,
   ) {}
 
   getTokenDate(): Date | undefined {
@@ -91,7 +88,6 @@ export class AuthService {
           this.isAuthorized$.next(!!this.getToken());
           this.toastr.success('Вы успешно авторизованы!');
         }),
-        switchMap(() => this.registriesResolver.resolve()),
       );
   }
 

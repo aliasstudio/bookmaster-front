@@ -10,6 +10,6 @@ export class PhonePipe implements PipeTransform {
     if (!parts) {
       return value;
     }
-    return `+7(${parts[2]})${parts[3]}-${parts[4]}-${parts[5]}`;
+    return `+7 (${parts[2]}) ${parts[3]}-${parts[4]}-${parts[5]}`;
   }
 }

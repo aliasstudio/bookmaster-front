@@ -28,6 +28,16 @@
   </div>
 
   <div class="form-field">
+    <mat-label>Роли</mat-label>
+    <app-mat-select-search
+      formControlName="roles"
+      placeholder="Выберите роли"
+      [items]="roles"
+    >
+    </app-mat-select-search>
+  </div>
+
+  <div class="form-field">
     <mat-label>Пароль</mat-label>
     <mat-form-field>
       <input matInput formControlName="password" placeholder="Введите пароль" [type]="showPassword ? 'text' : 'password'" autocomplete="on">

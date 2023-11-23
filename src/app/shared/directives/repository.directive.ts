@@ -13,6 +13,8 @@ import { CustomRequestOptions } from '@app/shared/models/databinding';
 import * as _ from 'lodash';
 import { ActivatedRoute, Data } from '@angular/router';
 import { hasEditPrivilege } from '@app/core/utils/functions';
+import {Store} from "@ngxs/store";
+import {AppState} from "@app/store/app.state";
 
 @Directive()
 export class RepositoryDirective<T extends PlainObject>
@@ -33,13 +35,14 @@ export class RepositoryDirective<T extends PlainObject>
 
   constructor(
     protected destroy$: DestroyService,
+    private store: Store,
     private route: ActivatedRoute,
   ) {
     this.routeData = this.route.snapshot.data;
 
     const isReadOnly = !hasEditPrivilege(
       this.routeData.registryKey,
-      this.routeData.registries,
+      this.store.selectSnapshot(AppState.getAvailableRegistries),
     );
     this.readOnly ||= isReadOnly;
   }
