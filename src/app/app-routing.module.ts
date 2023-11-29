@@ -54,6 +54,26 @@ const routes: Routes = [
             (m) => m.CustomersModule,
           ),
       },
+      // {
+      //   path: 'issues',
+      //   data: {
+      //     registryKey: Registry.Issue,
+      //   },
+      //   loadChildren: () =>
+      //     import('@app/issues/issues.module').then(
+      //       (m) => m.IssuesModule,
+      //     ),
+      // },
+      // {
+      //   path: 'reports',
+      //   data: {
+      //     registryKey: Registry.Report,
+      //   },
+      //   loadChildren: () =>
+      //     import('@app/reports/reports.module').then(
+      //       (m) => m.ReportsModule,
+      //     ),
+      // },
     ],
   },
 ];
