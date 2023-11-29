@@ -32,11 +32,11 @@ export class UserFormComponent extends FormEditorDirective<UserProtected> {
         { value: null, disabled: !isNew },
         Validators.required,
       ),
-      lastName: new FormControl(null, Validators.required),
-      firstName: new FormControl(null, Validators.required),
-      secondName: new FormControl(null, Validators.required),
+      lastName: new FormControl(null, [Validators.required, Validators.maxLength(16)]),
+      firstName: new FormControl(null, [Validators.required, Validators.maxLength(16)]),
+      secondName: new FormControl(null, [Validators.required, Validators.maxLength(16)]),
       roles: new FormControl(null, Validators.required),
-      password: new FormControl(null, isNew ? Validators.required : null),
+      password: new FormControl(null, [isNew ? Validators.required : Validators.nullValidator, Validators.maxLength(64)]),
     };
   }
 
