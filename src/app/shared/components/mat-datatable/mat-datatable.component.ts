@@ -51,6 +51,8 @@ export class MatDatatableComponent<T extends PlainObject>
   protected columnsBind: Column<T>[];
   protected columnKeys: string[];
 
+  private lastFilter?: string;
+
   constructor(
     protected destroy$: DestroyService,
     protected http: HttpClient,
@@ -72,6 +74,8 @@ export class MatDatatableComponent<T extends PlainObject>
   }
 
   bindData(filter?: string): void {
+    this.lastFilter = filter;
+
     const dataBinding = this.dataBinding;
 
     if (_.has(dataBinding, 'loadReq$')) {
@@ -95,6 +99,10 @@ export class MatDatatableComponent<T extends PlainObject>
 
       this.setData(binding.data);
     }
+  }
+
+  reloadData(keepFilter = true): void {
+    this.bindData(keepFilter ? this.lastFilter : null);
   }
 
   private setData(data: T[]): void {
