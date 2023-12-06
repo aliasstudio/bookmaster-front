@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 import { BookReturnRoutingModule } from './book-return-routing.module';
 import { BookReturnPageComponent } from './book-return-page/book-return-page.component';
+import { SharedModule } from "@app/shared/shared.module";
 
 
 @NgModule({
@@ -10,8 +10,8 @@ import { BookReturnPageComponent } from './book-return-page/book-return-page.com
     BookReturnPageComponent
   ],
   imports: [
-    CommonModule,
-    BookReturnRoutingModule
+    BookReturnRoutingModule,
+    SharedModule
   ]
 })
 export class BookReturnModule { }

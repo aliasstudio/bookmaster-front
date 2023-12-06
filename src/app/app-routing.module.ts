@@ -60,11 +60,21 @@ const routes: Routes = [
       {
         path: 'book-return',
         data: {
-          registryKey: Registry.Customer,
+          registryKey: Registry.Returns,
         },
         loadChildren: () =>
           import('@app/book-return/book-return.module').then(
             (m) => m.BookReturnModule,
+          ),
+      },
+      {
+        path: 'reports',
+        data: {
+          registryKey: Registry.Reports,
+        },
+        loadChildren: () =>
+          import('@app/reports/reports.module').then(
+            (m) => m.ReportsModule,
           ),
       },
     ],

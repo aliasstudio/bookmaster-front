@@ -6,6 +6,8 @@ import { DestroyService } from '@app/core/services/destroy.service';
 import {
   MatDatatableControlComponent
 } from '@app/shared/components/mat-datatable-control/mat-datatable-control.component';
+import { debounceTime, Subject, takeUntil } from 'rxjs';
+import { DestroyService } from '@app/core/services/destroy.service';
 
 @Component({
   selector: 'app-mat-datatable-search',
@@ -19,7 +21,8 @@ export class MatDatatableSearchComponent<T extends PlainObject>
   @ViewChild(MatFormField) formField: MatFormField;
   @Input() placeholder: string = 'Введите название или ID';
   @Input() url: string;
-  @Output() responseData = new EventEmitter<string>();
+  @Input() value: string;
+  @Output() searchClick = new EventEmitter();
 
 
   search$ = new Subject<void>();
@@ -28,6 +31,7 @@ export class MatDatatableSearchComponent<T extends PlainObject>
     private grid: MatDatatableControlComponent<T>,
     private destroy$: DestroyService,
   ) {}
+
   ngAfterViewInit(): void {
     const el = this.formField._elementRef.nativeElement.getElementsByClassName(
       'mat-mdc-form-field-infix',
@@ -50,6 +54,7 @@ export class MatDatatableSearchComponent<T extends PlainObject>
 
   search(): void {
     const searchText = this.formField._formFieldControl.value;
+    this.searchClick.emit(searchText);
 
     this.grid.bindData(searchText);
   }
