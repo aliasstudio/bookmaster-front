@@ -44,7 +44,9 @@ export class FormEditorDirective<T extends PlainObject>
   }
 
   get hasChanges(): boolean {
-    return !_.isEqual(this.form.value, this.entity);
+    const formValue = _.omit(this.form.getRawValue(), ['id', 'uuid']);
+
+    return !_.isEqual(formValue, _.pick(this.entity, _.keys(formValue)));
   }
 
   get formControls(): FormControlMap<T> {
@@ -75,6 +77,7 @@ export class FormEditorDirective<T extends PlainObject>
 
       this.form.reset(entity);
       this.entityChanges.emit(entity);
+      this.changeDetector.markForCheck();
     }
   }
 
@@ -83,6 +86,6 @@ export class FormEditorDirective<T extends PlainObject>
   }
 
   save(): void {
-    this.saved.emit(this.form.value);
+    this.saved.emit(this.form.getRawValue());
   }
 }

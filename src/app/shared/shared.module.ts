@@ -38,6 +38,7 @@ import { MatDeleteDialogComponent } from '@app/shared/components/mat-delete-dial
 import { MatDialogModule } from '@angular/material/dialog';
 import { HrefPipe } from '@app/shared/pipes/href.pipe';
 import { MatTabsModule } from '@angular/material/tabs';
+import { PhonePipe } from '@app/shared/pipes/phone.pipe';
 
 const imports = [
   CommonModule,
@@ -84,6 +85,7 @@ const exports = [
   SaveFormButtonDirective,
   MatDeleteDialogComponent,
   HrefPipe,
+  PhonePipe,
 ];
 
 @NgModule({

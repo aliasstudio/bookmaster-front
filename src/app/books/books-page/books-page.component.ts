@@ -12,6 +12,7 @@ import { Book } from '@app/shared/models/book';
 })
 export class BooksPageComponent extends RepositoryDirective<Book> {
   dataBinding: EntityRemoteDataBinding<Book> = {
+    idField: 'uuid',
     urlRoot: 'book',
     columns: [
       { name: 'ID', key: 'uuid' },

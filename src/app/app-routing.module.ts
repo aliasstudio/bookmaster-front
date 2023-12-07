@@ -1,14 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { Registry } from '@app/auth/models/privilege';
-import { RegistriesResolver } from '@app/core/resolvers/registries.resolver';
+import { authGuard } from '@app/core/guards/auth.guard';
+import { RegistriesGuard } from '@app/core/guards/registries.guard';
 
 const routes: Routes = [
   {
     path: '',
-    resolve: {
-      registries: RegistriesResolver,
-    },
+    canActivate: [RegistriesGuard],
     children: [
       {
         path: '',
@@ -17,6 +16,7 @@ const routes: Routes = [
       },
       {
         path: 'auth',
+        canActivate: [authGuard],
         loadChildren: () =>
           import('@app/auth/auth.module').then((m) => m.AuthModule),
       },
@@ -54,6 +54,26 @@ const routes: Routes = [
             (m) => m.CustomersModule,
           ),
       },
+      // {
+      //   path: 'issues',
+      //   data: {
+      //     registryKey: Registry.Issue,
+      //   },
+      //   loadChildren: () =>
+      //     import('@app/issues/issues.module').then(
+      //       (m) => m.IssuesModule,
+      //     ),
+      // },
+      // {
+      //   path: 'reports',
+      //   data: {
+      //     registryKey: Registry.Report,
+      //   },
+      //   loadChildren: () =>
+      //     import('@app/reports/reports.module').then(
+      //       (m) => m.ReportsModule,
+      //     ),
+      // },
     ],
   },
   {

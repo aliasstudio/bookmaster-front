@@ -1,12 +1,14 @@
 <form [formGroup]="form">
-  <ng-container *ngIf="!isNew">
-    <div class="form-field">
-      <mat-label>ID</mat-label>
-      <mat-form-field>
-        <input matInput formControlName="id" readonly>
-      </mat-form-field>
-    </div>
-  </ng-container>
+<!--  FIXME: Зачем нам показывать id вообще, нужно у аналитиков спросить -->
+<!--  Если действительно нужно, то показывать во всех сущностях  -->
+<!--  <ng-container *ngIf="!isNew">-->
+<!--    <div class="form-field">-->
+<!--      <mat-label>ID</mat-label>-->
+<!--      <mat-form-field>-->
+<!--        <input matInput formControlName="id" readonly>-->
+<!--      </mat-form-field>-->
+<!--    </div>-->
+<!--  </ng-container>-->
 
   <div class="form-field">
     <mat-label>ФИО</mat-label>

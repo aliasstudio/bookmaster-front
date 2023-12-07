@@ -7,16 +7,16 @@
   </div>
 
   <div class="form-field">
-    <mat-label>Фамилия</mat-label>
+    <mat-label>Имя</mat-label>
     <mat-form-field>
-      <input matInput formControlName="lastName" placeholder="Введите фамилию">
+      <input matInput formControlName="firstName" placeholder="Введите имя">
     </mat-form-field>
   </div>
 
   <div class="form-field">
-    <mat-label>Имя</mat-label>
+    <mat-label>Фамилия</mat-label>
     <mat-form-field>
-      <input matInput formControlName="firstName" placeholder="Введите имя">
+      <input matInput formControlName="lastName" placeholder="Введите фамилию">
     </mat-form-field>
   </div>
 
@@ -25,6 +25,16 @@
     <mat-form-field>
       <input matInput formControlName="secondName" placeholder="Введите отчество">
     </mat-form-field>
+  </div>
+
+  <div class="form-field">
+    <mat-label>Роли</mat-label>
+    <app-mat-select-search
+      formControlName="roles"
+      placeholder="Выберите роли"
+      [items]="roles"
+    >
+    </app-mat-select-search>
   </div>
 
   <div class="form-field">

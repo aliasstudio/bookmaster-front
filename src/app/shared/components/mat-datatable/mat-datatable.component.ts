@@ -51,6 +51,8 @@ export class MatDatatableComponent<T extends PlainObject>
   protected columnsBind: Column<T>[];
   protected columnKeys: string[];
 
+  private lastFilter?: string;
+
   constructor(
     protected destroy$: DestroyService,
     protected http: HttpClient,
@@ -71,7 +73,9 @@ export class MatDatatableComponent<T extends PlainObject>
     this.columnDefs.forEach((columnDef) => this.table.addColumnDef(columnDef));
   }
 
-  bindData(): void {
+  bindData(filter?: string): void {
+    this.lastFilter = filter;
+
     const dataBinding = this.dataBinding;
 
     if (_.has(dataBinding, 'loadReq$')) {
@@ -82,7 +86,9 @@ export class MatDatatableComponent<T extends PlainObject>
         .subscribe(({ content }) => this.setData(content));
     } else if (_.has(dataBinding, 'urlRoot')) {
       const binding = dataBinding as EntityRemoteDataBinding<T>;
-      const url = binding.urlRoot;
+      const url = filter
+        ? `${binding.urlRoot}?filter=${filter}`
+        : binding.urlRoot;
 
       this.http
         .get<Page<T>>(url)
@@ -93,6 +99,10 @@ export class MatDatatableComponent<T extends PlainObject>
 
       this.setData(binding.data);
     }
+  }
+
+  reloadData(keepFilter = true): void {
+    this.bindData(keepFilter ? this.lastFilter : null);
   }
 
   private setData(data: T[]): void {
