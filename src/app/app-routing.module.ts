@@ -1,22 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { Registry } from '@app/auth/models/privilege';
-import { authGuard } from '@app/core/guards/auth.guard';
-import { RegistriesGuard } from '@app/core/guards/registries.guard';
+import { FirstAccessibleChildRedirectGuard } from '@app/core/guards/first-accessible-child-redirect.guard';
 
 const routes: Routes = [
   {
     path: '',
-    canActivate: [RegistriesGuard],
+    canActivate: [FirstAccessibleChildRedirectGuard],
     children: [
       {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: 'auth',
-      },
-      {
         path: 'auth',
-        canActivate: [authGuard],
         loadChildren: () =>
           import('@app/auth/auth.module').then((m) => m.AuthModule),
       },
@@ -59,6 +52,7 @@ const routes: Routes = [
       //   data: {
       //     registryKey: Registry.Issue,
       //   },
+      //   canActivate: [firstAccessibleChildRedirectGuard],
       //   loadChildren: () =>
       //     import('@app/issues/issues.module').then(
       //       (m) => m.IssuesModule,
@@ -69,6 +63,7 @@ const routes: Routes = [
       //   data: {
       //     registryKey: Registry.Report,
       //   },
+      //   canActivate: [firstAccessibleChildRedirectGuard],
       //   loadChildren: () =>
       //     import('@app/reports/reports.module').then(
       //       (m) => m.ReportsModule,

@@ -7,9 +7,10 @@ import {
   HttpRequest,
   HttpStatusCode,
 } from '@angular/common/http';
-import { catchError, Observable, throwError } from 'rxjs';
+import { catchError, Observable, tap, throwError } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '@app/auth/services/auth.service';
+import { Token } from '@app/core/models/interfaces';
 
 @Injectable()
 export class BaseInterceptor implements HttpInterceptor {
@@ -62,6 +63,12 @@ export class BaseInterceptor implements HttpInterceptor {
 
           return throwError(() => error);
         }),
+        tap(() => {
+          const token = this.authService.getToken();
+          const storeToken: Token = { token, date: new Date().toJSON() };
+
+          localStorage.setItem('auth-token', JSON.stringify(storeToken));
+        }),
       );
   }
 
@@ -74,7 +81,7 @@ export class BaseInterceptor implements HttpInterceptor {
 
     return request.clone({
       setHeaders: {
-        'Auth-Token': this.authService.getToken(),
+        'Auth-Token': token,
       },
     });
   }

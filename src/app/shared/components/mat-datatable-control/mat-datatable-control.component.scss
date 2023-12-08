@@ -6,9 +6,18 @@
   padding: 8px 0;
 }
 
-.mat-data-table {
-  max-height: calc(100vh - 155px);
+.table-container {
+  display: block;
+  max-height: 100%;
   overflow: auto;
+}
+.mat-data-table {
+  ::ng-deep > thead {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background-color: white;
+  }
 }
 
 

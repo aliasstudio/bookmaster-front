@@ -5,13 +5,23 @@ import { DestroyService } from '@app/core/services/destroy.service';
 import * as _ from 'lodash';
 import { Registry, RegistryPrivilege } from '@app/auth/models/privilege';
 
+export function hasViewPrivilege(
+  registryKey: Registry,
+  registries: Record<Registry, RegistryPrivilege[]>,
+): boolean {
+  return (
+    _.has(registries, Registry.All) ||
+    !!_.get(registries, registryKey)?.includes(RegistryPrivilege.Select)
+  );
+}
+
 export function hasEditPrivilege(
   registryKey: Registry,
   registries: Record<Registry, RegistryPrivilege[]>,
 ): boolean {
   return (
     _.has(registries, Registry.All) ||
-    _.get(registries, registryKey)?.includes(RegistryPrivilege.Edit)
+    !!_.get(registries, registryKey)?.includes(RegistryPrivilege.Edit)
   );
 }
 

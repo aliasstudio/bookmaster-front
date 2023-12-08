@@ -33,11 +33,16 @@ export class BookFormComponent extends FormEditorDirective<Book> {
   }
 
   resolveForm(): FormControlMap<Book> {
+    const fieldValidators = [Validators.minLength(2), Validators.maxLength(32)];
+
     return {
-      title: new FormControl(null, Validators.required),
-      subTitle: new FormControl(null),
-      firstPublishDate: new FormControl(null),
-      description: new FormControl(null),
+      title: new FormControl(null, [...fieldValidators, Validators.required]),
+      subTitle: new FormControl(null, fieldValidators),
+      firstPublishDate: new FormControl(null), // FIXME: ПОЧЕМУ СТРОКА ТО ЕМАЕ
+      description: new FormControl(null, [
+        ...fieldValidators,
+        Validators.maxLength(224),
+      ]),
       authors: new FormControl(null),
     };
   }

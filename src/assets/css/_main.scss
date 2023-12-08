@@ -25,11 +25,57 @@ form {
   }
 }
 
+.table-container {
+  &::-webkit-scrollbar-track
+  {
+    -webkit-box-shadow: inset 0 0 2px rgba(68, 68, 68, 0.3);
+    border-radius: 10px;
+    background-color: #F5F5F5;
+  }
+
+  &::-webkit-scrollbar
+  {
+    width: 6px;
+    background-color: #F5F5F5;
+  }
+
+  &::-webkit-scrollbar-thumb
+  {
+    border-radius: 6px;
+    -webkit-box-shadow: inset 0 0 2px rgba(68, 68, 68, 0.3);
+    background-color: #9F9F9F;
+  }
+}
+
 .repository {
   padding: 20px;
 
+  // костыльный костыль из-за бутстрапа
+  h3 {
+    margin: 0 !important;
+  }
+
   &.full-height {
-    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-height: 100vh;
+
+    app-mat-datatable-control, .mat-drawer-container, .mat-drawer-content {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+    }
+
+    app-mat-datatable-control {
+      // еще один костыльный костыль, чтоб влезала таблица
+      max-height: calc(100vh - 73px);
+    }
+
+    .mat-mdc-paginator {
+      margin-top: auto;
+    }
   }
 
   > h3 {
