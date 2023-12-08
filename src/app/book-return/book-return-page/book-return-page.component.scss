@@ -1,0 +1,27 @@
+.search-boxes {
+  display: flex;
+  gap: 24px;
+}
+
+.cards {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  min-height: 150px;
+}
+
+.customer-wrapper {
+
+}
+
+.card-wrapper {
+  margin-top: 4px;
+  padding: 20px;
+  border-left: 2px solid black;
+  border-right: 2px solid black;
+  max-width: 630px;
+}
+
+.grids {
+  display: flex;
+}

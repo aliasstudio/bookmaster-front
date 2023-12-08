@@ -1,11 +1,36 @@
-<app-mat-datatable-search
-  placeholder="ID клиента"
-  (searchClick)="findCustomer($event)"
->
+<section class="repository full-height">
 
-</app-mat-datatable-search>
-<app-mat-datatable-search
-  placeholder="ID книги"
->
+<div class="search-boxes">
+  <app-mat-datatable-search
+    placeholder="ID клиента"
+    (searchClick)="findCustomer($event)"
+  >
+  </app-mat-datatable-search>
+  <app-mat-datatable-search
+    placeholder="ID книги"
+    (searchClick)="findBook($event)"
+  >
+  </app-mat-datatable-search>
+</div>
 
-</app-mat-datatable-search>
+  <div class="cards">
+    <div class="customer-wrapper card-wrapper" *ngIf="customer">
+        <h4>{{ customer.name }}</h4>
+        <h5>{{ customer.address }}</h5>
+        <h5>{{ customer.phone }}</h5>
+    </div>
+
+    <div class="book-wrapper card-wrapper" *ngIf="book">
+      <h4>{{ book.title }}</h4>
+      <h5>{{ book.firstPublishDate }}</h5>
+    </div>
+  </div>
+
+
+<button mat-flat-button (click)="lendBook()">Выдать</button>
+
+  <div class="grids">
+    <app-book-history-grid-page #historyGrid [dataBinding]="historyDataBinding" style="width: 100%;"></app-book-history-grid-page>
+    <app-book-history-grid-page #actualGrid [dataBinding]="actualDataBinding" style="width: 100%;"></app-book-history-grid-page>
+  </div>
+</section>

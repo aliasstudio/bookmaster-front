@@ -7,7 +7,9 @@ import { DestroyService } from "@app/core/services/destroy.service";
 import { MatSidenavContainer } from "@angular/material/sidenav";
 import { HttpClient } from "@angular/common/http";
 import { DataBinding, EntityRemoteDataBinding } from "@app/shared/models/databinding";
-import { BookHistoryGridPageComponent } from "@app/reports/book-history-grid-page/book-history-grid-page.component";
+import {
+  BookHistoryGridPageComponent
+} from "@app/shared/components/book-history-grid-page/book-history-grid-page.component";
 import { Book } from "@app/shared/models/book";
 import { MatTableDataSource } from "@angular/material/table";
 
