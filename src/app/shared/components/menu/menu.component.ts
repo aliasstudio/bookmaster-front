@@ -124,6 +124,12 @@ export class MenuComponent implements OnInit, AfterViewInit {
             icon: 'icon-customer',
             link: 'customers',
           },
+          {
+            id: Registry.Report,
+            name: 'Отчеты',
+            icon: 'icon-chart',
+            link: 'reports',
+          },
         ];
 
     return menuItems.filter((item) => {
