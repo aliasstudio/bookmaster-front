@@ -13,9 +13,9 @@
   </app-mat-datatable-search>
 
   <ng-container>
-    <button mat-flat-button appButton text="Выдать" (click)="lendBook()"></button>
-    <button mat-flat-button appButton text="Возврат" (click)="returnBook()"></button>
-    <button mat-flat-button appButton text="Продлить" (click)="extendBook()"></button>
+    <button mat-flat-button appButton [disabled]="!(customer?.id && book?.uuid)" text="Выдать" (click)="lendBook()"></button>
+    <button mat-flat-button appButton [disabled]="!(customer?.id && book?.uuid)" text="Возврат" (click)="returnBook()"></button>
+    <button mat-flat-button appButton [disabled]="!(customer?.id && book?.uuid)" text="Продлить" (click)="extendBook()"></button>
   </ng-container>
 </div>
 

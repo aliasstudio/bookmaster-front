@@ -6,8 +6,6 @@ import { DestroyService } from '@app/core/services/destroy.service';
 import {
   MatDatatableControlComponent
 } from '@app/shared/components/mat-datatable-control/mat-datatable-control.component';
-import { debounceTime, Subject, takeUntil } from 'rxjs';
-import { DestroyService } from '@app/core/services/destroy.service';
 
 @Component({
   selector: 'app-mat-datatable-search',
