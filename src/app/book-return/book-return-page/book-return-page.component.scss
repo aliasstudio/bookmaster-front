@@ -4,14 +4,20 @@
 }
 
 .cards {
-  display: flex;
   width: 100%;
-  justify-content: space-between;
   min-height: 150px;
+  position: relative;
 }
 
 .customer-wrapper {
+  display: inline-block;
+  margin-right: auto;
+}
 
+.book-wrapper {
+  display: inline-block;
+  position: absolute;
+  right: 0;
 }
 
 .card-wrapper {
