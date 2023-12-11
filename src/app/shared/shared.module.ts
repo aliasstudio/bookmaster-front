@@ -39,6 +39,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { HrefPipe } from '@app/shared/pipes/href.pipe';
 import { MatTabsModule } from '@angular/material/tabs';
 import { PhonePipe } from '@app/shared/pipes/phone.pipe';
+import { ExportButtonDirective } from '@app/shared/directives/buttons/export-button.directive';
 
 const imports = [
   CommonModule,
@@ -86,6 +87,7 @@ const exports = [
   MatDeleteDialogComponent,
   HrefPipe,
   PhonePipe,
+  ExportButtonDirective,
 ];
 
 @NgModule({

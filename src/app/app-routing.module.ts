@@ -64,26 +64,13 @@ const routes: Routes = [
       //       (m) => m.IssuesModule,
       //     ),
       // },
-      // {
-      //   path: 'reports',
-      //   data: {
-      //     registryKey: Registry.Report,
-      //   },
-      //   loadChildren: () =>
-      //     import('@app/reports/reports.module').then(
-      //       (m) => m.ReportsModule,
-      //     ),
-      // },
-    ],
-  },
-  {
-    path: 'reports',
-    pathMatch: 'full',
-    children: [
       {
-        path: '',
+        path: 'reports',
+        data: {
+          registryKey: Registry.Report,
+        },
         loadChildren: () =>
-         import('@app/reports/reports.module').then(m => m.ReportsModule),
+          import('@app/reports/reports.module').then((m) => m.ReportsModule),
       },
     ],
   },

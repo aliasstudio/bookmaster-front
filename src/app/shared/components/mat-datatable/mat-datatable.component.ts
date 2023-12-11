@@ -155,4 +155,27 @@ export class MatDatatableComponent<T extends PlainObject>
     dataSource._updateChangeSubscription();
     !withoutNotification && this.toastr.success('Запись успешно удалена!');
   }
+
+  export(fileName?: string) {
+    const binding = this.dataBinding as EntityRemoteDataBinding<T>;
+    const url = binding.urlRoot;
+    const filter = this.lastFilter;
+    fileName ??= 'отчет.xlsx';
+    const subscription = this.http
+      .get(url + `/export/excel${filter ? '?filter=' + this.lastFilter : ''}`, {
+        responseType: 'blob',
+      })
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((file: Blob) => {
+        const url = window.URL.createObjectURL(file);
+        const link = document.createElement('a');
+
+        link.setAttribute('href', url);
+        link.setAttribute('download', fileName);
+        link.style.display = 'none';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      });
+  }
 }

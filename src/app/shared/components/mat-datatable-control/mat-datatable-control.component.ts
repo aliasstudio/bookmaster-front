@@ -41,7 +41,7 @@ export class MatDatatableControlComponent<
 > extends MatDatatableComponent<T> {
   @ViewChild('drawer') drawer: MatDrawer;
 
-  @Input() formRef: TemplateRef<any>;
+  @Input() formRef?: TemplateRef<any>;
   @Input() readOnly: boolean;
   @Input() formTitle: string;
 
@@ -54,7 +54,9 @@ export class MatDatatableControlComponent<
   protected onBindingComplete() {
     super.onBindingComplete();
 
-    this.columnKeys.push('control');
+    if (this.formRef) {
+      this.columnKeys.push('control');
+    }
   }
 
   private hasEntityRoot(): boolean {
