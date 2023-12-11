@@ -35,8 +35,8 @@ export class BookReturnPageComponent {
   @ViewChild('historyGrid')
   historyGrid: BookReturnGridPageComponent;
 
-  get isButtonDisabled(): boolean {
-    return !(this.customer?.id && this.book?.uuid);
+  get isCustomerAndBookSelected(): boolean {
+    return !!(this.customer?.id && this.book?.uuid);
   }
 
   customer: Customer;

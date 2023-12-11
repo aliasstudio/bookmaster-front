@@ -1,11 +1,16 @@
-import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { PlainObject } from '@ngxs/store/internals';
 import { MatFormField } from '@angular/material/form-field';
 import { debounceTime, Subject, takeUntil } from 'rxjs';
 import { DestroyService } from '@app/core/services/destroy.service';
-import {
-  MatDatatableControlComponent
-} from '@app/shared/components/mat-datatable-control/mat-datatable-control.component';
+import { MatDatatableControlComponent } from '@app/shared/components/mat-datatable-control/mat-datatable-control.component';
 
 @Component({
   selector: 'app-mat-datatable-search',
@@ -20,8 +25,8 @@ export class MatDatatableSearchComponent<T extends PlainObject>
   @Input() placeholder: string = 'Введите название или ID';
   @Input() url: string;
   @Input() value: string;
+  @Input() width: number;
   @Output() searchClick = new EventEmitter();
-
 
   search$ = new Subject<void>();
 
@@ -37,7 +42,7 @@ export class MatDatatableSearchComponent<T extends PlainObject>
 
     el.style.padding = '6px 0';
     el.style.minHeight = '38px';
-    el.style.minWidth = '190px';
+    el.style.minWidth = this.width ? `${this.width}px` : '190px';
 
     this.search$
       .pipe(debounceTime(250), takeUntil(this.destroy$))
