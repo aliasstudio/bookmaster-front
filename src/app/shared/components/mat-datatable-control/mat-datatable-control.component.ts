@@ -109,7 +109,10 @@ export class MatDatatableControlComponent<
               this.toastr.error('Ошибка удаления записи!');
             return throwError(() => error);
           }),
-          tap(() => this.remove(item, idField, withoutNotification)),
+          tap(() => {
+            this.remove(item, idField, withoutNotification);
+            this.bindData();
+          }),
           takeUntil(this.destroy$),
         )
         .subscribe(() => this.removed.emit(item));
@@ -141,6 +144,7 @@ export class MatDatatableControlComponent<
 
             this.add(entity, withoutNotification);
             this.selectedItem$.next(entity);
+            this.reloadData();
           }),
           takeUntil(this.destroy$),
         )
@@ -176,6 +180,7 @@ export class MatDatatableControlComponent<
 
             this.edit(entity, idField, withoutNotification);
             this.selectedItem$.next(entity);
+            this.reloadData();
           }),
           takeUntil(this.destroy$),
         )

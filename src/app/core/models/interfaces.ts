@@ -11,3 +11,8 @@ export type Function<TArgument = any, TResult = void> = (
 ) => TResult;
 
 export type ValueOrObservable<T = any> = T | Observable<T>;
+
+export interface Token {
+  token: string;
+  date: string;
+}

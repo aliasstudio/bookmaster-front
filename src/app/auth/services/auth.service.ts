@@ -18,11 +18,7 @@ import { UserProtected } from '@app/auth/models/user-proteted';
 import { Router } from '@angular/router';
 import { parseJSON } from 'date-fns';
 import { User } from '@app/auth/models/user';
-
-interface Token {
-  token: string;
-  date: string;
-}
+import { Token } from '@app/core/models/interfaces';
 
 @Injectable({
   providedIn: 'root',

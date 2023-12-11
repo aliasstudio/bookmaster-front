@@ -129,7 +129,7 @@ export class MatDatatableComponent<T extends PlainObject>
   add(item: T, withoutNotification?: boolean): void {
     const dataSource = this.dataSource;
 
-    dataSource.data.unshift(item);
+    dataSource.data.push(item);
     dataSource._updateChangeSubscription();
     !withoutNotification && this.toastr.success('Запись успешно добавлена!');
   }

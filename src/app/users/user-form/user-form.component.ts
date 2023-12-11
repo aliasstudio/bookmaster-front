@@ -5,6 +5,8 @@ import { FormEditorDirective } from '@app/shared/directives/form-editor.directiv
 import { FormControlMap } from '@app/core/models/interfaces';
 import { provideFormEditor } from '@app/core/utils/functions';
 import { Roles } from '@app/auth/models/roles';
+import { TEXT } from '@app/core/utils/patterns';
+import { takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-user-form',
@@ -25,27 +27,42 @@ export class UserFormComponent extends FormEditorDirective<UserProtected> {
   }
 
   resolveForm(): FormControlMap<UserProtected> {
-    const isNew = this.isNew;
+    const fieldValidators = [
+      Validators.required,
+      Validators.minLength(2),
+      Validators.maxLength(16),
+      Validators.pattern(TEXT),
+    ];
 
     return {
       login: new FormControl(
-        { value: null, disabled: !isNew },
-        Validators.required,
+        { value: null, disabled: this.isPristine },
+        fieldValidators,
       ),
-      lastName: new FormControl(null, [Validators.required, Validators.maxLength(16)]),
-      firstName: new FormControl(null, [Validators.required, Validators.maxLength(16)]),
-      secondName: new FormControl(null, [Validators.required, Validators.maxLength(16)]),
+      lastName: new FormControl(null, fieldValidators),
+      firstName: new FormControl(null, fieldValidators),
+      secondName: new FormControl(null, fieldValidators),
       roles: new FormControl(null, Validators.required),
-      password: new FormControl(null, [isNew ? Validators.required : Validators.nullValidator, Validators.maxLength(64)]),
+      password: new FormControl(null, [
+        this.isNew ? Validators.required : Validators.nullValidator,
+        Validators.minLength(2),
+        Validators.maxLength(64),
+      ]),
     };
   }
 
   ngOnInit(): void {
     super.ngOnInit();
 
+    const formControls = this.formControls;
+
     if (this.isPristine) {
       this.entity.password = null;
-      this.formControls.password.reset();
+      formControls.password.reset();
     }
+
+    this.entityChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
+      this.isPristine && formControls.login.disable();
+    });
   }
 }
