@@ -1,35 +1,43 @@
 import { Component, ViewChild } from '@angular/core';
+import { MatDatatableControlComponent } from '@app/shared/components/mat-datatable-control/mat-datatable-control.component';
+import { HttpClient } from '@angular/common/http';
+import { of, switchMap, takeUntil } from 'rxjs';
+import { DestroyService } from '@app/core/services/destroy.service';
+import { Customer } from '@app/customers/models/customer';
+import { Book } from '@app/shared/models/book';
 import {
-  MatDatatableControlComponent
-} from "@app/shared/components/mat-datatable-control/mat-datatable-control.component";
-import { HttpClient } from "@angular/common/http";
-import { of, switchMap, takeUntil } from "rxjs";
-import { DestroyService } from "@app/core/services/destroy.service";
-import { Customer } from "@app/customers/models/customer";
-import { Book } from "@app/shared/models/book";
-import { DataBinding, EntityRemoteDataBinding } from "@app/shared/models/databinding";
-import { Issue } from "@app/shared/models/issue";
-import { MatSidenavContainer } from "@angular/material/sidenav";
-import { MatDialog } from "@angular/material/dialog";
-import { DialogLendBookComponent } from "@app/book-return/dialog-lend-book/dialog-lend-book.component";
-import { DialogReturnBookComponent } from "@app/book-return/dialog-return-book/dialog-return-book.component";
-import { Page } from "@app/shared/models/page";
-import { BookReturnGridPageComponent } from "@app/book-return/book-return-grid-page/book-return-grid-page.component";
-import { DialogExtendBookComponent } from "@app/book-return/dialog-extend-book/dialog-extend-book.component";
+  DataBinding,
+  EntityRemoteDataBinding,
+} from '@app/shared/models/databinding';
+import { Issue } from '@app/shared/models/issue';
+import { MatSidenavContainer } from '@angular/material/sidenav';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogLendBookComponent } from '@app/book-return/dialog-lend-book/dialog-lend-book.component';
+import { DialogReturnBookComponent } from '@app/book-return/dialog-return-book/dialog-return-book.component';
+import { Page } from '@app/shared/models/page';
+import { BookReturnGridPageComponent } from '@app/book-return/book-return-grid-page/book-return-grid-page.component';
+import { DialogExtendBookComponent } from '@app/book-return/dialog-extend-book/dialog-extend-book.component';
 
 @Component({
   selector: 'app-book-return-page',
   templateUrl: './book-return-page.component.html',
   styleUrls: ['./book-return-page.component.scss'],
-  providers: [MatDatatableControlComponent, MatSidenavContainer, DestroyService],
+  providers: [
+    MatDatatableControlComponent,
+    MatSidenavContainer,
+    DestroyService,
+  ],
 })
 export class BookReturnPageComponent {
-
   @ViewChild('actualGrid')
   actualGrid: BookReturnGridPageComponent;
 
   @ViewChild('historyGrid')
   historyGrid: BookReturnGridPageComponent;
+
+  get isButtonDisabled(): boolean {
+    return !(this.customer?.id && this.book?.uuid);
+  }
 
   customer: Customer;
   book: Book;
@@ -65,14 +73,16 @@ export class BookReturnPageComponent {
   };
 
   public findCustomer(customerId: string): void {
+    const [historyUrl] = (
+      this.historyDataBinding as EntityRemoteDataBinding<Issue>
+    ).urlRoot.split('?');
+    const [actualUrl] = (
+      this.actualDataBinding as EntityRemoteDataBinding<Issue>
+    ).urlRoot.split('?');
 
-    const [historyUrl] = (this.historyDataBinding as EntityRemoteDataBinding<Issue>).urlRoot.split('?');
-    const [actualUrl] = (this.actualDataBinding as EntityRemoteDataBinding<Issue>).urlRoot.split('?');
-
-    this.http.get(`customer/${customerId}`)
-      .pipe(
-        takeUntil(this.destroy$)
-      )
+    this.http
+      .get(`customer/${customerId}`)
+      .pipe(takeUntil(this.destroy$))
       .subscribe((customer: Customer) => {
         this.customer = customer;
 
@@ -92,9 +102,12 @@ export class BookReturnPageComponent {
   }
 
   public findBook(bookId: string) {
-    this.http.get(`book/${bookId}`).pipe(takeUntil(this.destroy$)).subscribe((book: Book) => {
-      this.book = book;
-    });
+    this.http
+      .get(`book/${bookId}`)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((book: Book) => {
+        this.book = book;
+      });
   }
 
   lendBook() {
@@ -102,11 +115,11 @@ export class BookReturnPageComponent {
       data: { dateOfIssue: null, returnUntil: null },
     });
 
-    dialogRef.afterClosed()
+    dialogRef
+      .afterClosed()
       .pipe(
         switchMap((result) => {
-          if (!result)
-            return of(null);
+          if (!result) return of(null);
 
           const { dateOfIssue, returnUntil } = result;
           return this.http.post('issue', {
@@ -115,40 +128,40 @@ export class BookReturnPageComponent {
             dateOfReturn: null,
             customer: { id: this.customer?.id },
             book: { uuid: this.book?.uuid, title: this.book?.title },
-          })
+          });
         }),
-        takeUntil(this.destroy$)
-      ).subscribe(() =>
-       this.updateTables(this.customer.name)
-    );
+        takeUntil(this.destroy$),
+      )
+      .subscribe(() => this.updateTables(this.customer.name));
   }
 
   returnBook() {
-
     const dialogRef = this.dialog.open(DialogReturnBookComponent, {
       data: { dateOfReturn: null },
     });
 
-    dialogRef.afterClosed()
+    dialogRef
+      .afterClosed()
       .pipe(
         switchMap((result) => {
-          if (!result)
-            return of(null);
+          if (!result) return of(null);
           const { dateOfReturn } = result;
-          return this.http.get(`issue?filter=${this.book.uuid}`).pipe(switchMap(({content}: Page<Issue>) => {
-            const [issue] = content;
+          return this.http.get(`issue?filter=${this.book.uuid}`).pipe(
+            switchMap(({ content }: Page<Issue>) => {
+              const [issue] = content;
 
-            return this.http.put(`issue/${issue.id}`, {
-              ...issue,
-              dateOfReturn,
-              customer: { id: this.customer?.id },
-              book: { uuid: this.book?.uuid, title: this.book?.title },
-            });
-          }));
+              return this.http.put(`issue/${issue.id}`, {
+                ...issue,
+                dateOfReturn,
+                customer: { id: this.customer?.id },
+                book: { uuid: this.book?.uuid, title: this.book?.title },
+              });
+            }),
+          );
         }),
-        takeUntil(this.destroy$)
-      ).subscribe(() => this.updateTables(this.customer.name));
-
+        takeUntil(this.destroy$),
+      )
+      .subscribe(() => this.updateTables(this.customer.name));
   }
 
   extendBook() {
@@ -156,30 +169,32 @@ export class BookReturnPageComponent {
       data: { returnUntil: null },
     });
 
-    dialogRef.afterClosed()
+    dialogRef
+      .afterClosed()
       .pipe(
         switchMap((result) => {
-          if (!result)
-            return of(null);
+          if (!result) return of(null);
           const { returnUntil } = result;
-          return this.http.get(`issue?filter=${this.book.uuid}`).pipe(switchMap(({content}: Page<Issue>) => {
-            const [issue] = content;
+          return this.http.get(`issue?filter=${this.book.uuid}`).pipe(
+            switchMap(({ content }: Page<Issue>) => {
+              const [issue] = content;
 
-            return this.http.put(`issue/${issue.id}`, {
-              ...issue,
-              returnUntil,
-              customer: { id: this.customer?.id },
-              book: { uuid: this.book?.uuid, title: this.book?.title },
-            });
-          }));
+              return this.http.put(`issue/${issue.id}`, {
+                ...issue,
+                returnUntil,
+                customer: { id: this.customer?.id },
+                book: { uuid: this.book?.uuid, title: this.book?.title },
+              });
+            }),
+          );
         }),
-        takeUntil(this.destroy$)
-      ).subscribe(() => this.updateTables(this.customer.name));
+        takeUntil(this.destroy$),
+      )
+      .subscribe(() => this.updateTables(this.customer.name));
   }
 
   private updateTables(customerName = '') {
     this.actualGrid.bindData(customerName);
     this.historyGrid.bindData(customerName);
   }
-
 }

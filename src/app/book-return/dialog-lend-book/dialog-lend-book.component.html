@@ -2,15 +2,15 @@
   <h5>Заполните данные о выдаче</h5>
   <mat-form-field>
     <mat-label>Дата выдачи</mat-label>
-    <input matInput formControlName="dateOfIssue" [matDatepicker]="picker2">
-    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-    <mat-datepicker #picker2></mat-datepicker>
+    <input matInput formControlName="dateOfIssue" [matDatepicker]="dateOfIssuePicker">
+    <mat-datepicker-toggle matSuffix [for]="dateOfIssuePicker"></mat-datepicker-toggle>
+    <mat-datepicker #dateOfIssuePicker></mat-datepicker>
   </mat-form-field>
   <mat-form-field>
     <mat-label>Вернуть до</mat-label>
-    <input matInput formControlName="returnUntil" [matDatepicker]="picker">
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
+    <input matInput formControlName="returnUntil" [matDatepicker]="retunUntilPicker">
+    <mat-datepicker-toggle matSuffix [for]="retunUntilPicker"></mat-datepicker-toggle>
+    <mat-datepicker #retunUntilPicker></mat-datepicker>
   </mat-form-field>
 </form>
 

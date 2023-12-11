@@ -1,6 +1,7 @@
 <div class="toolbar table__header_wrapper">
   <app-mat-datatable-search url="issue/history" (searchClick)="updateRecords($event)"></app-mat-datatable-search>
-  <button mat-flat-button appButton iconClass="icon-reload" class="reload-button" text="Обновить" (click)="grid.bindData()"></button>
+<!--  <button mat-flat-button appButton iconClass="icon-reload" class="reload-button" text="Обновить" (click)="grid.bindData()"></button>-->
+  <button mat-flat-button appReloadGridButton></button>
 </div>
 <div class="content">
   <div class="book-card">

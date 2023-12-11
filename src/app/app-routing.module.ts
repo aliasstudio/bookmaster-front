@@ -53,9 +53,7 @@ const routes: Routes = [
           registryKey: Registry.Reports,
         },
         loadChildren: () =>
-          import('@app/reports/reports.module').then(
-            (m) => m.ReportsModule,
-          ),
+          import('@app/reports/reports.module').then((m) => m.ReportsModule),
       },
       {
         path: 'book-return',
@@ -65,16 +63,6 @@ const routes: Routes = [
         loadChildren: () =>
           import('@app/book-return/book-return.module').then(
             (m) => m.BookReturnModule,
-          ),
-      },
-      {
-        path: 'reports',
-        data: {
-          registryKey: Registry.Reports,
-        },
-        loadChildren: () =>
-          import('@app/reports/reports.module').then(
-            (m) => m.ReportsModule,
           ),
       },
     ],
