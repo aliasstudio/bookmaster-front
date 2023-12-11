@@ -44,6 +44,7 @@ import { HrefPipe } from '@app/shared/pipes/href.pipe';
 import { MatTabsModule } from '@angular/material/tabs';
 import { PhonePipe } from '@app/shared/pipes/phone.pipe';
 import { ExportButtonDirective } from '@app/shared/directives/buttons/export-button.directive';
+import { IssueDelayPipe } from '@app/shared/pipes/issue-delay.pipe';
 
 const imports = [
   CommonModule,
@@ -95,6 +96,7 @@ const exports = [
   HrefPipe,
   PhonePipe,
   ExportButtonDirective,
+  IssueDelayPipe,
 ];
 
 @NgModule({

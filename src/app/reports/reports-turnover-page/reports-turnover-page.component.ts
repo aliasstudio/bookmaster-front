@@ -19,4 +19,11 @@ export class ReportsTurnoverPageComponent {
       { name: 'Срок сдачи', key: 'returnUntil', customTemplate: true },
     ],
   };
+
+  isDelayed(issue: Issue) {
+    let { dateOfReturn, returnUntil } = issue;
+    dateOfReturn = dateOfReturn ? new Date(dateOfReturn) : new Date();
+    returnUntil = new Date(returnUntil);
+    return dateOfReturn > returnUntil;
+  }
 }
