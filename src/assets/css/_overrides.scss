@@ -25,3 +25,9 @@
   max-width: 240px !important;
   white-space: nowrap !important;
 }
+
+.mat-mdc-tab-body {
+  section.repository {
+    padding: 0;
+  }
+}

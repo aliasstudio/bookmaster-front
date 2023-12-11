@@ -58,7 +58,7 @@ const routes: Routes = [
       {
         path: 'book-return',
         data: {
-          registryKey: Registry.Issue,
+          registryKey: Registry.BookReturn,
         },
         loadChildren: () =>
           import('@app/book-return/book-return.module').then(
