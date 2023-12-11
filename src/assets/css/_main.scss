@@ -61,7 +61,8 @@ form {
     height: 100%;
     max-height: 100vh;
 
-    app-mat-datatable-control, .mat-drawer-container, .mat-drawer-content {
+    app-mat-datatable-control, .mat-drawer-container, .mat-drawer-content,
+    .mat-mdc-tab-group, .mat-mdc-tab-body-wrapper {
       display: flex;
       flex-direction: column;
       width: 100%;
