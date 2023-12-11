@@ -1,0 +1,33 @@
+.search-boxes {
+  display: flex;
+  gap: 24px;
+}
+
+.cards {
+  width: 100%;
+  min-height: 150px;
+  position: relative;
+}
+
+.customer-wrapper {
+  display: inline-block;
+  margin-right: auto;
+}
+
+.book-wrapper {
+  display: inline-block;
+  position: absolute;
+  right: 0;
+}
+
+.card-wrapper {
+  margin-top: 4px;
+  padding: 20px;
+  border-left: 2px solid black;
+  border-right: 2px solid black;
+  max-width: 630px;
+}
+
+.grids {
+  display: flex;
+}

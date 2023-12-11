@@ -1,0 +1,19 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding: 16px;
+
+  h5 {
+    margin-bottom: 12px;
+  }
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  .dialog-actions {
+    margin-top: auto;
+  }
+}

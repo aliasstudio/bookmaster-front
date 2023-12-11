@@ -8,7 +8,7 @@ export enum Registry {
   Customer = 'CLIENT',
   Book = 'BOOK',
   Author = 'AUTHOR',
+  Reports = 'REPORTS',
   Issue = 'ISSUES',
-  Report = 'REPORT',
   All = 'ALL',
 }

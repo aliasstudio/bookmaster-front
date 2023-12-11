@@ -1,0 +1,42 @@
+<section class="repository full-height">
+
+<div class="search-boxes">
+  <app-mat-datatable-search
+    placeholder="ID клиента"
+    (searchClick)="findCustomer($event)"
+  >
+  </app-mat-datatable-search>
+  <app-mat-datatable-search
+    placeholder="ID книги"
+    (searchClick)="findBook($event)"
+  >
+  </app-mat-datatable-search>
+
+  <ng-container>
+    <button mat-flat-button appButton [disabled]="!(customer?.id && book?.uuid)" text="Выдать" (click)="lendBook()"></button>
+    <button mat-flat-button appButton [disabled]="!(customer?.id && book?.uuid)" text="Возврат" (click)="returnBook()"></button>
+    <button mat-flat-button appButton [disabled]="!(customer?.id && book?.uuid)" text="Продлить" (click)="extendBook()"></button>
+  </ng-container>
+</div>
+
+  <div class="cards">
+    <div class="customer-wrapper card-wrapper" *ngIf="customer?.id">
+        <h4>{{ customer.name }}</h4>
+        <h5>{{ customer.address }}</h5>
+        <h5>{{ customer.phone }}</h5>
+    </div>
+
+    <div class="book-wrapper card-wrapper" *ngIf="book">
+      <h4>{{ book.title }}</h4>
+      <h5>{{ book.authors.length > 0 && book.authors[0].name }}</h5>
+      <h5>{{ book.firstPublishDate }}</h5>
+    </div>
+  </div>
+
+
+  <div class="grids" *ngIf="customer?.id">
+    <app-book-return-grid-page #actualGrid title="Выданные книги" [dataBinding]="actualDataBinding" style="width: 100%;"></app-book-return-grid-page>
+    <app-book-return-grid-page #historyGrid title="История выдачи" [dataBinding]="historyDataBinding" style="width: 100%;"></app-book-return-grid-page>
+
+  </div>
+</section>
