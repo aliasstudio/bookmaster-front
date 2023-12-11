@@ -10,6 +10,5 @@ export enum Registry {
   Author = 'AUTHOR',
   Reports = 'REPORTS',
   Issue = 'ISSUES',
-  Returns = 'RETURNS',
   All = 'ALL',
 }

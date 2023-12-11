@@ -123,7 +123,7 @@ export class MenuComponent implements OnInit, AfterViewInit {
             link: 'reports',
           },
           {
-            id: Registry.Customer,
+            id: Registry.Issue,
             name: 'Возврат',
             icon: 'icon-customer',
             link: 'book-return',
