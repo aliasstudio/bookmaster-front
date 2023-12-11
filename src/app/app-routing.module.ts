@@ -58,17 +58,14 @@ const routes: Routes = [
       //       (m) => m.IssuesModule,
       //     ),
       // },
-      // {
-      //   path: 'reports',
-      //   data: {
-      //     registryKey: Registry.Report,
-      //   },
-      //   canActivate: [firstAccessibleChildRedirectGuard],
-      //   loadChildren: () =>
-      //     import('@app/reports/reports.module').then(
-      //       (m) => m.ReportsModule,
-      //     ),
-      // },
+      {
+        path: 'reports',
+        data: {
+          registryKey: Registry.Report,
+        },
+        loadChildren: () =>
+          import('@app/reports/reports.module').then((m) => m.ReportsModule),
+      },
     ],
   },
 ];

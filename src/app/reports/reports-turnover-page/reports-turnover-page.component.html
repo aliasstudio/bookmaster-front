@@ -1,0 +1,28 @@
+<section class="repository full-height">
+    <app-mat-datatable-control
+            [dataBinding]="dataBinding"
+    >
+        <ng-container table-header>
+            <app-mat-datatable-search placeholder="Введите название книги или ФИО клиента"></app-mat-datatable-search>
+            <button mat-flat-button appReloadGridButton></button>
+            <button mat-flat-button appExportButton fileName="Оборот книг.xlsx"></button>
+        </ng-container>
+
+        <ng-container table-columns>
+            <ng-container matColumnDef="book">
+                <th mat-header-cell *matHeaderCellDef>Название книги</th>
+                <td mat-cell *matCellDef="let element">{{ element.book.title }}</td>
+            </ng-container>
+            <ng-container matColumnDef="customer">
+                <th mat-header-cell *matHeaderCellDef>Клиент</th>
+                <td mat-cell *matCellDef="let element">{{ element.customer.name }}</td>
+            </ng-container>
+            <ng-container matColumnDef="returnUntil">
+                <th mat-header-cell *matHeaderCellDef>Срок сдачи</th>
+                <td mat-cell *matCellDef="let element">
+                    <app-reports-return-until-column [element]="element"></app-reports-return-until-column>
+                </td>
+            </ng-container>
+        </ng-container>
+    </app-mat-datatable-control>
+</section>
