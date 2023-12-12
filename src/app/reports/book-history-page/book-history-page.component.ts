@@ -1,9 +1,11 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { Issue } from '@app/shared/models/issue';
 import { EntityRemoteDataBinding } from '@app/shared/models/databinding';
 import { Book } from '@app/shared/models/book';
-import { MatTableDataSource } from '@angular/material/table';
 import { MatDatatableControlComponent } from '@app/shared/components/mat-datatable-control/mat-datatable-control.component';
+import { HttpClient } from '@angular/common/http';
+import { DestroyService } from '@app/core/services/destroy.service';
+import { lastValueFrom, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-book-history-page',
@@ -14,6 +16,9 @@ import { MatDatatableControlComponent } from '@app/shared/components/mat-datatab
 export class BookHistoryPageComponent {
   @ViewChild(MatDatatableControlComponent)
   grid: MatDatatableControlComponent<Issue>;
+
+  http = inject(HttpClient);
+  destroy$ = inject(DestroyService);
 
   dataBinding: EntityRemoteDataBinding<Issue> = {
     urlRoot: 'issue/history',
@@ -27,19 +32,56 @@ export class BookHistoryPageComponent {
     ],
   };
 
-  get book(): Book {
-    if (this.grid?.dataSource?.data.length > 0) {
-      return (this.grid?.dataSource as MatTableDataSource<Issue>)?.data?.[0]
-        .book;
-    }
-    return {} as Book;
-  }
+  book: Book;
+  currentImageIndex = 0;
+  images?: (string | ArrayBuffer)[] = [];
 
-  updateRecords(text: string) {
+  reloadBook(text: string) {
     const dataBinding = this.dataBinding;
     const [url] = dataBinding.urlRoot.split('?');
 
     this.dataBinding.urlRoot = url + `?filter=${text}`;
     this.grid.reloadData();
+
+    lastValueFrom(this.http.get<Book>(`book/${text}`)).then((book) => {
+      this.book = book;
+      this.images = [];
+
+      book.covers.forEach(async (cover) => {
+        const blob = await lastValueFrom(
+          this.http.get(`book-cover/${cover.id}`, {
+            responseType: 'blob',
+          }),
+        );
+        const reader = new FileReader();
+
+        reader.readAsDataURL(blob);
+        reader.onloadend = () => {
+          this.images.push(reader.result);
+        };
+      });
+    });
+  }
+
+  export(): void {
+    this.http
+      .get('issue/export/excel', {
+        responseType: 'blob',
+        params: {
+          filter: this.book?.id,
+        },
+      })
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((file: Blob) => {
+        const url = window.URL.createObjectURL(file);
+        const link = document.createElement('a');
+
+        link.setAttribute('href', url);
+        link.setAttribute('download', 'test.xlsx');
+        link.style.display = 'none';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      });
   }
 }

@@ -145,6 +145,7 @@ export class MatDatatableControlComponent<
             this.add(entity, withoutNotification);
             this.selectedItem$.next(entity);
             this.reloadData();
+            this.drawer.close();
           }),
           takeUntil(this.destroy$),
         )
@@ -181,6 +182,7 @@ export class MatDatatableControlComponent<
             this.edit(entity, idField, withoutNotification);
             this.selectedItem$.next(entity);
             this.reloadData();
+            this.drawer.close();
           }),
           takeUntil(this.destroy$),
         )

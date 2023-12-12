@@ -23,6 +23,6 @@ export class ReloadGridButtonDirective<
 
   @HostListener('click')
   onReloadClick(): void {
-    this.grid.reloadData();
+    this.grid.reloadData(false);
   }
 }

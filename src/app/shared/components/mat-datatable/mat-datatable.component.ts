@@ -101,8 +101,9 @@ export class MatDatatableComponent<T extends PlainObject>
     }
   }
 
-  reloadData(keepFilter = true): void {
+  reloadData(silent = true, keepFilter = true): void {
     this.bindData(keepFilter ? this.lastFilter : null);
+    !silent && this.toastr.success('Страница успешно обновлена!');
   }
 
   private setData(data: T[]): void {

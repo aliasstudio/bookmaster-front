@@ -1,18 +1,47 @@
 <div class="toolbar table__header_wrapper">
-  <app-mat-datatable-search [customQuery]="true" (onSearchEvent)="updateRecords($event)"></app-mat-datatable-search>
+  <app-mat-datatable-search [customQuery]="true" (onSearchEvent)="reloadBook($event)"></app-mat-datatable-search>
+  <button mat-flat-button appButton iconClass="icon-document" text="Экспорт" (click)="export()"></button>
   <button mat-flat-button appButton iconClass="icon-reload" class="reload-button" text="Обновить" (click)="grid.reloadData()"></button>
 </div>
 <div class="content">
   <div class="book-card">
     <h3 class="book-card__title">Информация о книге</h3>
-    <div>Название: {{ book.title }}</div>
+    <div>Название: {{ book?.title }}</div>
     <div>
       <span>Авторы: </span>
-      <span *ngFor="let author of book.authors">
-        {{ author.name }}
+      <span *ngFor="let author of book?.authors">
+        {{ author?.name }}
       </span>
     </div>
-    <div>Описание: {{ book.description }}</div>
+    <div>Описание: {{ book?.description }}</div>
+
+    <div *ngIf="images.length > 0">
+      <div>
+        <img style="width: 100%; height: 300px" [src]="images[currentImageIndex]" alt="">
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center mt-4">
+        <button
+          mat-flat-button
+          appButton
+          text="Пред."
+          (click)="currentImageIndex = currentImageIndex === 0 ? currentImageIndex : currentImageIndex - 1"
+        >
+        </button>
+
+        <div>
+          {{ currentImageIndex + 1 }} / {{ images.length }}
+        </div>
+
+        <button
+          mat-flat-button
+          appButton
+          text="След."
+          (click)="currentImageIndex = (currentImageIndex === images.length - 1) ? currentImageIndex : currentImageIndex + 1"
+        >
+        </button>
+      </div>
+    </div>
   </div>
 
   <app-mat-datatable-control [dataBinding]="dataBinding" class="w-100">
