@@ -1,17 +1,5 @@
-import {
-  AfterContentInit,
-  Component,
-  ContentChildren,
-  Input,
-  OnInit,
-  QueryList,
-  ViewChild,
-} from '@angular/core';
-import {
-  MatColumnDef,
-  MatTable,
-  MatTableDataSource,
-} from '@angular/material/table';
+import { AfterContentInit, Component, ContentChildren, Input, OnInit, QueryList, ViewChild, } from '@angular/core';
+import { MatColumnDef, MatTable, MatTableDataSource, } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { PlainObject } from '@ngxs/store/internals';
 import * as _ from 'lodash';
@@ -91,7 +79,11 @@ export class MatDatatableComponent<T extends PlainObject>
         : binding.urlRoot;
 
       this.http
-        .get<Page<T>>(url)
+        .get<Page<T>>(url, {
+          params: {
+            size: 100000,
+          }
+        })
         .pipe(takeUntil(this.destroy$))
         .subscribe(({ content }) => this.setData(content));
     } else {
