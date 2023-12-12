@@ -2,7 +2,9 @@ import { Component, inject, ViewChild } from '@angular/core';
 import { Issue } from '@app/shared/models/issue';
 import { EntityRemoteDataBinding } from '@app/shared/models/databinding';
 import { Book } from '@app/shared/models/book';
-import { MatDatatableControlComponent } from '@app/shared/components/mat-datatable-control/mat-datatable-control.component';
+import {
+  MatDatatableControlComponent
+} from '@app/shared/components/mat-datatable-control/mat-datatable-control.component';
 import { HttpClient } from '@angular/common/http';
 import { DestroyService } from '@app/core/services/destroy.service';
 import { lastValueFrom, takeUntil } from 'rxjs';
@@ -68,7 +70,7 @@ export class BookHistoryPageComponent {
       .get('issue/export/excel', {
         responseType: 'blob',
         params: {
-          filter: this.book?.id,
+          filter: this.book?.uuid,
         },
       })
       .pipe(takeUntil(this.destroy$))
