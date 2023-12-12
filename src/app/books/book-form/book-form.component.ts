@@ -41,6 +41,7 @@ export class BookFormComponent extends FormEditorDirective<Book> {
       firstPublishDate: new FormControl(null, [Validators.maxLength(224)]), // FIXME: ПОЧЕМУ СТРОКА ТО ЕМАЕ
       description: new FormControl(null, [Validators.maxLength(224)]),
       authors: new FormControl(null),
+      subjects: new FormControl(null),
     };
   }
 }

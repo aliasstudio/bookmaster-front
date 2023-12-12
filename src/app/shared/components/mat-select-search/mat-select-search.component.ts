@@ -33,7 +33,8 @@ export class MatSelectSearchComponent<T extends Dictionary<string | number>>
 
   @Input() placeholder: string;
   @Input() binding: Observable<T[]>;
-  @Input() items: T[];
+  @Input() items: T[] = [];
+  @Input() allowCustom: boolean;
 
   // выбранные значения
   control: FormControl = new FormControl<T[]>([]);
@@ -103,6 +104,27 @@ export class MatSelectSearchComponent<T extends Dictionary<string | number>>
 
   validate(control: AbstractControl): ValidationErrors {
     return this.control.errors;
+  }
+
+  onkeydown(event: KeyboardEvent): void {
+    if (
+      event.code === 'Enter' &&
+      this.allowCustom &&
+      !this.filteredItems.getValue().length
+    ) {
+      this.addItem();
+    }
+  }
+
+  addItem(): void {
+    const searchControl = this.searchControl;
+    const selectControl = this.control;
+    const item = { id: null, name: searchControl.value } as T;
+
+    this.items.push(item);
+    selectControl.setValue([...(selectControl.value ?? []), item]);
+    this.filteredItems.next(this.items);
+    searchControl.reset();
   }
 
   protected filterValue() {

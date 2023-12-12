@@ -3,9 +3,17 @@
     <mat-option>
       <ngx-mat-select-search
         [formControl]="searchControl"
-        placeholderLabel="Поиск..."
+        [placeholderLabel]="allowCustom ? 'Введите значение...' : 'Поиск...'"
         noEntriesFoundLabel="Список пуст"
+        [preventHomeEndKeyPropagation]="true"
+        (keydown)="onkeydown($event)"
       >
+        <span ngxMatSelectNoEntriesFound *ngIf="allowCustom">
+          <button mat-flat-button color="accent" class="green-button" (click)="addItem()">
+            <span class="icon-add"></span>
+            <span class="font-weight-400">Добавить</span>
+          </button>
+        </span>
       </ngx-mat-select-search>
     </mat-option>
     <mat-option *ngFor="let item of filteredItems | async" [value]="item">
