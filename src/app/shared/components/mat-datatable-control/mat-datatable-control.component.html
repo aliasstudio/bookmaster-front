@@ -51,7 +51,7 @@
       </table>
     </div>
 
-    <app-no-data-stub [display]="hasData === false"></app-no-data-stub>
+    <app-no-data-stub [display]="hasData === false" size="large" [useAltIcon]="true"></app-no-data-stub>
 
     <mat-paginator [hidden]="!hasData"></mat-paginator>
   </mat-sidenav-content>

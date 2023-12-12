@@ -11,12 +11,29 @@
     align-items: center;
     justify-content: center;
     height: 100%;
+    font-size: 1rem;
+    max-width: 270px;
+    text-align: center;
 
     * {
       user-select: none;
     }
+
+    &.large {
+      font-size: 1.75rem;
+      max-width: initial;
+    }
+
+    img {
+      max-width: 100%;
+    }
+  }
+  &_title {
+    font-weight: bold;
+    font-size: 1em;
   }
   &_subtitle {
-    color: var(--gray-400, #898993);
+    color: #898993;
+    font-size: .875rem;
   }
 }

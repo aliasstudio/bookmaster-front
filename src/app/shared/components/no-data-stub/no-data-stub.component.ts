@@ -9,4 +9,6 @@ export class NoDataStubComponent {
   @Input() display: boolean;
   @Input() title = 'Записи не найдены';
   @Input() subTitle = '';
+  @Input() useAltIcon = false;
+  @Input() size: 'large' | 'normal' = 'normal';
 }
