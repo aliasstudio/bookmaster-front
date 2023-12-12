@@ -13,7 +13,7 @@
     <div class="table__header_wrapper">
       <ng-content select="[table-header]"></ng-content>
     </div>
-    <div class="table-container">
+    <div class="table-container" [hidden]="!hasData">
       <table
         class="mat-data-table"
         mat-table
@@ -51,6 +51,8 @@
       </table>
     </div>
 
-    <mat-paginator></mat-paginator>
+    <app-no-data-stub [display]="hasData === false"></app-no-data-stub>
+
+    <mat-paginator [hidden]="!hasData"></mat-paginator>
   </mat-sidenav-content>
 </mat-sidenav-container>

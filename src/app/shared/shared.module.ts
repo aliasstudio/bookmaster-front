@@ -41,6 +41,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { PhonePipe } from '@app/shared/pipes/phone.pipe';
 import { ExportButtonDirective } from '@app/shared/directives/buttons/export-button.directive';
 import { IssueDelayPipe } from '@app/shared/pipes/issue-delay.pipe';
+import { NoDataStubComponent } from '@app/shared/components/no-data-stub/no-data-stub.component';
 
 const imports = [
   CommonModule,
@@ -93,6 +94,7 @@ const exports = [
   PhonePipe,
   ExportButtonDirective,
   IssueDelayPipe,
+  NoDataStubComponent,
 ];
 
 @NgModule({
