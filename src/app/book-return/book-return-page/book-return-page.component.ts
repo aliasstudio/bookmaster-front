@@ -3,7 +3,7 @@ import {
   MatDatatableControlComponent
 } from '@app/shared/components/mat-datatable-control/mat-datatable-control.component';
 import { HttpClient } from '@angular/common/http';
-import { of, switchMap, takeUntil } from 'rxjs';
+import { lastValueFrom, of, switchMap, takeUntil } from 'rxjs';
 import { DestroyService } from '@app/core/services/destroy.service';
 import { Customer } from '@app/customers/models/customer';
 import { Book } from '@app/shared/models/book';
@@ -34,9 +34,9 @@ export class BookReturnPageComponent {
   @ViewChild('historyGrid')
   historyGrid: BookReturnGridPageComponent;
 
-  get isCustomerAndBookSelected(): boolean {
-    return !!(this.customer?.id && this.book?.uuid);
-  }
+  lendButtonDisabled = true;
+  returnButtonDisabled = true;
+  extendButtonDisabled = true;
 
   customer: Customer;
   book: Book;
@@ -72,41 +72,34 @@ export class BookReturnPageComponent {
   };
 
   public findCustomer(customerId: string): void {
-    // const [historyUrl] = (
-    //   this.historyDataBinding as EntityRemoteDataBinding<Issue>
-    // ).urlRoot.split('?');
-    // const [actualUrl] = (
-    //   this.actualDataBinding as EntityRemoteDataBinding<Issue>
-    // ).urlRoot.split('?');
 
     this.http
       .get(`customer/${customerId}`)
       .pipe(takeUntil(this.destroy$))
       .subscribe((customer: Customer) => {
         this.customer = customer;
-
         this.updateTables(customer.name);
-
-        //
-        // this.historyDataBinding = {
-        //   ...this.historyDataBinding,
-        //   urlRoot: historyUrl + `?filter=${customer.name}`,
-        // } as DataBinding<Issue>;
-        //
-        // this.actualDataBinding = {
-        //   ...this.actualDataBinding,
-        //   urlRoot: actualUrl + `?filter=${customer.name}`,
-        // } as DataBinding<Issue>;
       });
   }
 
   public findBook(bookId: string) {
     this.http
       .get(`book/${bookId}`)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(
+        takeUntil(this.destroy$)
+      )
       .subscribe((book: Book) => {
-        this.book = book;
+          this.book = book;
+          this.setButtonsAccessibility();
       });
+  }
+
+  async setButtonsAccessibility() {
+    const actualIssuesByCustomerName = await (lastValueFrom(this.http.get(`issue/actual?filter=${this.customer.name}`)) as Promise<Page<Issue>>);
+    const actualIssuesByBookId= await (lastValueFrom(this.http.get(`issue/actual?filter=${this.book.uuid}`)) as Promise<Page<Issue>>);
+    this.returnButtonDisabled = !actualIssuesByCustomerName.content.find(issue => issue.customer.id === this.customer.id && issue.book.uuid === this.book.uuid);
+    this.extendButtonDisabled = this.returnButtonDisabled;
+    this.lendButtonDisabled = actualIssuesByBookId.content.length > 0;
   }
 
   lendBook() {
@@ -193,6 +186,7 @@ export class BookReturnPageComponent {
   }
 
   private updateTables(customerName = '') {
+    this.setButtonsAccessibility();
     this.actualGrid.bindData(customerName);
     this.historyGrid.bindData(customerName);
   }

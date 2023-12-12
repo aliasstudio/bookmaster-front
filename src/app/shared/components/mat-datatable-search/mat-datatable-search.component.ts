@@ -1,16 +1,11 @@
-import {
-  AfterViewInit,
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild, } from '@angular/core';
 import { PlainObject } from '@ngxs/store/internals';
 import { MatFormField } from '@angular/material/form-field';
 import { debounceTime, Subject, takeUntil } from 'rxjs';
 import { DestroyService } from '@app/core/services/destroy.service';
-import { MatDatatableControlComponent } from '@app/shared/components/mat-datatable-control/mat-datatable-control.component';
+import {
+  MatDatatableControlComponent
+} from '@app/shared/components/mat-datatable-control/mat-datatable-control.component';
 
 @Component({
   selector: 'app-mat-datatable-search',
@@ -26,6 +21,7 @@ export class MatDatatableSearchComponent<T extends PlainObject>
   @Input() value: string;
   @Input() width: number;
   @Input() customQuery: boolean;
+  @Input() disabled: boolean;
   @Output() onSearchEvent = new EventEmitter();
 
   search$ = new Subject<void>();
