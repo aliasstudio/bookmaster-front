@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import type { Observable } from 'rxjs';
-import { map } from 'rxjs';
+import { map, of, switchMap } from 'rxjs';
 import { Store } from '@ngxs/store';
 import { AuthService } from '@app/auth/services/auth.service';
 import { GetAvailableRegistries } from '@app/store/app.actions';
@@ -12,6 +12,7 @@ import {
 } from '@angular/router';
 import { AppState } from '@app/store/app.state';
 import { Registry, RegistryPrivilege } from '@app/auth/models/privilege';
+import { differenceInMinutes } from 'date-fns';
 
 @Injectable({
   providedIn: 'root',
@@ -52,17 +53,28 @@ export class FirstAccessibleChildRedirectGuard {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,
   ): Observable<boolean> {
-    return this.authService.isAuthorized$.pipe(
-      map((isAuthorized) => {
-        if (isAuthorized) {
-          this.resolve(route, state).subscribe();
-          return true;
-        } else if (state.url !== '/auth') {
-          this.router.navigate(['/auth']);
-        }
+    const authService = this.authService;
 
-        return true;
+    return authService.isAuthorized$.pipe(
+      switchMap((isAuthorized) => {
+        if (
+          isAuthorized &&
+          differenceInMinutes(new Date(), authService.getTokenDate()) < 30
+        ) {
+          return this.resolve(route, state);
+        } else {
+          const token = authService.getToken();
+
+          return token
+            ? this.authService
+                .logout('Сессия авторизации истекла')
+                .pipe(switchMap(() => this.router.navigate(['/auth'])))
+            : state.url !== '/auth'
+            ? of(this.router.navigate(['/auth']))
+            : of(true);
+        }
       }),
+      map(() => true),
     );
   }
 }

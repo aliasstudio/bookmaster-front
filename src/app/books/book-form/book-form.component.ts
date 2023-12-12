@@ -37,12 +37,9 @@ export class BookFormComponent extends FormEditorDirective<Book> {
 
     return {
       title: new FormControl(null, [...fieldValidators, Validators.required]),
-      subTitle: new FormControl(null, fieldValidators),
-      firstPublishDate: new FormControl(null), // FIXME: ПОЧЕМУ СТРОКА ТО ЕМАЕ
-      description: new FormControl(null, [
-        ...fieldValidators,
-        Validators.maxLength(224),
-      ]),
+      subTitle: new FormControl(null, [Validators.maxLength(100)]),
+      firstPublishDate: new FormControl(null, [Validators.maxLength(224)]), // FIXME: ПОЧЕМУ СТРОКА ТО ЕМАЕ
+      description: new FormControl(null, [Validators.maxLength(224)]),
       authors: new FormControl(null),
     };
   }

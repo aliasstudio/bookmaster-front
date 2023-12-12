@@ -1,23 +1,26 @@
 <section class="repository full-height">
+  <h3 class="pb-2">Возврат книг</h3>
 
-<div class="search-boxes">
-  <app-mat-datatable-search
-    placeholder="ID клиента"
-    (searchClick)="findCustomer($event)"
-  >
-  </app-mat-datatable-search>
-  <app-mat-datatable-search
-    placeholder="ID книги"
-    (searchClick)="findBook($event)"
-  >
-  </app-mat-datatable-search>
+  <div class="search-boxes">
+    <app-mat-datatable-search
+      placeholder="ID клиента"
+      [customQuery]="true"
+      (onSearchEvent)="findCustomer($event)"
+    >
+    </app-mat-datatable-search>
+    <app-mat-datatable-search
+      placeholder="ID книги"
+      [customQuery]="true"
+      (onSearchEvent)="findBook($event)"
+    >
+    </app-mat-datatable-search>
 
-  <ng-container>
-    <button mat-flat-button appButton [disabled]="!isCustomerAndBookSelected" text="Выдать" (click)="lendBook()"></button>
-    <button mat-flat-button appButton [disabled]="!isCustomerAndBookSelected" text="Возврат" (click)="returnBook()"></button>
-    <button mat-flat-button appButton [disabled]="!isCustomerAndBookSelected" text="Продлить" (click)="extendBook()"></button>
-  </ng-container>
-</div>
+    <ng-container>
+      <button mat-flat-button appButton [disabled]="!isCustomerAndBookSelected" text="Выдать" (click)="lendBook()"></button>
+      <button mat-flat-button appButton [disabled]="!isCustomerAndBookSelected" text="Возврат" (click)="returnBook()"></button>
+      <button mat-flat-button appButton [disabled]="!isCustomerAndBookSelected" text="Продлить" (click)="extendBook()"></button>
+    </ng-container>
+  </div>
 
   <div class="cards">
     <div class="customer-wrapper card-wrapper" *ngIf="customer?.id">
@@ -33,10 +36,8 @@
     </div>
   </div>
 
-
   <div class="grids" *ngIf="customer?.id">
-    <app-book-return-grid-page #actualGrid title="Выданные книги" [dataBinding]="actualDataBinding" style="width: 100%;"></app-book-return-grid-page>
-    <app-book-return-grid-page #historyGrid title="История выдачи" [dataBinding]="historyDataBinding" style="width: 100%;"></app-book-return-grid-page>
-
+    <app-book-return-grid-page #actualGrid title="Выданные книги" [dataBinding]="actualDataBinding" class="w-100"></app-book-return-grid-page>
+    <app-book-return-grid-page #historyGrid title="История выдачи" [dataBinding]="historyDataBinding" class="w-100"></app-book-return-grid-page>
   </div>
 </section>

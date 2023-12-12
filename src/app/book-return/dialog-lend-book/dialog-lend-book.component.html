@@ -8,13 +8,13 @@
   </mat-form-field>
   <mat-form-field>
     <mat-label>Вернуть до</mat-label>
-    <input matInput formControlName="returnUntil" [matDatepicker]="retunUntilPicker">
-    <mat-datepicker-toggle matSuffix [for]="retunUntilPicker"></mat-datepicker-toggle>
-    <mat-datepicker #retunUntilPicker></mat-datepicker>
+    <input matInput formControlName="returnUntil" [matDatepicker]="returnUntilPicker">
+    <mat-datepicker-toggle matSuffix [for]="returnUntilPicker"></mat-datepicker-toggle>
+    <mat-datepicker #returnUntilPicker></mat-datepicker>
   </mat-form-field>
 </form>
 
 <div mat-dialog-actions class="dialog-actions">
-  <button mat-button (click)="onNoClick()"></button>
+  <button mat-button (click)="cancel()"></button>
   <button mat-flat-button appButton text="Подтвердить" [mat-dialog-close]="formGroup.value" cdkFocusInitial></button>
 </div>

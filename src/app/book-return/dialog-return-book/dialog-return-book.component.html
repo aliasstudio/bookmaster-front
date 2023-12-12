@@ -2,13 +2,13 @@
   <h5>Заполните данные о возврате</h5>
     <mat-form-field>
       <mat-label>Дата возврата</mat-label>
-      <input matInput formControlName="dateOfReturn" [matDatepicker]="picker">
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
+      <input matInput formControlName="dateOfReturn" [matDatepicker]="dateOfReturnPicker">
+      <mat-datepicker-toggle matSuffix [for]="dateOfReturnPicker"></mat-datepicker-toggle>
+      <mat-datepicker #dateOfReturnPicker></mat-datepicker>
     </mat-form-field>
 </form>
 
 <div mat-dialog-actions class="dialog-actions">
-  <button mat-button (click)="onNoClick()"></button>
+  <button mat-button (click)="cancel()"></button>
   <button mat-flat-button appButton text="Подтвердить" [mat-dialog-close]="formGroup.value" cdkFocusInitial></button>
 </div>

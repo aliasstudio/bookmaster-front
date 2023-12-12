@@ -1,7 +1,6 @@
 <div class="toolbar table__header_wrapper">
-  <app-mat-datatable-search url="issue/history" (searchClick)="updateRecords($event)"></app-mat-datatable-search>
-<!--  <button mat-flat-button appButton iconClass="icon-reload" class="reload-button" text="Обновить" (click)="grid.bindData()"></button>-->
-  <button mat-flat-button appReloadGridButton></button>
+  <app-mat-datatable-search [customQuery]="true" (onSearchEvent)="updateRecords($event)"></app-mat-datatable-search>
+  <button mat-flat-button appButton iconClass="icon-reload" class="reload-button" text="Обновить" (click)="grid.reloadData()"></button>
 </div>
 <div class="content">
   <div class="book-card">
@@ -16,5 +15,12 @@
     <div>Описание: {{ book.description }}</div>
   </div>
 
-  <app-book-history-grid-page #grid [dataBinding]="dataBinding" style="width: 100%;"></app-book-history-grid-page>
+  <app-mat-datatable-control [dataBinding]="dataBinding" class="w-100">
+    <ng-container table-columns>
+      <ng-container matColumnDef="customer">
+        <th mat-header-cell *matHeaderCellDef>Клиент</th>
+        <td mat-cell *matCellDef="let element">{{ element.customer.name }}</td>
+      </ng-container>
+    </ng-container>
+  </app-mat-datatable-control>
 </div>

@@ -1,13 +1,11 @@
 import { Component } from '@angular/core';
 import { Issue } from '@app/shared/models/issue';
 import { EntityRemoteDataBinding } from '@app/shared/models/databinding';
-import { DestroyService } from '@app/core/services/destroy.service';
 
 @Component({
   selector: 'app-reports-turnover-page',
   templateUrl: './reports-turnover-page.component.html',
   styleUrls: ['./reports-turnover-page.component.scss'],
-  providers: [DestroyService],
 })
 export class ReportsTurnoverPageComponent {
   dataBinding: EntityRemoteDataBinding<Issue> = {
@@ -22,8 +20,10 @@ export class ReportsTurnoverPageComponent {
 
   isDelayed(issue: Issue) {
     let { dateOfReturn, returnUntil } = issue;
+
     dateOfReturn = dateOfReturn ? new Date(dateOfReturn) : new Date();
     returnUntil = new Date(returnUntil);
+
     return dateOfReturn > returnUntil;
   }
 }

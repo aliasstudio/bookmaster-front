@@ -23,10 +23,10 @@ export class MatDatatableSearchComponent<T extends PlainObject>
 {
   @ViewChild(MatFormField) formField: MatFormField;
   @Input() placeholder: string = 'Введите название или ID';
-  @Input() url: string;
   @Input() value: string;
   @Input() width: number;
-  @Output() searchClick = new EventEmitter();
+  @Input() customQuery: boolean;
+  @Output() onSearchEvent = new EventEmitter();
 
   search$ = new Subject<void>();
 
@@ -57,8 +57,8 @@ export class MatDatatableSearchComponent<T extends PlainObject>
 
   search(): void {
     const searchText = this.formField._formFieldControl.value;
-    this.searchClick.emit(searchText);
+    this.onSearchEvent.emit(searchText);
 
-    this.grid.bindData(searchText);
+    !this.customQuery && this.grid.bindData(searchText);
   }
 }

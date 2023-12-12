@@ -21,18 +21,14 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatDatatableComponent } from '@app/shared/components/mat-datatable/mat-datatable.component';
-import {
-  MatDatatableControlComponent
-} from '@app/shared/components/mat-datatable-control/mat-datatable-control.component';
+import { MatDatatableControlComponent } from '@app/shared/components/mat-datatable-control/mat-datatable-control.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BaseButtonDirective } from '@app/shared/directives/buttons/base-button.directive';
 import { CreateGridRowButtonDirective } from '@app/shared/directives/buttons/create-grid-row-button.directive';
 import { ReloadGridButtonDirective } from '@app/shared/directives/buttons/reload-grid-button.directive';
 import { SearchGridButtonDirective } from '@app/shared/directives/buttons/search-button.directive';
-import {
-  MatDatatableSearchComponent
-} from '@app/shared/components/mat-datatable-search/mat-datatable-search.component';
+import { MatDatatableSearchComponent } from '@app/shared/components/mat-datatable-search/mat-datatable-search.component';
 import { MatSelectSearchComponent } from '@app/shared/components/mat-select-search/mat-select-search.component';
 import { MatPaginatorCustomizeDirective } from '@app/shared/directives/mat-paginator-customize.directive';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';

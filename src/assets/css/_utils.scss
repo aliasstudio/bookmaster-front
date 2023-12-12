@@ -59,6 +59,10 @@
    box-shadow: 0 0 0 0 rgba(0,123,255,0)!important;
  }
 
+ textarea {
+   max-height: 200px;
+ }
+
  input, textarea,input:active, textarea:active {outline:none;}
  input[type="checkbox"]:focus,
  input[type="radio"]:focus {
