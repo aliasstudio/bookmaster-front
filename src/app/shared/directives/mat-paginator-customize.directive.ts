@@ -1,4 +1,4 @@
-import { Directive, OnInit } from '@angular/core';
+import { Directive, Input, OnInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 
 @Directive({
@@ -7,8 +7,12 @@ import { MatPaginator } from '@angular/material/paginator';
 export class MatPaginatorCustomizeDirective implements OnInit {
   constructor(protected paginator: MatPaginator) {}
 
+  @Input()
+  pageSizeOptions: number[];
+
   ngOnInit(): void {
-    this.paginator.pageSizeOptions = [10, 20, 50];
+    if (!this.pageSizeOptions)
+      this.paginator.pageSizeOptions = [10, 20, 50];
     this.paginator.pageSize = 10;
 
     this.paginator._intl.nextPageLabel = 'Следующая';
