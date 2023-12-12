@@ -52,6 +52,15 @@ export class BaseInterceptor implements HttpInterceptor {
               }`;
               break;
             }
+            case HttpStatusCode.Forbidden: {
+              message = `Нет привилегий`;
+              break;
+            }
+            case HttpStatusCode.Conflict: {
+              const errorMessage = error.error as HttpErrorResponse;
+              this.toastr.warning(errorMessage.message);
+              break;
+            }
             case HttpStatusCode.Unauthorized: {
               this.toastr.warning(`Сессия авторизации истекла`);
               this.authService.clearToken();
