@@ -1,13 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
-import {
-  MatDatatableControlComponent
-} from '@app/shared/components/mat-datatable-control/mat-datatable-control.component';
+import { MatDatatableControlComponent } from '@app/shared/components/mat-datatable-control/mat-datatable-control.component';
 import { HttpClient } from '@angular/common/http';
 import { of, switchMap, takeUntil } from 'rxjs';
 import { DestroyService } from '@app/core/services/destroy.service';
 import { Customer } from '@app/customers/models/customer';
 import { Book } from '@app/shared/models/book';
-import { DataBinding, } from '@app/shared/models/databinding';
+import { DataBinding } from '@app/shared/models/databinding';
 import { Issue } from '@app/shared/models/issue';
 import { MatSidenavContainer } from '@angular/material/sidenav';
 import { MatDialog } from '@angular/material/dialog';
@@ -36,6 +34,10 @@ export class BookReturnPageComponent {
 
   get isCustomerAndBookSelected(): boolean {
     return !!(this.customer?.id && this.book?.uuid);
+  }
+
+  get hasData(): boolean {
+    return this.actualGrid?.hasData || this.historyGrid?.hasData;
   }
 
   customer: Customer;
