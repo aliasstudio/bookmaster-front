@@ -12,6 +12,7 @@ import { MatDatatableControlComponent } from '@app/shared/components/mat-datatab
 import { HttpClient } from '@angular/common/http';
 import { DestroyService } from '@app/core/services/destroy.service';
 import { lastValueFrom, takeUntil } from 'rxjs';
+import { Page } from '@app/shared/models/page';
 
 @Component({
   selector: 'app-book-history-page',
@@ -61,23 +62,26 @@ export class BookHistoryPageComponent implements AfterViewInit {
     this.dataBinding.urlRoot = url + `?filter=${text}`;
     this.grid.reloadData();
 
-    lastValueFrom(this.http.get<Book>(`book/${text}`)).then((book) => {
-      this.book = book;
+    lastValueFrom(this.http.get(`book?filter=${text}`)).then(
+      ({ content }: Page<Book>) => {
+        const book = content?.shift();
+        this.book = book;
 
-      book.covers.forEach(async (cover) => {
-        const blob = await lastValueFrom(
-          this.http.get(`book-cover/${cover.id}`, {
-            responseType: 'blob',
-          }),
-        );
-        const reader = new FileReader();
+        book.covers.forEach(async (cover) => {
+          const blob = await lastValueFrom(
+            this.http.get(`book-cover/${cover.id}`, {
+              responseType: 'blob',
+            }),
+          );
+          const reader = new FileReader();
 
-        reader.readAsDataURL(blob);
-        reader.onloadend = () => {
-          this.images.push(reader.result);
-        };
-      });
-    });
+          reader.readAsDataURL(blob);
+          reader.onloadend = () => {
+            this.images.push(reader.result);
+          };
+        });
+      },
+    );
   }
 
   export(): void {

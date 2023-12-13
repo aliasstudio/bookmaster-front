@@ -2,13 +2,13 @@
   <h5>Заполните данные о продлении</h5>
     <mat-form-field>
       <mat-label>Вернуть до</mat-label>
-      <input matInput formControlName="returnUntil" [matDatepicker]="picker">
+      <input matInput formControlName="returnUntil" [matDatepicker]="picker" [min]="formGroup.controls.minDate.value">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
 </form>
 
 <div mat-dialog-actions class="dialog-actions d-flex justify-content-between">
-  <button mat-flat-button appButton text="Выдать" [mat-dialog-close]="formGroup.value" cdkFocusInitial></button>
+  <button mat-flat-button appButton text="Продлить" [mat-dialog-close]="formGroup.value" cdkFocusInitial></button>
   <button mat-flat-button appButton text="Отмена" (click)="cancel()" ></button>
 </div>

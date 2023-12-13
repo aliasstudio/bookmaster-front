@@ -42,6 +42,7 @@ import { PhonePipe } from '@app/shared/pipes/phone.pipe';
 import { ExportButtonDirective } from '@app/shared/directives/buttons/export-button.directive';
 import { IssueDelayPipe } from '@app/shared/pipes/issue-delay.pipe';
 import { NoDataStubComponent } from '@app/shared/components/no-data-stub/no-data-stub.component';
+import { PaginatorPageInputComponent } from '@app/shared/components/paginator-page-input/paginator-page-input.component';
 
 const imports = [
   CommonModule,
@@ -95,6 +96,7 @@ const exports = [
   ExportButtonDirective,
   IssueDelayPipe,
   NoDataStubComponent,
+  PaginatorPageInputComponent,
 ];
 
 @NgModule({

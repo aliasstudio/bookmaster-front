@@ -13,6 +13,7 @@ import { DialogReturnBookComponent } from '@app/book-return/dialog-return-book/d
 import { Page } from '@app/shared/models/page';
 import { DialogExtendBookComponent } from '@app/book-return/dialog-extend-book/dialog-extend-book.component';
 import { EntityRemoteDataBinding } from '@app/shared/models/databinding';
+import { addDays } from 'date-fns';
 
 @Component({
   selector: 'app-book-return-page',
@@ -114,7 +115,7 @@ export class BookReturnPageComponent implements OnInit {
 
   lendBook() {
     const dialogRef = this.dialog.open(DialogLendBookComponent, {
-      data: { dateOfIssue: null, returnUntil: null },
+      data: { dateOfIssue: new Date(), returnUntil: addDays(new Date(), 21) },
     });
 
     dialogRef
@@ -148,18 +149,18 @@ export class BookReturnPageComponent implements OnInit {
         switchMap((result) => {
           if (!result) return of(null);
           const { dateOfReturn } = result;
-          return this.http.get(`issue?filter=${this.book.uuid}`).pipe(
-            switchMap(({ content }: Page<Issue>) => {
-              const [issue] = content;
-
-              return this.http.put(`issue/${issue.id}`, {
-                ...issue,
-                dateOfReturn,
-                customer: { id: this.customer?.id },
-                book: { uuid: this.book?.uuid, title: this.book?.title },
-              });
-            }),
+          const dataSource = this.actualGrid.dataSource.data;
+          const data = [...(dataSource.length ? dataSource : [])];
+          const issue = data.find(
+            (item) => !item.dateOfReturn && item.book.uuid === this.book.uuid,
           );
+
+          return this.http.put(`issue/${issue.id}`, {
+            ...issue,
+            dateOfReturn,
+            customer: { id: this.customer?.id },
+            book: { uuid: this.book?.uuid, title: this.book?.title },
+          });
         }),
         takeUntil(this.destroy$),
       )
@@ -167,8 +168,13 @@ export class BookReturnPageComponent implements OnInit {
   }
 
   extendBook() {
+    const dataSource = this.actualGrid.dataSource.data;
+    const data = [...(dataSource.length ? dataSource : [])];
+    const issue = data.find(
+      (item) => !item.dateOfReturn && item.book.uuid === this.book.uuid,
+    );
     const dialogRef = this.dialog.open(DialogExtendBookComponent, {
-      data: { returnUntil: null },
+      data: { returnUntil: null, minDate: issue?.returnUntil },
     });
 
     dialogRef
@@ -177,18 +183,18 @@ export class BookReturnPageComponent implements OnInit {
         switchMap((result) => {
           if (!result) return of(null);
           const { returnUntil } = result;
-          return this.http.get(`issue?filter=${this.book.uuid}`).pipe(
-            switchMap(({ content }: Page<Issue>) => {
-              const [issue] = content;
-
-              return this.http.put(`issue/${issue.id}`, {
-                ...issue,
-                returnUntil,
-                customer: { id: this.customer?.id },
-                book: { uuid: this.book?.uuid, title: this.book?.title },
-              });
-            }),
+          const dataSource = this.actualGrid.dataSource.data;
+          const data = [...(dataSource.length ? dataSource : [])];
+          const issue = data.find(
+            (item) => !item.dateOfReturn && item.book.uuid === this.book.uuid,
           );
+
+          return this.http.put(`issue/${issue.id}`, {
+            ...issue,
+            returnUntil,
+            customer: { id: this.customer?.id },
+            book: { uuid: this.book?.uuid, title: this.book?.title },
+          });
         }),
         takeUntil(this.destroy$),
       )

@@ -16,6 +16,7 @@ export class DialogExtendBookComponent {
 
   formGroup = new FormGroup({
     returnUntil: new FormControl(this.data?.returnUntil),
+    minDate: new FormControl(this.data?.minDate),
   });
 
   cancel(): void {
