@@ -53,7 +53,14 @@ export class BaseInterceptor implements HttpInterceptor {
               break;
             }
             case HttpStatusCode.Forbidden: {
-              message = `Нет привилегий`;
+              const excludedRoutes = ['login', 'logout'];
+              const messageForbidden = (
+                (error?.error || JSON.parse(error?.error)) as HttpErrorResponse
+              )?.message;
+
+              if (!excludedRoutes.includes(request.url) && !!messageForbidden) {
+                message = messageForbidden;
+              }
               break;
             }
             case HttpStatusCode.Conflict: {

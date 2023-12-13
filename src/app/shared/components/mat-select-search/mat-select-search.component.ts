@@ -85,6 +85,13 @@ export class MatSelectSearchComponent<T extends Dictionary<string | number>>
   }
 
   writeValue(val: T[]): void {
+    if (this.allowCustom) {
+      const value = [...(val ?? [])];
+
+      this.items = value;
+      this.filteredItems.next(value);
+    }
+
     this.control.reset(val, { emitEvent: false });
   }
 
@@ -120,8 +127,9 @@ export class MatSelectSearchComponent<T extends Dictionary<string | number>>
     const searchControl = this.searchControl;
     const selectControl = this.control;
     const item = { id: null, name: searchControl.value } as T;
+    const isNew = !this.items.find((el) => el.name === item.name);
 
-    this.items.push(item);
+    isNew && this.items.push(item);
     selectControl.setValue([...(selectControl.value ?? []), item]);
     this.filteredItems.next(this.items);
     searchControl.reset();

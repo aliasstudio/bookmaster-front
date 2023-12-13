@@ -1,5 +1,6 @@
 import {
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   OnInit,
@@ -15,7 +16,7 @@ import * as _ from 'lodash';
 import { DestroyService } from '@app/core/services/destroy.service';
 import { Actions, ofActionSuccessful, Store } from '@ngxs/store';
 import { AppState } from '@app/store/app.state';
-import { Registry } from '@app/auth/models/privilege';
+import { Registry, RegistryPrivilege } from '@app/auth/models/privilege';
 import { GetAvailableRegistries } from '@app/store/app.actions';
 
 @Component({
@@ -31,13 +32,14 @@ export class MenuComponent implements OnInit, AfterViewInit {
   protected items: MenuItem[];
   private hoverWidth = 120;
   private initialWidth = 60;
-  private availableRegistries: Registry[];
+  private availableRegistries: Record<Registry, RegistryPrivilege[]>;
 
   constructor(
     protected router: Router,
     protected authService: AuthService,
     private destroy$: DestroyService,
     private store: Store,
+    private changeDetector: ChangeDetectorRef,
     private actions$: Actions,
   ) {}
 
@@ -50,13 +52,14 @@ export class MenuComponent implements OnInit, AfterViewInit {
         map(() => this.store.selectSnapshot(AppState.getAvailableRegistries)),
       )
       .subscribe((registries) => {
-        this.availableRegistries = _.keys(registries);
+        this.availableRegistries = registries;
         this.items = this.getMenuItems();
       });
 
-    this.authService.isAuthorized$.subscribe(
-      () => (this.items = this.getMenuItems()),
-    );
+    this.authService.isAuthorized$.subscribe(() => {
+      this.items = this.getMenuItems();
+      this.changeDetector.markForCheck();
+    });
   }
 
   ngAfterViewInit() {
@@ -129,6 +132,10 @@ export class MenuComponent implements OnInit, AfterViewInit {
             name: 'Выдача',
             icon: 'icon-arrows',
             link: 'book-return',
+            hidden: (registries) =>
+              !registries?.[Registry.BookReturn].includes(
+                RegistryPrivilege.Edit,
+              ),
           },
           {
             id: Registry.Reports,
@@ -139,9 +146,15 @@ export class MenuComponent implements OnInit, AfterViewInit {
         ];
 
     return menuItems.filter((item) => {
-      const reg = this.availableRegistries;
+      const registries = this.availableRegistries;
+      const registriesKeys = _.keys(this.availableRegistries);
 
-      return reg?.includes(item.id) || reg?.includes(Registry.All);
+      return (
+        !!registries &&
+        ((!item.hidden?.call(this, registries) &&
+          registriesKeys?.includes(item.id)) ||
+          registriesKeys?.includes(Registry.All))
+      );
     });
   }
 }
