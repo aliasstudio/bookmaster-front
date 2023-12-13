@@ -1,7 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {
-  MatDatatableControlComponent
-} from '@app/shared/components/mat-datatable-control/mat-datatable-control.component';
+import { MatDatatableControlComponent } from '@app/shared/components/mat-datatable-control/mat-datatable-control.component';
 import { HttpClient } from '@angular/common/http';
 import { lastValueFrom, of, switchMap, takeUntil } from 'rxjs';
 import { DestroyService } from '@app/core/services/destroy.service';
@@ -13,8 +11,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogLendBookComponent } from '@app/book-return/dialog-lend-book/dialog-lend-book.component';
 import { DialogReturnBookComponent } from '@app/book-return/dialog-return-book/dialog-return-book.component';
 import { Page } from '@app/shared/models/page';
-import { BookReturnGridPageComponent } from '@app/book-return/book-return-grid-page/book-return-grid-page.component';
 import { DialogExtendBookComponent } from '@app/book-return/dialog-extend-book/dialog-extend-book.component';
+import { EntityRemoteDataBinding } from '@app/shared/models/databinding';
 
 @Component({
   selector: 'app-book-return-page',
@@ -28,10 +26,9 @@ import { DialogExtendBookComponent } from '@app/book-return/dialog-extend-book/d
 })
 export class BookReturnPageComponent implements OnInit {
   @ViewChild('actualGrid')
-  actualGrid: BookReturnGridPageComponent;
-
+  actualGrid: MatDatatableControlComponent<Issue>;
   @ViewChild('historyGrid')
-  historyGrid: BookReturnGridPageComponent;
+  historyGrid: MatDatatableControlComponent<Issue>;
 
   lendButtonDisabled = true;
   returnButtonDisabled = true;
@@ -50,18 +47,16 @@ export class BookReturnPageComponent implements OnInit {
     public dialog: MatDialog,
   ) {}
 
-  actualDataBinding;
-
-  historyDataBinding;
+  actualDataBinding: EntityRemoteDataBinding<Issue>;
+  historyDataBinding: EntityRemoteDataBinding<Issue>;
 
   ngOnInit(): void {
-
     this.actualDataBinding = {
       urlRoot: 'issue/actual',
       columns: [
         { name: 'ID', key: 'id' },
         // { name: 'Клиент', key: 'customer' },
-        { name: 'Книга', key: 'book' },
+        { name: 'Книга', key: 'book', customTemplate: true },
         { name: 'Дата выдачи', key: 'dateOfIssue' },
         { name: 'Дата возврата', key: 'dateOfReturn' },
         { name: 'Вернуть до', key: 'returnUntil' },
@@ -73,7 +68,7 @@ export class BookReturnPageComponent implements OnInit {
       columns: [
         { name: 'ID', key: 'id' },
         // { name: 'Клиент', key: 'customer' },
-        { name: 'Книга', key: 'book' },
+        { name: 'Книга', key: 'book', customTemplate: true },
         { name: 'Дата выдачи', key: 'dateOfIssue' },
         { name: 'Дата возврата', key: 'dateOfReturn' },
         { name: 'Вернуть до', key: 'returnUntil' },
@@ -82,7 +77,6 @@ export class BookReturnPageComponent implements OnInit {
   }
 
   public findCustomer(customerId: string): void {
-
     this.http
       .get(`customer/${customerId}`)
       .pipe(takeUntil(this.destroy$))
@@ -95,19 +89,25 @@ export class BookReturnPageComponent implements OnInit {
   public findBook(bookId: string) {
     this.http
       .get(`book/${bookId}`)
-      .pipe(
-        takeUntil(this.destroy$)
-      )
+      .pipe(takeUntil(this.destroy$))
       .subscribe((book: Book) => {
-          this.book = book;
-          this.setButtonsAccessibility();
+        this.book = book;
+        this.setButtonsAccessibility();
       });
   }
 
   async setButtonsAccessibility() {
-    const actualIssuesByCustomerName = await (lastValueFrom(this.http.get(`issue/actual?filter=${this.customer.name}`)) as Promise<Page<Issue>>);
-    const actualIssuesByBookId= await (lastValueFrom(this.http.get(`issue/actual?filter=${this.book.uuid}`)) as Promise<Page<Issue>>);
-    this.returnButtonDisabled = !actualIssuesByCustomerName.content.find(issue => issue.customer.id === this.customer.id && issue.book.uuid === this.book.uuid);
+    const actualIssuesByCustomerName = await (lastValueFrom(
+      this.http.get(`issue/actual?filter=${this.customer.name}`),
+    ) as Promise<Page<Issue>>);
+    const actualIssuesByBookId = await (lastValueFrom(
+      this.http.get(`issue/actual?filter=${this.book.uuid}`),
+    ) as Promise<Page<Issue>>);
+    this.returnButtonDisabled = !actualIssuesByCustomerName.content.find(
+      (issue) =>
+        issue.customer.id === this.customer.id &&
+        issue.book.uuid === this.book.uuid,
+    );
     this.extendButtonDisabled = this.returnButtonDisabled;
     this.lendButtonDisabled = actualIssuesByBookId.content.length > 0;
   }
@@ -200,6 +200,4 @@ export class BookReturnPageComponent implements OnInit {
     this.actualGrid.bindData(customerName);
     this.historyGrid.bindData(customerName);
   }
-
-
 }
