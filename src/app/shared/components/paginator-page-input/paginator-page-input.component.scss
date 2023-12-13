@@ -1,0 +1,10 @@
+.paginator-page-input {
+  border: none;
+  border-bottom: 1px solid rgba(0,0,0,0.12);
+  outline: none;
+  text-align: right;
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+}
