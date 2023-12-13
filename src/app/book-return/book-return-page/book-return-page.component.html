@@ -32,7 +32,7 @@
 
     <div class="book-wrapper card-wrapper" *ngIf="book">
       <h4>{{ book.title }}</h4>
-      <h5>{{ book.authors.length > 0 && book.authors[0].name }}</h5>
+      <h5>{{ book.authors.length > 0 ? book.authors[0].name : '' }}</h5>
       <h5>{{ book.firstPublishDate }}</h5>
     </div>
   </div>
@@ -40,8 +40,19 @@
   <app-no-data-stub [display]="!customer?.id" title="" subTitle="Введите ID клиента для получения информации" [useAltIcon]="true" size="large"></app-no-data-stub>
   <app-no-data-stub [display]="customer?.id && !hasData" subTitle="Клиенту ещё не выдавали книги! Введите ID книги, и отправьте читателя в удивительный мир книг!" size="large"></app-no-data-stub>
 
-  <div class="grids" *ngIf="customer?.id" [hidden]="!hasData">
-    <app-book-return-grid-page #actualGrid title="Выданные книги" [dataBinding]="actualDataBinding" class="w-100"></app-book-return-grid-page>
-    <app-book-return-grid-page #historyGrid title="История выдачи" [dataBinding]="historyDataBinding" class="w-100"></app-book-return-grid-page>
+  <div class="grids gap-4">
+    <app-book-return-grid-page
+      #actualGrid
+      title="Выданные книги"
+      [dataBinding]="actualDataBinding"
+      [ignoreInitQuery]="true"
+      class="w-100 {{ customer?.id && hasData ? 'visible' : 'invisible' }}"
+    ></app-book-return-grid-page>
+    <app-book-return-grid-page
+      #historyGrid title="История выдачи"
+      [dataBinding]="historyDataBinding"
+      [ignoreInitQuery]="true"
+      class="w-100 {{ customer?.id && hasData ? 'visible' : 'invisible' }}"
+    ></app-book-return-grid-page>
   </div>
 </section>

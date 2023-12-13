@@ -1,17 +1,5 @@
-import {
-  AfterContentInit,
-  Component,
-  ContentChildren,
-  Input,
-  OnInit,
-  QueryList,
-  ViewChild,
-} from '@angular/core';
-import {
-  MatColumnDef,
-  MatTable,
-  MatTableDataSource,
-} from '@angular/material/table';
+import { AfterContentInit, Component, ContentChildren, Input, OnInit, QueryList, ViewChild, } from '@angular/core';
+import { MatColumnDef, MatTable, MatTableDataSource, } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { PlainObject } from '@ngxs/store/internals';
 import * as _ from 'lodash';
@@ -44,6 +32,7 @@ export class MatDatatableComponent<T extends PlainObject>
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @Input({ required: true }) dataBinding: DataBinding<T>;
+  @Input() ignoreInitQuery: boolean = false;
 
   dataSource = new MatTableDataSource<T>();
   hasData?: boolean;
@@ -67,6 +56,12 @@ export class MatDatatableComponent<T extends PlainObject>
     this.columnsBind = dataBinding.columns.filter(
       (col) => !col?.customTemplate,
     );
+
+    if (this.ignoreInitQuery) {
+      this.ignoreInitQuery = false;
+      return;
+    }
+
     this.bindData();
   }
 

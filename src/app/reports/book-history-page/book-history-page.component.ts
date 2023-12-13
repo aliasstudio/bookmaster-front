@@ -2,9 +2,7 @@ import { Component, inject, ViewChild } from '@angular/core';
 import { Issue } from '@app/shared/models/issue';
 import { EntityRemoteDataBinding } from '@app/shared/models/databinding';
 import { Book } from '@app/shared/models/book';
-import {
-  MatDatatableControlComponent
-} from '@app/shared/components/mat-datatable-control/mat-datatable-control.component';
+import { MatDatatableControlComponent } from '@app/shared/components/mat-datatable-control/mat-datatable-control.component';
 import { HttpClient } from '@angular/common/http';
 import { DestroyService } from '@app/core/services/destroy.service';
 import { lastValueFrom, takeUntil } from 'rxjs';
@@ -41,13 +39,14 @@ export class BookHistoryPageComponent {
   reloadBook(text: string) {
     const dataBinding = this.dataBinding;
     const [url] = dataBinding.urlRoot.split('?');
+    this.currentImageIndex = 0;
+    this.images = [];
 
     this.dataBinding.urlRoot = url + `?filter=${text}`;
     this.grid.reloadData();
 
     lastValueFrom(this.http.get<Book>(`book/${text}`)).then((book) => {
       this.book = book;
-      this.images = [];
 
       book.covers.forEach(async (cover) => {
         const blob = await lastValueFrom(

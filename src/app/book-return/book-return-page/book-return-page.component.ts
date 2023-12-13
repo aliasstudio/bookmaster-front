@@ -1,11 +1,12 @@
-import { Component, ViewChild } from '@angular/core';
-import { MatDatatableControlComponent } from '@app/shared/components/mat-datatable-control/mat-datatable-control.component';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  MatDatatableControlComponent
+} from '@app/shared/components/mat-datatable-control/mat-datatable-control.component';
 import { HttpClient } from '@angular/common/http';
 import { lastValueFrom, of, switchMap, takeUntil } from 'rxjs';
 import { DestroyService } from '@app/core/services/destroy.service';
 import { Customer } from '@app/customers/models/customer';
 import { Book } from '@app/shared/models/book';
-import { DataBinding } from '@app/shared/models/databinding';
 import { Issue } from '@app/shared/models/issue';
 import { MatSidenavContainer } from '@angular/material/sidenav';
 import { MatDialog } from '@angular/material/dialog';
@@ -25,7 +26,7 @@ import { DialogExtendBookComponent } from '@app/book-return/dialog-extend-book/d
     DestroyService,
   ],
 })
-export class BookReturnPageComponent {
+export class BookReturnPageComponent implements OnInit {
   @ViewChild('actualGrid')
   actualGrid: BookReturnGridPageComponent;
 
@@ -49,29 +50,36 @@ export class BookReturnPageComponent {
     public dialog: MatDialog,
   ) {}
 
-  actualDataBinding: DataBinding<Issue> = {
-    urlRoot: 'issue/actual',
-    columns: [
-      { name: 'ID', key: 'id' },
-      // { name: 'Клиент', key: 'customer' },
-      { name: 'Книга', key: 'book' },
-      { name: 'Дата выдачи', key: 'dateOfIssue' },
-      { name: 'Дата возврата', key: 'dateOfReturn' },
-      { name: 'Вернуть до', key: 'returnUntil' },
-    ],
-  };
+  actualDataBinding;
 
-  historyDataBinding: DataBinding<Issue> = {
-    urlRoot: 'issue/history',
-    columns: [
-      { name: 'ID', key: 'id' },
-      // { name: 'Клиент', key: 'customer' },
-      { name: 'Книга', key: 'book' },
-      { name: 'Дата выдачи', key: 'dateOfIssue' },
-      { name: 'Дата возврата', key: 'dateOfReturn' },
-      { name: 'Вернуть до', key: 'returnUntil' },
-    ],
-  };
+  historyDataBinding;
+
+  ngOnInit(): void {
+
+    this.actualDataBinding = {
+      urlRoot: 'issue/actual',
+      columns: [
+        { name: 'ID', key: 'id' },
+        // { name: 'Клиент', key: 'customer' },
+        { name: 'Книга', key: 'book' },
+        { name: 'Дата выдачи', key: 'dateOfIssue' },
+        { name: 'Дата возврата', key: 'dateOfReturn' },
+        { name: 'Вернуть до', key: 'returnUntil' },
+      ],
+    };
+
+    this.historyDataBinding = {
+      urlRoot: 'issue/history',
+      columns: [
+        { name: 'ID', key: 'id' },
+        // { name: 'Клиент', key: 'customer' },
+        { name: 'Книга', key: 'book' },
+        { name: 'Дата выдачи', key: 'dateOfIssue' },
+        { name: 'Дата возврата', key: 'dateOfReturn' },
+        { name: 'Вернуть до', key: 'returnUntil' },
+      ],
+    };
+  }
 
   public findCustomer(customerId: string): void {
 
@@ -187,9 +195,11 @@ export class BookReturnPageComponent {
       .subscribe(() => this.updateTables(this.customer.name));
   }
 
-  private updateTables(customerName = '') {
+  protected updateTables(customerName = '') {
     this.setButtonsAccessibility();
     this.actualGrid.bindData(customerName);
     this.historyGrid.bindData(customerName);
   }
+
+
 }

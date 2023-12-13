@@ -1,31 +1,11 @@
-import {
-  Component,
-  EventEmitter,
-  inject,
-  Input,
-  Output,
-  TemplateRef,
-  ViewChild,
-} from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output, TemplateRef, ViewChild, } from '@angular/core';
 import { MatDatatableComponent } from '@app/shared/components/mat-datatable/mat-datatable.component';
 import { PlainObject } from '@ngxs/store/internals';
 import { DestroyService } from '@app/core/services/destroy.service';
 import { MatDrawer } from '@angular/material/sidenav';
-import {
-  BehaviorSubject,
-  catchError,
-  first,
-  map,
-  of,
-  takeUntil,
-  tap,
-  throwError,
-} from 'rxjs';
+import { BehaviorSubject, catchError, first, map, of, takeUntil, tap, throwError, } from 'rxjs';
 import * as _ from 'lodash';
-import {
-  CustomRequestOptions,
-  EntityRemoteDataBinding,
-} from '@app/shared/models/databinding';
+import { CustomRequestOptions, EntityRemoteDataBinding, } from '@app/shared/models/databinding';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDeleteDialogComponent } from '@app/shared/components/mat-delete-dialog/mat-delete-dialog.component';

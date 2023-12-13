@@ -8,7 +8,7 @@
     </mat-form-field>
 </form>
 
-<div mat-dialog-actions class="dialog-actions">
-  <button mat-button appButton text="Закрыть" (click)="cancel()"></button>
-  <button mat-flat-button appButton text="Подтвердить" [mat-dialog-close]="formGroup.value" cdkFocusInitial></button>
+<div mat-dialog-actions class="dialog-actions d-flex justify-content-between">
+  <button mat-flat-button appButton text="Выдать" [mat-dialog-close]="formGroup.value" cdkFocusInitial></button>
+  <button mat-flat-button appButton text="Отмена" (click)="cancel()" ></button>
 </div>
