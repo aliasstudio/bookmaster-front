@@ -13,6 +13,7 @@ import { DialogReturnBookComponent } from '@app/book-return/dialog-return-book/d
 import { Page } from '@app/shared/models/page';
 import { DialogExtendBookComponent } from '@app/book-return/dialog-extend-book/dialog-extend-book.component';
 import { EntityRemoteDataBinding } from '@app/shared/models/databinding';
+import { addDays } from 'date-fns';
 
 @Component({
   selector: 'app-book-return-page',
@@ -114,7 +115,7 @@ export class BookReturnPageComponent implements OnInit {
 
   lendBook() {
     const dialogRef = this.dialog.open(DialogLendBookComponent, {
-      data: { dateOfIssue: null, returnUntil: null },
+      data: { dateOfIssue: new Date(), returnUntil: addDays(new Date(), 21) },
     });
 
     dialogRef
