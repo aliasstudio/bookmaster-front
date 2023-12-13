@@ -26,7 +26,8 @@
           mat-flat-button
           appButton
           text="Пред."
-          (click)="currentImageIndex = currentImageIndex === 0 ? currentImageIndex : currentImageIndex - 1"
+          [disabled]="currentImageIndex === 0"
+          (click)="currentImageIndex = currentImageIndex - 1"
         >
         </button>
 
@@ -36,7 +37,8 @@
           mat-flat-button
           appButton
           text="След."
-          (click)="currentImageIndex = (currentImageIndex === images.length - 1) ? currentImageIndex : currentImageIndex + 1"
+          [disabled]="currentImageIndex === images.length - 1"
+          (click)="currentImageIndex = currentImageIndex + 1"
         >
         </button>
       </div>
