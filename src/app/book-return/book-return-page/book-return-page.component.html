@@ -36,7 +36,10 @@
     </div>
   </div>
 
-  <div class="grids" *ngIf="customer?.id">
+  <app-no-data-stub [display]="!customer?.id" title="" subTitle="Введите ID клиента для получения информации" [useAltIcon]="true" size="large"></app-no-data-stub>
+  <app-no-data-stub [display]="customer?.id && !hasData" subTitle="Клиенту ещё не выдавали книги! Введите ID книги, и отправьте читателя в удивительный мир книг!" size="large"></app-no-data-stub>
+
+  <div class="grids" *ngIf="customer?.id" [hidden]="!hasData">
     <app-book-return-grid-page #actualGrid title="Выданные книги" [dataBinding]="actualDataBinding" class="w-100"></app-book-return-grid-page>
     <app-book-return-grid-page #historyGrid title="История выдачи" [dataBinding]="historyDataBinding" class="w-100"></app-book-return-grid-page>
   </div>

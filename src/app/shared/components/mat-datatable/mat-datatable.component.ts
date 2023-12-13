@@ -1,5 +1,17 @@
-import { AfterContentInit, Component, ContentChildren, Input, OnInit, QueryList, ViewChild, } from '@angular/core';
-import { MatColumnDef, MatTable, MatTableDataSource, } from '@angular/material/table';
+import {
+  AfterContentInit,
+  Component,
+  ContentChildren,
+  Input,
+  OnInit,
+  QueryList,
+  ViewChild,
+} from '@angular/core';
+import {
+  MatColumnDef,
+  MatTable,
+  MatTableDataSource,
+} from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { PlainObject } from '@ngxs/store/internals';
 import * as _ from 'lodash';
@@ -34,6 +46,7 @@ export class MatDatatableComponent<T extends PlainObject>
   @Input({ required: true }) dataBinding: DataBinding<T>;
 
   dataSource = new MatTableDataSource<T>();
+  hasData?: boolean;
 
   protected columns: Column<T>[];
   protected columnsBind: Column<T>[];
@@ -82,7 +95,7 @@ export class MatDatatableComponent<T extends PlainObject>
         .get<Page<T>>(url, {
           params: {
             size: 100000,
-          }
+          },
         })
         .pipe(takeUntil(this.destroy$))
         .subscribe(({ content }) => this.setData(content));
@@ -100,6 +113,7 @@ export class MatDatatableComponent<T extends PlainObject>
 
   private setData(data: T[]): void {
     this.dataSource.data = data;
+    this.hasData = !!data.length;
     this.onBindingComplete();
   }
 

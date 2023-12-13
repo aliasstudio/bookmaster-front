@@ -1,0 +1,40 @@
+:host {
+  &:has(*) {
+    height: 100%;
+  }
+}
+
+.no-data-stub {
+  &_wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-size: 1rem;
+    max-width: 270px;
+    text-align: center;
+
+    * {
+      user-select: none;
+    }
+
+    &.large {
+      font-size: 1.75rem;
+      max-width: initial;
+    }
+
+    img {
+      max-width: 100%;
+    }
+  }
+  &_title {
+    font-weight: bold;
+    font-size: 1em;
+  }
+  &_subtitle {
+    color: #898993;
+    font-size: .875rem;
+    max-width: 360px;
+  }
+}

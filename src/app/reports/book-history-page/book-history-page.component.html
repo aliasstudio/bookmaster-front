@@ -15,9 +15,10 @@
     </div>
     <div>Описание: {{ book?.description }}</div>
 
-    <div *ngIf="images.length > 0">
-      <div>
-        <img style="width: 100%; height: 300px" [src]="images[currentImageIndex]" alt="">
+    <div *ngIf="book">
+      <div style="width: 100%; height: 300px">
+        <img *ngIf="images[currentImageIndex]" [src]="images[currentImageIndex]" alt="">
+        <app-no-data-stub [display]="!images[currentImageIndex]" title="Фото не найдено"></app-no-data-stub>
       </div>
 
       <div class="d-flex justify-content-between align-items-center mt-4">
@@ -25,18 +26,20 @@
           mat-flat-button
           appButton
           text="Пред."
+          [disabled]="!images.length"
           (click)="currentImageIndex = currentImageIndex === 0 ? currentImageIndex : currentImageIndex - 1"
         >
         </button>
 
         <div>
-          {{ currentImageIndex + 1 }} / {{ images.length }}
+          {{ currentImageIndex + 1 }} / {{ images.length || 1 }}
         </div>
 
         <button
           mat-flat-button
           appButton
           text="След."
+          [disabled]="!images.length"
           (click)="currentImageIndex = (currentImageIndex === images.length - 1) ? currentImageIndex : currentImageIndex + 1"
         >
         </button>
