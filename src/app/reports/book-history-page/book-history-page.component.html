@@ -1,10 +1,10 @@
 <div class="toolbar table__header_wrapper">
   <app-mat-datatable-search [customQuery]="true" (onSearchEvent)="reloadBook($event)"></app-mat-datatable-search>
-  <button mat-flat-button appButton iconClass="icon-document" text="Экспорт" (click)="export()"></button>
+  <button mat-flat-button appButton iconClass="icon-document" text="Экспорт" [disabled]="exportDisabled" (click)="export()"></button>
   <button mat-flat-button appButton iconClass="icon-reload" class="reload-button" text="Обновить" (click)="grid.reloadData()"></button>
 </div>
 <div class="content">
-  <div class="book-card">
+  <div class="book-card" *ngIf="book">
     <h3 class="book-card__title">Информация о книге</h3>
     <div>Название: {{ book?.title }}</div>
     <div>
@@ -21,25 +21,21 @@
         <app-no-data-stub [display]="!images[currentImageIndex]" title="Фото не найдено"></app-no-data-stub>
       </div>
 
-      <div class="d-flex justify-content-between align-items-center mt-4">
+      <div class="d-flex justify-content-between align-items-center mt-4" *ngIf="images?.length">
         <button
           mat-flat-button
           appButton
           text="Пред."
-          [disabled]="!images.length"
           (click)="currentImageIndex = currentImageIndex === 0 ? currentImageIndex : currentImageIndex - 1"
         >
         </button>
 
-        <div *ngIf="images.length">
-          {{ currentImageIndex + 1 }} / {{ images.length }}
-        </div>
+        <div>{{ currentImageIndex + 1 }} / {{ images.length }}</div>
 
         <button
           mat-flat-button
           appButton
           text="След."
-          [disabled]="!images.length"
           (click)="currentImageIndex = (currentImageIndex === images.length - 1) ? currentImageIndex : currentImageIndex + 1"
         >
         </button>
@@ -47,7 +43,12 @@
     </div>
   </div>
 
-  <app-mat-datatable-control [ignoreInitQuery]="true" [dataBinding]="dataBinding" class="history-repository w-100">
+  <app-mat-datatable-control
+    [dataBinding]="dataBinding"
+    [ignoreInitQuery]="true"
+    class="history-repository w-100"
+    [noDataStubTitle]="book ? 'Записи не найдены' : 'Для получения результатов укажите идентификатор книги'"
+  >
     <ng-container table-columns>
       <ng-container matColumnDef="customer">
         <th mat-header-cell *matHeaderCellDef>Клиент</th>

@@ -133,7 +133,7 @@ export class MenuComponent implements OnInit, AfterViewInit {
             icon: 'icon-arrows',
             link: 'book-return',
             hidden: (registries) =>
-              !registries?.[Registry.BookReturn].includes(
+              !registries?.[Registry.BookReturn]?.includes(
                 RegistryPrivilege.Edit,
               ),
           },
