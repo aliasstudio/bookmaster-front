@@ -18,7 +18,6 @@ import { MatDeleteDialogComponent } from '@app/shared/components/mat-delete-dial
   providers: [provideFormEditor(BookFormComponent)],
 })
 export class BookFormComponent extends FormEditorDirective<Book> {
-
   get isNew(): boolean {
     return !this.entity?.uuid;
   }

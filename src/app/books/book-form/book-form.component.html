@@ -51,10 +51,10 @@
     <mat-label class="align-self-start">Обложки книги</mat-label>
 
     <div class="d-flex justify-content-between" style="width: 400px;">
-      <mat-chip-grid #chipGrid aria-label="Fruit selection">
+      <mat-chip-grid aria-label="Fruit selection">
         <mat-chip-row *ngFor="let cover of entity.covers" (removed)="removeImage(cover.id)" class="green-button">
           {{cover.coverFile}}
-          <button matChipRemove>
+          <button matChipRemove *ngIf="!readOnly">
             <mat-icon>cancel</mat-icon>
           </button>
         </mat-chip-row>
@@ -62,7 +62,7 @@
 
       <div *ngIf="!isNew">
         <input #imageInput hidden="true" type="file" onclick="this.value=null" (change)="imageAdd($event)"/>
-        <button mat-flat-button appButton (click)="imageInput.click()" text="Добавить"></button>
+        <button mat-flat-button appButton (click)="imageInput.click()" text="Добавить" *ngIf="!readOnly"></button>
       </div>
     </div>
   </div>

@@ -1,4 +1,10 @@
-import { Component, inject, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  inject,
+  ViewChild,
+} from '@angular/core';
 import { Issue } from '@app/shared/models/issue';
 import { EntityRemoteDataBinding } from '@app/shared/models/databinding';
 import { Book } from '@app/shared/models/book';
@@ -13,12 +19,13 @@ import { lastValueFrom, takeUntil } from 'rxjs';
   styleUrls: ['./book-history-page.component.scss'],
   providers: [MatDatatableControlComponent],
 })
-export class BookHistoryPageComponent {
+export class BookHistoryPageComponent implements AfterViewInit {
   @ViewChild(MatDatatableControlComponent)
   grid: MatDatatableControlComponent<Issue>;
 
   http = inject(HttpClient);
   destroy$ = inject(DestroyService);
+  changeDetector = inject(ChangeDetectorRef);
 
   dataBinding: EntityRemoteDataBinding<Issue> = {
     urlRoot: 'issue/history',
@@ -35,6 +42,15 @@ export class BookHistoryPageComponent {
   book: Book;
   currentImageIndex = 0;
   images?: (string | ArrayBuffer)[] = [];
+
+  exportDisabled: boolean = true;
+
+  ngAfterViewInit(): void {
+    this.grid.dataLoaded.pipe(takeUntil(this.destroy$)).subscribe(() => {
+      this.exportDisabled = !this.grid.hasData;
+      this.changeDetector.markForCheck();
+    });
+  }
 
   reloadBook(text: string) {
     const dataBinding = this.dataBinding;

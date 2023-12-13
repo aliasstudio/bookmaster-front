@@ -41,18 +41,38 @@
   <app-no-data-stub [display]="customer?.id && !hasData" subTitle="Клиенту ещё не выдавали книги! Введите ID книги, и отправьте читателя в удивительный мир книг!" size="large"></app-no-data-stub>
 
   <div class="grids gap-4">
-    <app-book-return-grid-page
+    <app-mat-datatable-control
       #actualGrid
-      title="Выданные книги"
       [dataBinding]="actualDataBinding"
       [ignoreInitQuery]="true"
       class="w-100 {{ customer?.id && hasData ? 'visible' : 'invisible' }}"
-    ></app-book-return-grid-page>
-    <app-book-return-grid-page
-      #historyGrid title="История выдачи"
+    >
+      <ng-container table-header>
+        <h5 class="mx-auto">Выданные книги</h5>
+      </ng-container>
+      <ng-container table-columns>
+        <ng-container matColumnDef="book">
+          <th mat-header-cell *matHeaderCellDef>Название книги</th>
+          <td mat-cell *matCellDef="let element">{{ element.book.title }}</td>
+        </ng-container>
+      </ng-container>
+    </app-mat-datatable-control>
+    <app-mat-datatable-control
+      #historyGrid
       [dataBinding]="historyDataBinding"
       [ignoreInitQuery]="true"
+      noDataStubSubTitle="Клиенту ещё не выдавали книги! Введите ID книги, и отправьте читателя в удивительный мир книг!"
       class="w-100 {{ customer?.id && hasData ? 'visible' : 'invisible' }}"
-    ></app-book-return-grid-page>
+    >
+      <ng-container table-header>
+        <h5 class="mx-auto">История выдачи</h5>
+      </ng-container>
+      <ng-container table-columns>
+        <ng-container matColumnDef="book">
+          <th mat-header-cell *matHeaderCellDef>Название книги</th>
+          <td mat-cell *matCellDef="let element">{{ element.book.title }}</td>
+        </ng-container>
+      </ng-container>
+    </app-mat-datatable-control>
   </div>
 </section>
