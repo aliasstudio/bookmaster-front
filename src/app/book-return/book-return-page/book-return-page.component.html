@@ -11,14 +11,15 @@
     <app-mat-datatable-search
       placeholder="ID книги"
       [customQuery]="true"
+      [disabled]="!customer?.id"
       (onSearchEvent)="findBook($event)"
     >
     </app-mat-datatable-search>
 
     <ng-container>
-      <button mat-flat-button appButton [disabled]="!isCustomerAndBookSelected" text="Выдать" (click)="lendBook()"></button>
-      <button mat-flat-button appButton [disabled]="!isCustomerAndBookSelected" text="Возврат" (click)="returnBook()"></button>
-      <button mat-flat-button appButton [disabled]="!isCustomerAndBookSelected" text="Продлить" (click)="extendBook()"></button>
+      <button mat-flat-button [disabled]="lendButtonDisabled" appButton text="Выдать" (click)="lendBook()"></button>
+      <button mat-flat-button [disabled]="returnButtonDisabled" appButton text="Возврат" (click)="returnBook()"></button>
+      <button mat-flat-button [disabled]="extendButtonDisabled" appButton text="Продлить" (click)="extendBook()"></button>
     </ng-container>
   </div>
 
