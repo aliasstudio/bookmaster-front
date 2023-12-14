@@ -139,8 +139,14 @@ export class BookReturnPageComponent implements OnInit {
   }
 
   returnBook() {
+    const dataSource = this.actualGrid.dataSource.data;
+    const data = [...(dataSource.length ? dataSource : [])];
+    const issue = data.find(
+      (item) => !item.dateOfReturn && item.book.uuid === this.book.uuid,
+    );
+
     const dialogRef = this.dialog.open(DialogReturnBookComponent, {
-      data: { dateOfReturn: null },
+      data: { dateOfReturn: null, minDate: issue?.dateOfIssue },
     });
 
     dialogRef

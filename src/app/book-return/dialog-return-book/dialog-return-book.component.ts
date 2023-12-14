@@ -16,6 +16,7 @@ export class DialogReturnBookComponent {
 
   formGroup = new FormGroup({
     dateOfReturn: new FormControl(this.data?.dateOfReturn),
+    minDate: new FormControl(this.data?.minDate),
   });
 
   cancel(): void {
